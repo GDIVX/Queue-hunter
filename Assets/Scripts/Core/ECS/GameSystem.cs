@@ -23,6 +23,19 @@ namespace Assets.Scripts.Engine.ECS
 
         protected IRequestable RequestHandler { get => _requestHandler; private set => _requestHandler = value; }
 
+        event Action<IGameSystem> IGameSystem.OnDestroyed
+        {
+            add
+            {
+                OnDestroyed += value;
+            }
+
+            remove
+            {
+                OnDestroyed -= value;
+            }
+        }
+
         /// <summary>
         /// Called when the system is created
         /// </summary>

@@ -14,6 +14,14 @@ namespace Assets.Scripts.Core.ECS
 
         public T CreateSystem<T>() where T : IGameSystem, new()
         {
+            //If we already have a system of this type, return it
+
+            T existingSystem = GetSystem<T>();
+            if (existingSystem != null)
+            {
+                return existingSystem;
+            }
+
             T system = new T();
             system.Initialize();
             systems.Add(system);

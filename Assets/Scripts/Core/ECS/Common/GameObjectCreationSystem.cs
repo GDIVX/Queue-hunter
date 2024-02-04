@@ -6,9 +6,7 @@ using Zenject;
 
 public class GameObjectCreationSystem : GameSystem
 {
-    public GameObjectCreationSystem(SignalBus signalBus) : base(signalBus)
-    {
-    }
+
 
 
     public override void OnEntityAdded(IEntity entity)

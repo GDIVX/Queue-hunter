@@ -4,9 +4,7 @@ namespace Assets.Scripts.Engine.ECS.Common
 {
     public class PositionSystem : GameSystem
     {
-        public PositionSystem(SignalBus signalBus) : base(signalBus)
-        {
-        }
+
 
         protected override bool ShouldProcessEntity(IEntity entity)
         {
