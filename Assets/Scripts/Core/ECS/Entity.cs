@@ -3,21 +3,25 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
+using System.Linq;
 
 namespace Assets.Scripts.Engine.ECS
 {
+
+
     /// <summary>
     /// An entity is a container for components
     /// It represent a game object in the ECS system
     /// </summary>
     [Serializable]
-    public class Entity
+    public class Entity : ICloneable, IEntity
     {
         /// <summary>
         /// Unique ID for this entity
         /// </summary>
         [ShowInInspector, ReadOnly]
-        public int ID { get; private set; }
+        public Guid ID { get; private set; }
 
         [ShowInInspector, ReadOnly]
         public List<IComponent> Components { get; private set; } = new();
@@ -26,25 +30,18 @@ namespace Assets.Scripts.Engine.ECS
         public List<string> Tags { get; private set; } = new();
 
         [ShowInInspector, ReadOnly]
-        GameObject _rootGameObject;
+        GameObject _GameObject;
 
-        public event Action<Entity> OnModified;
+        [Inject]
+        private SignalBus _signalBus;
 
-        public Action<Entity> OnDestroyed;
-
-        internal Entity()
+        public Entity(List<IComponent> components)
         {
-            this.ID = GetHashCode();
+            this.ID = Guid.NewGuid();
+            Components = components;
+            _signalBus.Fire(new EntityCreatedSignal(this));
         }
 
-        /// <summary>
-        /// Create a new blank entity
-        /// </summary>
-        /// <returns></returns>
-        public static Entity Create()
-        {
-            return ECSManager.Instance.CreateEntity();
-        }
 
         /// <summary>
         /// Clones the entity, creating a new entity with the same components.
@@ -52,19 +49,14 @@ namespace Assets.Scripts.Engine.ECS
         /// <returns></returns>
         public Entity Clone()
         {
-            //Create a new entity
-            var entity = Create();
+            List<IComponent> components =
+            (from component in Components
+             let newComponent = component.Clone()
+             select newComponent).ToList();
 
-            //clone each component and attach to the new entity
-            foreach (var component in Components)
-            {
-                IComponent newComponent = component.Clone();
-                entity.AddComponent(newComponent);
-            }
+            Entity clone = new(components);
 
-            ECSManager.Instance.OnEntityInitialized?.Invoke(entity);
-
-            return entity;
+            return clone;
         }
 
         /// <summary>
@@ -76,9 +68,10 @@ namespace Assets.Scripts.Engine.ECS
         {
             Components.Add(component);
             component.SetParent(this);
-            OnModified?.Invoke(this);
+            OnModified();
             return component;
         }
+
 
         /// <summary>
         /// Remove a component for the entity.
@@ -88,19 +81,23 @@ namespace Assets.Scripts.Engine.ECS
         {
             Components.Remove(component);
             component.SetParent(null);
-            OnModified?.Invoke(this);
+            OnModified();
         }
 
         public void AddTag(string tag)
         {
             Tags.Add(tag);
-            OnModified?.Invoke(this);
+            OnModified();
         }
 
         public void RemoveTag(string tag)
         {
             Tags.Remove(tag);
-            OnModified?.Invoke(this);
+            OnModified();
+        }
+        private void OnModified()
+        {
+            _signalBus.Fire(new EntityModifiedSignal(this));
         }
 
         // <summary>
@@ -132,17 +129,6 @@ namespace Assets.Scripts.Engine.ECS
             return false;
         }
 
-        public T GetOrAddComponent<T>() where T : IComponent, new()
-        {
-            var component = GetComponent<T>();
-            if (component == null)
-            {
-                component = new T();
-                AddComponent(component);
-            }
-            return component;
-        }
-
         public bool TryGetComponent<T>(out T component) where T : IComponent
         {
             if (HasComponent<T>())
@@ -167,20 +153,20 @@ namespace Assets.Scripts.Engine.ECS
             return components.ToArray();
         }
 
-        public GameObject GetRootGameObject()
+        public GameObject GetGameObject()
         {
-            return _rootGameObject;
+            return _GameObject;
         }
 
         public void SetRootGameObject(GameObject gameObject)
         {
-            if (_rootGameObject != null)
+            if (_GameObject != null)
             {
                 //we made a game object by accident.
                 Debug.LogWarning($"{gameObject.name} game object was created but not needed. It is being deactivated.");
                 gameObject.SetActive(false);
             }
-            _rootGameObject = gameObject;
+            _GameObject = gameObject;
         }
 
         public bool HasTag(string tag)
@@ -190,10 +176,10 @@ namespace Assets.Scripts.Engine.ECS
 
         public void Destroy()
         {
-            ECSManager.Instance.DestroyEntity(this);
-            if (_rootGameObject != null)
+            _signalBus.Fire(new EntityDestroyedSignal(this));
+            if (_GameObject != null)
             {
-                GameObject.Destroy(_rootGameObject);
+                UnityEngine.Object.Destroy(_GameObject);
             }
         }
 
@@ -211,9 +197,13 @@ namespace Assets.Scripts.Engine.ECS
 
         public override int GetHashCode()
         {
-            return ECSManager.Instance.GenerateUniqueId();
+            return HashCode.Combine(ID, Components, Tags);
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
     }
 
 }

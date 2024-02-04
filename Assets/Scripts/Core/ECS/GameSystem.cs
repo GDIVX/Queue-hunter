@@ -3,27 +3,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public abstract class GameSystem : MonoBehaviour
+    public abstract class GameSystem : ITickable, ILateTickable, IGameSystem
     {
-        [SerializeField] protected List<Entity> entitiesToProcess = new List<Entity>();
+        [SerializeField] protected List<IEntity> entitiesToProcess = new List<IEntity>();
 
-        private void Awake()
+        [Inject]
+        SignalBus _signalBus;
+
+        [Inject]
+        IRequestable _requestHandler;
+
+        bool _isActive = true;
+
+        event Action<IGameSystem> OnDestroyed;
+
+        protected IRequestable RequestHandler { get => _requestHandler; private set => _requestHandler = value; }
+
+        /// <summary>
+        /// Called when the system is created
+        /// </summary>
+        public virtual void Initialize()
         {
-            //register this system with the entity manager
-            ECSManager.Instance.RegisterSystem(this);
+            //subscribe to the entity created signal
+            _signalBus.Subscribe<EntityCreatedSignal>(x => OnEntityCreatedOrModified(x.Entity));
+            _signalBus.Subscribe<EntityModifiedSignal>(x => OnEntityCreatedOrModified(x.Entity));
         }
 
-        public virtual void OnEntityCreatedOrModified(Entity entity)
+        public virtual void OnEntityCreatedOrModified(IEntity entity)
         {
             //schedule the entity to be checked
-            RequestManager.Instance.Schedule(() =>
+            RequestHandler.Schedule(() =>
             {
                 bool isEntityValid = ShouldProcessEntity(entity);
 
-                //Do we processing this entity?
+                //Are we processing this entity?
                 if (entitiesToProcess.Contains(entity) && !isEntityValid)
                 {
                     //remove the entity from the list
@@ -43,26 +60,55 @@ namespace Assets.Scripts.Engine.ECS
         /// Called when an entity is added to the system.
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void OnEntityAdded(Entity entity)
+        public virtual void OnEntityAdded(IEntity entity)
         {
         }
+
+        /// <summary>
+        /// Pause or resume the system. A system would not process entities while inactive.
+        /// </summary>
+        /// <param name="active"></param>
+        public void SetActive(bool active)
+        {
+            _isActive = active;
+        }
+        public void Tick()
+        {
+            if (!_isActive) return;
+
+            for (int i = 0; i < entitiesToProcess.Count; i++)
+            {
+                IEntity entity = entitiesToProcess[i];
+                OnUpdate(entity);
+            }
+        }
+        public void LateTick()
+        {
+            if (!_isActive) return;
+
+            for (int i = 0; i < entitiesToProcess.Count; i++)
+            {
+                IEntity entity = entitiesToProcess[i];
+                OnLateUpdate(entity);
+            }
+        }
+
 
         /// <summary>
         /// Called a frame after an entity is added to the system.
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void OnLateEntityAdded(Entity entity)
-        {
-
-        }
-
-        public virtual void OnEntityRemoved(Entity entity)
+        public virtual void OnLateEntityAdded(IEntity entity)
         {
         }
 
-        public virtual void OnEntityDeleted(Entity entity)
+        public virtual void OnEntityRemoved(IEntity entity)
         {
-            RequestManager.Instance.Schedule(() =>
+        }
+
+        public virtual void OnEntityDeleted(IEntity entity)
+        {
+            RequestHandler.Schedule(() =>
             {
                 // Remove the entity from the list
                 RemoveEntity(entity);
@@ -71,7 +117,7 @@ namespace Assets.Scripts.Engine.ECS
         }
 
 
-        protected void AddEntity(Entity entity)
+        protected void AddEntity(IEntity entity)
         {
             if (!ShouldProcessEntity(entity) || entitiesToProcess.Contains(entity)) return;
 
@@ -79,18 +125,13 @@ namespace Assets.Scripts.Engine.ECS
 
             OnEntityAdded(entity);
 
-            //use a coroutine to call the late on entity added
-            StartCoroutine(LateOnEntityAddedCoroutine(entity));
         }
-
-        private IEnumerator LateOnEntityAddedCoroutine(Entity entity)
+        public virtual void OnLateUpdate(IEntity entity)
         {
-            yield return new WaitForEndOfFrame();
-            OnLateEntityAdded(entity);
-
         }
 
-        protected void RemoveEntity(Entity entity)
+
+        protected void RemoveEntity(IEntity entity)
         {
             //do we have this entity?
             if (entitiesToProcess.Contains(entity))
@@ -100,40 +141,38 @@ namespace Assets.Scripts.Engine.ECS
             }
         }
 
-        /// <summary>
-        /// Update all the entities in the system. Recommended to be called in the Update method for the game.
-        /// </summary>
-        protected void UpdateEntities()
-        {
-            for (int i = 0; i < entitiesToProcess.Count; i++)
-            {
-                Entity entity = entitiesToProcess[i];
-                OnUpdate(entity);
-            }
-        }
 
         /// <summary>
         /// Called for each entity when is being updated.
         /// </summary>
         /// <param name="entity"></param>
-        protected virtual void OnUpdate(Entity entity) { }
+        protected virtual void OnUpdate(IEntity entity) { }
 
         /// <summary>
         /// Define the criteria weather or not to include an entity in the system.
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        protected abstract bool ShouldProcessEntity(Entity entity);
+        protected abstract bool ShouldProcessEntity(IEntity entity);
 
-
-
-        void OnDestroy()
+        /// <summary>
+        /// Destroy the system
+        /// </summary>
+        public void Destroy()
         {
-            // Unsubscribe from all the entities
-            for (int i = 0; i < entitiesToProcess.Count; i++)
+            RequestHandler.Schedule(() =>
             {
-                Entity entity = entitiesToProcess[i];
-            }
+                OnDestroy();
+                // Unsubscribe from all the entities
+                for (int i = 0; i < entitiesToProcess.Count; i++)
+                {
+                    IEntity entity = entitiesToProcess[i];
+                }
+            });
+        }
+        protected virtual void OnDestroy()
+        {
+            OnDestroyed?.Invoke(this);
         }
 
     }

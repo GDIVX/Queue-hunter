@@ -3,47 +3,44 @@ using Assets.Scripts.Engine.ECS.Common;
 using System;
 using System.Diagnostics;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.ECS.Common
 {
     public class ModelSystem : GameSystem
     {
-        protected override bool ShouldProcessEntity(Entity entity)
+        public ModelSystem(SignalBus signalBus) : base(signalBus)
+        {
+        }
+
+        protected override bool ShouldProcessEntity(IEntity entity)
         {
             var hasModel = entity.HasComponent<ModelComponent>();
             var hasGameObject = entity.HasTag("HasGameObject");
             return hasModel && hasGameObject;
         }
 
-        private void Start()
-        {
-            UpdateEntities();
-        }
 
-        public override void OnEntityAdded(Entity entity)
+        public override void OnEntityAdded(IEntity entity)
         {
             base.OnEntityAdded(entity);
-            UpdateEntities();
+            OnUpdate(entity);
         }
 
-        private void Update()
-        {
-            UpdateEntities();
-        }
 
-        public override void OnEntityRemoved(Entity entity)
+        public override void OnEntityRemoved(IEntity entity)
         {
             //remove the model
             if (entity.HasComponent<ModelComponent>())
             {
                 var model = entity.GetComponent<ModelComponent>().Model;
-                Destroy(model);
+                UnityEngine.Object.Destroy(model);
             }
 
 
         }
 
-        public override void OnLateEntityAdded(Entity entity)
+        public override void OnLateEntityAdded(IEntity entity)
         {
             if (entity is null)
             {
@@ -61,7 +58,7 @@ namespace Assets.Scripts.ECS.Common
             }
 
             var prefab = modelCom.Model;
-            var model = Instantiate(prefab, entity.GetRootGameObject().transform);
+            var model = UnityEngine.Object.Instantiate(prefab, entity.GetGameObject().transform);
             model.name = $"{entity}_Model";
 
             modelCom.Model = model;

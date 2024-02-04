@@ -2,16 +2,16 @@ using Assets.Scripts.Engine.ECS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GameObjectCreationSystem : GameSystem
 {
-    protected override bool ShouldProcessEntity(Entity entity)
+    public GameObjectCreationSystem(SignalBus signalBus) : base(signalBus)
     {
-        return entity.HasTag("HasGameObject");
     }
 
 
-    public override void OnEntityAdded(Entity entity)
+    public override void OnEntityAdded(IEntity entity)
     {
         // Create the game object
         GameObject newGameObject = new GameObject(entity.ToString());
@@ -21,4 +21,8 @@ public class GameObjectCreationSystem : GameSystem
         newGameObject.AddComponent<EntityInspector>().Init(entity);
     }
 
+    protected override bool ShouldProcessEntity(IEntity entity)
+    {
+        return entity.HasTag("HasGameObject");
+    }
 }

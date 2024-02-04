@@ -2,25 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public class RequestManager : MonoBehaviour
+    public class RequestHandler : ILateTickable, IRequestable
     {
-        // Singleton implementation
-        private static RequestManager _instance;
-        public static RequestManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<RequestManager>()
-                        ?? new GameObject("RequestManager").AddComponent<RequestManager>();
-                }
-                return _instance;
-            }
-        }
 
         Queue<Request> _requests = new();
 
@@ -42,18 +29,10 @@ namespace Assets.Scripts.Engine.ECS
             return request;
         }
 
-        private void LateUpdate()
-        {
-            if (_requests.Count > 0)
-            {
-                StartCoroutine(ProcessRequests());
-            }
-        }
+        
 
-        IEnumerator ProcessRequests()
+        void ProcessRequests()
         {
-            yield return new WaitForEndOfFrame();
-
             while (_requests.Count > 0)
             {
                 Request request = _requests.Dequeue();
@@ -67,6 +46,12 @@ namespace Assets.Scripts.Engine.ECS
                     request.OnComplete?.Invoke();
                 }
             }
+        }
+
+        public void LateTick()
+        {
+            if (_requests.Count > 0)
+                ProcessRequests();
         }
     }
 }

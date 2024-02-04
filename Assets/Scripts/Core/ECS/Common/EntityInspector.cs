@@ -8,9 +8,9 @@ public class EntityInspector : MonoBehaviour
     [SerializeField] int entityID;
     [SerializeField] List<DataComponent> components;
 
-    public void Init(Entity entity)
+    public void Init(IEntity entity)
     {
-        entityID = entity.ID;
+        entityID = entity.ID.GetHashCode();
 
         components = new();
 

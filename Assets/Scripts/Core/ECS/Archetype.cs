@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
@@ -11,13 +12,27 @@ namespace Assets.Scripts.Engine.ECS
     public class Archetype : ScriptableObject
     {
         [SerializeField] List<string> tags;
-        [SerializeField] List<DataComponent> components;
+        [SerializeField] List<IComponent> components;
 
-        public List<DataComponent> Components { get => components; set => components = value; }
+        private SignalBus _signalBus;
+        public List<IComponent> Components { get => components; set => components = value; }
 
-        public Entity CreateEntity()
+        [Inject]
+        public void Construct(SignalBus signalBus)
         {
-            var entity = ECSManager.Instance.CreateEntity();
+            _signalBus = signalBus;
+        }
+
+        public IEntity CreateEntity()
+        {
+
+            if (_signalBus == null)
+            {
+                Debug.LogError("SignalBus not injected in Archetype");
+                return null;
+            }
+
+            var entity = new Entity(_signalBus, new List<IComponent>());
 
             foreach (var component in Components)
             {
@@ -35,7 +50,6 @@ namespace Assets.Scripts.Engine.ECS
                 entity.Tags.Add(tag);
             }
 
-            ECSManager.Instance.OnEntityInitialized?.Invoke(entity);
 
             return entity;
         }
@@ -47,7 +61,7 @@ namespace Assets.Scripts.Engine.ECS
 
             copy.tags = new List<string>(tags);
 
-            copy.components = new List<DataComponent>();
+            copy.components = new List<IComponent>();
 
             foreach (var component in components)
             {

@@ -1,31 +1,30 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Engine.ECS.Common
 {
     public class RotationSystem : GameSystem
     {
+        public RotationSystem(SignalBus signalBus) : base(signalBus)
+        {
+        }
 
-        protected override bool ShouldProcessEntity(Entity entity)
+        protected override bool ShouldProcessEntity(IEntity entity)
         {
             //we should process any entity with a position component and a model component
             return entity.HasComponent<RotationComponent>()
                 && entity.HasTag("HasGameObject");
         }
 
-        private void Update()
-        {
-            UpdateEntities();
-        }
-
-        protected override void OnUpdate(Entity entity)
+        protected override void OnUpdate(IEntity entity)
         {
             //get the position component
             var rotationComponent = entity.GetComponent<RotationComponent>();
 
 
             //update the entity root game object
-            entity.GetRootGameObject().transform.rotation = Quaternion.Euler(rotationComponent.Rotation);
+            entity.GetGameObject().transform.rotation = Quaternion.Euler(rotationComponent.Rotation);
 
         }
     }

@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
     public class GameObjectCleanupSystem : GameSystem
     {
-        protected override bool ShouldProcessEntity(Entity entity)
+        public GameObjectCleanupSystem(SignalBus signalBus) : base(signalBus)
+        {
+        }
+
+        protected override bool ShouldProcessEntity(IEntity entity)
         {
             return entity.HasTag("HasGameObject");
         }
 
-        public override void OnEntityAdded(Entity entity)
+        public override void OnEntityDeleted(IEntity entity)
         {
-            entity.OnDestroyed += OnEntityDestroyed;
-        }
-
-        void OnEntityDestroyed(Entity entity)
-        {
-            //destroy the game object
-            Destroy(entity.GetRootGameObject());
+            base.OnEntityDeleted(entity);
+            UnityEngine.Object.Destroy(entity.GetGameObject());
         }
     }
 }
