@@ -52,7 +52,7 @@ namespace Assets.Scripts.Engine.ECS
         [Inject]
         private SignalBus _signalBus;
 
-        private bool isActive; 
+        private bool isActive;
         #endregion
 
         #region Lifecycle
@@ -80,6 +80,8 @@ namespace Assets.Scripts.Engine.ECS
              select newComponent).ToList();
 
             Entity clone = new(components);
+
+            Archetype.AddEntity(clone);
 
             return clone as IEntity;
         }
@@ -215,7 +217,7 @@ namespace Assets.Scripts.Engine.ECS
                 gameObject.SetActive(false);
             }
             _GameObject = gameObject;
-        } 
+        }
         #endregion
 
 

@@ -8,8 +8,9 @@ namespace Assets.Scripts.Engine.ECS
         Dictionary<Guid, Dictionary<Type, IComponent>> Matrix { get; }
         string Name { get; }
 
-        IEntity CreateEntity<T>();
+        T CreateEntity<T>() where T : IEntity;
         void RemoveEntity(Guid id);
+        void AddEntity(IEntity entity);
         T GetComponent<T>(Guid id) where T : IComponent;
 
         bool HasEntity(Guid id);

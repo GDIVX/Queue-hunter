@@ -101,9 +101,9 @@ namespace Assets.Scripts.Engine.ECS
 
         }
 
-        public IEntity CreateEntity<T>()
+        public T CreateEntity<T>() where T : IEntity
         {
-            IEntity clone = FirstEntity.Clone();
+            T clone = (T)FirstEntity.Clone();
             AddEntity(clone);
             return clone;
         }
@@ -183,5 +183,7 @@ namespace Assets.Scripts.Engine.ECS
             //If the given entity has the same components as the first entity, it is valid
             return FirstEntity.HasSameComposition(entity);
         }
+
+
     }
 }

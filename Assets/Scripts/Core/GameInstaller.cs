@@ -12,8 +12,9 @@ public class GameInstaller : MonoInstaller
         Container.DeclareSignal<EntityCreatedSignal>();
         Container.DeclareSignal<EntityModifiedSignal>();
 
-        Container.Bind<ISystemManager>().AsSingle();
+        Container.Bind<SystemManager>().AsSingle();
         Container.Bind<RequestHandler>().AsSingle();
+        Container.Bind<EntityGenerator>().AsSingle();
         #endregion
     }
 }
