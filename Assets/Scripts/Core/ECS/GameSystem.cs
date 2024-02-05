@@ -9,19 +9,18 @@ namespace Assets.Scripts.Engine.ECS
 {
     public abstract class GameSystem : ITickable, ILateTickable, IGameSystem
     {
-        [SerializeField] protected List<IEntity> entitiesToProcess = new List<IEntity>();
+        protected List<IEntity> EntitiesToProcess = new List<IEntity>();
+        protected Dictionary<string, Archetype> Archetypes = new Dictionary<string, Archetype>();
 
         [Inject]
         SignalBus _signalBus;
 
         [Inject]
         IRequestable _requestHandler;
-
-        bool _isActive = true;
-
         event Action<IGameSystem> OnDestroyed;
 
         protected IRequestable RequestHandler { get => _requestHandler; private set => _requestHandler = value; }
+        public bool IsActive { get; set; } = true;
 
         event Action<IGameSystem> IGameSystem.OnDestroyed
         {
@@ -51,10 +50,16 @@ namespace Assets.Scripts.Engine.ECS
             //schedule the entity to be checked
             RequestHandler.Schedule(() =>
             {
-                bool isEntityValid = ShouldProcessEntity(entity);
+
+                //If the entity is of an archetype that we are interested in
+                //we can skip the check and add it to the list
+                bool isEntityValid = Archetypes.ContainsKey(entity.Archetype.Name) ? true : ShouldProcessEntity(entity);
+
+                //check if the entity is valid
+                isEntityValid = ShouldProcessEntity(entity);
 
                 //Are we processing this entity?
-                if (entitiesToProcess.Contains(entity) && !isEntityValid)
+                if (EntitiesToProcess.Contains(entity) && !isEntityValid)
                 {
                     //remove the entity from the list
                     RemoveEntity(entity);
@@ -83,25 +88,25 @@ namespace Assets.Scripts.Engine.ECS
         /// <param name="active"></param>
         public void SetActive(bool active)
         {
-            _isActive = active;
+            IsActive = active;
         }
         public void Tick()
         {
-            if (!_isActive) return;
+            if (!IsActive) return;
 
-            for (int i = 0; i < entitiesToProcess.Count; i++)
+            for (int i = 0; i < EntitiesToProcess.Count; i++)
             {
-                IEntity entity = entitiesToProcess[i];
+                IEntity entity = EntitiesToProcess[i];
                 OnUpdate(entity);
             }
         }
         public void LateTick()
         {
-            if (!_isActive) return;
+            if (!IsActive) return;
 
-            for (int i = 0; i < entitiesToProcess.Count; i++)
+            for (int i = 0; i < EntitiesToProcess.Count; i++)
             {
-                IEntity entity = entitiesToProcess[i];
+                IEntity entity = EntitiesToProcess[i];
                 OnLateUpdate(entity);
             }
         }
@@ -132,9 +137,9 @@ namespace Assets.Scripts.Engine.ECS
 
         protected void AddEntity(IEntity entity)
         {
-            if (!ShouldProcessEntity(entity) || entitiesToProcess.Contains(entity)) return;
+            if (!ShouldProcessEntity(entity) || EntitiesToProcess.Contains(entity)) return;
 
-            entitiesToProcess.Add(entity);
+            EntitiesToProcess.Add(entity);
 
             OnEntityAdded(entity);
 
@@ -147,10 +152,10 @@ namespace Assets.Scripts.Engine.ECS
         protected void RemoveEntity(IEntity entity)
         {
             //do we have this entity?
-            if (entitiesToProcess.Contains(entity))
+            if (EntitiesToProcess.Contains(entity))
             {
                 OnEntityRemoved(entity);
-                entitiesToProcess.Remove(entity);
+                EntitiesToProcess.Remove(entity);
             }
         }
 
@@ -177,9 +182,9 @@ namespace Assets.Scripts.Engine.ECS
             {
                 OnDestroy();
                 // Unsubscribe from all the entities
-                for (int i = 0; i < entitiesToProcess.Count; i++)
+                for (int i = 0; i < EntitiesToProcess.Count; i++)
                 {
-                    IEntity entity = entitiesToProcess[i];
+                    IEntity entity = EntitiesToProcess[i];
                 }
             });
         }

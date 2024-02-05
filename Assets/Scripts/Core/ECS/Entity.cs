@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using System.Linq;
+using Assets.Scripts.ECS;
 
 namespace Assets.Scripts.Engine.ECS
 {
@@ -17,30 +18,53 @@ namespace Assets.Scripts.Engine.ECS
     [Serializable]
     public class Entity : ICloneable, IEntity
     {
+        #region Properties
         /// <summary>
         /// Unique ID for this entity
         /// </summary>
-        [ShowInInspector, ReadOnly]
         public Guid ID { get; private set; }
+        public IArchetype Archetype { get; set; }
 
-        [ShowInInspector, ReadOnly]
         public List<IComponent> Components { get; private set; } = new();
 
-        [ShowInInspector, ReadOnly]
         public List<ITag> Tags { get; private set; } = new();
+        public bool IsActive
+        {
+            get => isActive;
+            set
+            {
+                //iterate throughout the components and tags and toggle them
+                foreach (var component in Components)
+                {
+                    component.IsActive = value;
+                }
 
+                foreach (var tag in Tags)
+                {
+                    tag.IsActive = value;
+                }
+                isActive = value;
+            }
+        }
 
-        [ShowInInspector, ReadOnly]
         GameObject _GameObject;
 
         [Inject]
         private SignalBus _signalBus;
 
+        private bool isActive; 
+        #endregion
+
+        #region Lifecycle
         public Entity(List<IComponent> components)
         {
             this.ID = Guid.NewGuid();
             Components = components;
             _signalBus.Fire(new EntityCreatedSignal(this));
+        }
+        private void OnModified()
+        {
+            _signalBus.Fire(new EntityModifiedSignal(this));
         }
 
 
@@ -59,7 +83,26 @@ namespace Assets.Scripts.Engine.ECS
 
             return clone as IEntity;
         }
+        public void Destroy()
+        {
+            _signalBus.Fire(new EntityDestroyedSignal(this));
 
+            Archetype.RemoveEntity(ID);
+            Archetype = null;
+
+            if (_GameObject != null)
+            {
+                UnityEngine.Object.Destroy(_GameObject);
+            }
+        }
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        #endregion
+
+        #region Components
         /// <summary>
         /// Adds a component to the entity.
         /// </summary>
@@ -73,7 +116,6 @@ namespace Assets.Scripts.Engine.ECS
             return component;
         }
 
-
         /// <summary>
         /// Remove a component for the entity.
         /// </summary>
@@ -84,28 +126,6 @@ namespace Assets.Scripts.Engine.ECS
             component.SetParent(null);
             OnModified();
         }
-
-        public void AddTag(ITag tag)
-        {
-            Tags.Add(tag);
-            OnModified();
-        }
-
-        public void RemoveTag(ITag tag)
-        {
-            Tags.Remove(tag);
-            OnModified();
-        }
-        private void OnModified()
-        {
-            _signalBus.Fire(new EntityModifiedSignal(this));
-        }
-
-        // <summary>
-        /// Gets a component of the specified type attached to the entity.
-        /// </summary>
-        /// <typeparam name="T">The type of component to retrieve.</typeparam>
-        /// <returns>The component of the specified type if found; otherwise, the default value of the type.</returns>
         public T GetComponent<T>() where T : IComponent
         {
             foreach (var component in Components)
@@ -153,7 +173,34 @@ namespace Assets.Scripts.Engine.ECS
             }
             return components.ToArray();
         }
+        #endregion
 
+        #region Tags
+        public void AddTag(ITag tag)
+        {
+            Tags.Add(tag);
+            OnModified();
+        }
+
+        public void RemoveTag(ITag tag)
+        {
+            Tags.Remove(tag);
+            OnModified();
+        }
+        public bool HasTag(string tagName)
+        {
+            foreach (var tag in Tags)
+            {
+                if (tag.Name == tagName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
+
+        #region GameObject
         public GameObject GetGameObject()
         {
             return _GameObject;
@@ -168,28 +215,42 @@ namespace Assets.Scripts.Engine.ECS
                 gameObject.SetActive(false);
             }
             _GameObject = gameObject;
-        }
-        
-        public bool HasTag(string tagName)
+        } 
+        #endregion
+
+
+        public bool HasSameComposition(IEntity entity)
         {
-            foreach (var tag in Tags)
+            //We can do a simple 1 to 1 comparison of components and tags
+            if (Components.Count != entity.Components.Count)
             {
-                if (tag.Name == tagName)
+                return false;
+            }
+
+            if (Tags.Count != entity.Tags.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Components.Count; i++)
+            {
+                if (Components[i].GetType() != entity.Components[i].GetType())
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
-        }
 
-        public void Destroy()
-        {
-            _signalBus.Fire(new EntityDestroyedSignal(this));
-            if (_GameObject != null)
+            for (int i = 0; i < Components.Count; i++)
             {
-                UnityEngine.Object.Destroy(_GameObject);
+                if (Tags[i].Name != entity.Tags[i].Name)
+                {
+                    return false;
+                }
             }
+
+            return true;
         }
+        #region Management
 
 
         public override string ToString()
@@ -208,10 +269,11 @@ namespace Assets.Scripts.Engine.ECS
             return HashCode.Combine(ID, Components, Tags);
         }
 
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
+        #endregion
+
+
+
+
     }
 
 }

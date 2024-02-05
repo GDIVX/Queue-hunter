@@ -1,3 +1,4 @@
+using Assets.Scripts.ECS;
 using Assets.Scripts.Engine.ECS;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -5,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Tag : IComponent , ITag
+public class Tag : ITag
 {
     IEntity _parent;
 

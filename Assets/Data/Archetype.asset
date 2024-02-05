@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e056582ea1e9d14ba9205820c99154e, type: 3}
   m_Name: Archetype
   m_EditorClassIdentifier: 
-  tags: []
+  tags:
+  - <Name>k__BackingField: sss
+    <IsActive>k__BackingField: 0

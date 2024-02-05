@@ -9,7 +9,14 @@ namespace Assets.Scripts.Engine.ECS
         string Name { get; }
 
         IEntity CreateEntity<T>();
+        void RemoveEntity(Guid id);
         T GetComponent<T>(Guid id) where T : IComponent;
+
+        bool HasEntity(Guid id);
+        bool HasTag(string tag);
+        bool IsValidEntity(IEntity entity);
+        bool HasComponent<T>() where T : IComponent;
         IEntity GetEntity(Guid id);
+        IEntity[] GetEntities();
     }
 }

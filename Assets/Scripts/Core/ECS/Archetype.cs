@@ -32,6 +32,7 @@ namespace Assets.Scripts.Engine.ECS
         {
         }
 
+
         /// <summary>
         /// Create an archetype from a list of components
         /// </summary>
@@ -52,6 +53,7 @@ namespace Assets.Scripts.Engine.ECS
 
             return archetype;
         }
+
 
         /// <summary>
         /// Create an archetype from an entity
@@ -105,6 +107,38 @@ namespace Assets.Scripts.Engine.ECS
             AddEntity(clone);
             return clone;
         }
+        public void AddEntity(IEntity entity)
+        {
+            if (Matrix.ContainsKey(entity.ID))
+            {
+                return;
+            }
+            if (IsValidEntity(entity) == false)
+            {
+                Debug.LogError("The entity is not valid for this archetype");
+                return;
+            }
+
+            Matrix.Add(entity.ID, new());
+            entity.Archetype = this;
+        }
+
+        public void RemoveEntity(Guid id)
+        {
+            //do we have this entity?
+            if (!HasEntity(id)) return;
+
+            //If this is the first entity, only deactivate it.
+            IEntity entity = GetEntity(id);
+            if (FirstEntity == entity)
+            {
+                entity.IsActive = false;
+                return;
+            }
+
+            //remove the entity
+            Matrix.Remove(id);
+        }
 
         private void AddComponent(IComponent component)
         {
@@ -121,9 +155,33 @@ namespace Assets.Scripts.Engine.ECS
             Matrix[entity.ID].Add(component.GetType(), component);
         }
 
-        private void AddEntity(IEntity entity)
+
+        public IEntity[] GetEntities()
         {
-            Matrix.Add(entity.ID, new());
+            return Matrix.Keys.Select(id => GetEntity(id)).ToArray();
+        }
+
+        public bool HasEntity(Guid id)
+        {
+            return Matrix.ContainsKey(id);
+        }
+
+        public bool HasTag(string tag)
+        {
+            //Since all the entities of an archetype have the same tags, we can just check the first one
+            return FirstEntity.HasTag(tag);
+        }
+
+        public bool HasComponent<T>() where T : IComponent
+        {
+            //Since all the entities of an archetype have the same components, we can just check the first one
+            return FirstEntity.HasComponent<T>();
+        }
+
+        public bool IsValidEntity(IEntity entity)
+        {
+            //If the given entity has the same components as the first entity, it is valid
+            return FirstEntity.HasSameComposition(entity);
         }
     }
 }

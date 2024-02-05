@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Engine.ECS
 {
-    public interface IComponent
+    public interface IComponent : IActivable
     {
         public IComponent Clone();
 
@@ -8,6 +8,5 @@
 
         public IEntity GetParent();
 
-        bool IsActive { get; set; }
     }
 }

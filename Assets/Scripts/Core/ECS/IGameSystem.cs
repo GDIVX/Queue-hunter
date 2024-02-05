@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public interface IGameSystem
+    public interface IGameSystem : IActivable
     {
         void Initialize();
         void OnEntityAdded(IEntity entity);
@@ -13,8 +13,6 @@ namespace Assets.Scripts.Engine.ECS
         void OnLateUpdate(IEntity entity);
 
         void Destroy();
-
-        void SetActive(bool active);
 
         event Action<IGameSystem> OnDestroyed;
 

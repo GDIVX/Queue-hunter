@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Assets.Scripts.ECS;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public interface IEntity
+    public interface IEntity : IActivable
     {
         List<IComponent> Components { get; }
         Guid ID { get; }
         List<ITag> Tags { get; }
+
+        IArchetype Archetype { get; set; }
 
         IComponent AddComponent(IComponent component);
         IEntity Clone();
@@ -26,5 +29,6 @@ namespace Assets.Scripts.Engine.ECS
         void SetRootGameObject(GameObject gameObject);
         string ToString();
         bool TryGetComponent<T>(out T component) where T : IComponent;
+        bool HasSameComposition(IEntity entity);
     }
 }

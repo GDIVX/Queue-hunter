@@ -1,4 +1,10 @@
-﻿public interface ITag
+﻿
+using Assets.Scripts.Engine.ECS;
+
+namespace Assets.Scripts.ECS
 {
-    string Name { get; }
+    public interface ITag : IComponent
+    {
+        string Name { get; }
+    }
 }
