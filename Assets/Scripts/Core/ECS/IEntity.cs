@@ -8,11 +8,10 @@ namespace Assets.Scripts.Engine.ECS
     {
         List<IComponent> Components { get; }
         Guid ID { get; }
-        List<string> Tags { get; }
+        List<ITag> Tags { get; }
 
         IComponent AddComponent(IComponent component);
-        void AddTag(string tag);
-        Entity Clone();
+        IEntity Clone();
         void Destroy();
         bool Equals(object obj);
         T GetComponent<T>() where T : IComponent;
@@ -20,9 +19,10 @@ namespace Assets.Scripts.Engine.ECS
         GameObject GetGameObject();
         int GetHashCode();
         bool HasComponent<T>() where T : IComponent;
+        void AddTag(ITag tag);
         bool HasTag(string tag);
+        void RemoveTag(ITag tag);
         void RemoveComponent(IComponent component);
-        void RemoveTag(string tag);
         void SetRootGameObject(GameObject gameObject);
         string ToString();
         bool TryGetComponent<T>(out T component) where T : IComponent;

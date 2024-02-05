@@ -4,9 +4,9 @@
     {
         public IComponent Clone();
 
-        public void SetParent(Entity entity);
+        public void SetParent(IEntity entity);
 
-        public Entity GetParent();
+        public IEntity GetParent();
 
         bool IsActive { get; set; }
     }

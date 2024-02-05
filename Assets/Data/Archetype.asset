@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d1740a3b97fa374d8ad4f3eebdb8c36, type: 3}
-  m_Name: ArchetypeLibrary
+  m_Script: {fileID: 11500000, guid: 5e056582ea1e9d14ba9205820c99154e, type: 3}
+  m_Name: Archetype
   m_EditorClassIdentifier: 
-  archetypes: []
+  tags: []

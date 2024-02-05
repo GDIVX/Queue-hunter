@@ -13,7 +13,7 @@ namespace Assets.Scripts.Engine.ECS
 
         [SerializeField] bool _isActive = true;
 
-        public Entity Entity { get; private set; }
+        public IEntity Entity { get; private set; }
 
         [ShowInInspector]
         public bool IsDirty
@@ -52,14 +52,14 @@ namespace Assets.Scripts.Engine.ECS
             clone.Initialize();
             return clone;
         }
-        public Entity GetParent()
+        public IEntity GetParent()
         {
             return Entity;
         }
 
         virtual public void Initialize() { }
 
-        public void SetParent(Entity entity)
+        public void SetParent(IEntity entity)
         {
             Entity = entity;
         }

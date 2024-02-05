@@ -27,11 +27,7 @@ namespace Assets.Scripts.Core.ECS
             systems.Add(system);
 
             //register to on destroyed event
-            system.OnDestroyed += (IGameSystem system) =>
-            {
-                systems.Remove(system);
-
-            };
+            system.OnDestroyed += (IGameSystem system) => systems.Remove(system);
 
             return system;
         }

@@ -27,7 +27,8 @@ namespace Assets.Scripts.Engine.ECS
         public List<IComponent> Components { get; private set; } = new();
 
         [ShowInInspector, ReadOnly]
-        public List<string> Tags { get; private set; } = new();
+        public List<ITag> Tags { get; private set; } = new();
+
 
         [ShowInInspector, ReadOnly]
         GameObject _GameObject;
@@ -47,7 +48,7 @@ namespace Assets.Scripts.Engine.ECS
         /// Clones the entity, creating a new entity with the same components.
         /// </summary>
         /// <returns></returns>
-        public Entity Clone()
+        public IEntity Clone()
         {
             List<IComponent> components =
             (from component in Components
@@ -56,7 +57,7 @@ namespace Assets.Scripts.Engine.ECS
 
             Entity clone = new(components);
 
-            return clone;
+            return clone as IEntity;
         }
 
         /// <summary>
@@ -84,13 +85,13 @@ namespace Assets.Scripts.Engine.ECS
             OnModified();
         }
 
-        public void AddTag(string tag)
+        public void AddTag(ITag tag)
         {
             Tags.Add(tag);
             OnModified();
         }
 
-        public void RemoveTag(string tag)
+        public void RemoveTag(ITag tag)
         {
             Tags.Remove(tag);
             OnModified();
@@ -168,10 +169,17 @@ namespace Assets.Scripts.Engine.ECS
             }
             _GameObject = gameObject;
         }
-
-        public bool HasTag(string tag)
+        
+        public bool HasTag(string tagName)
         {
-            return Tags.Contains(tag);
+            foreach (var tag in Tags)
+            {
+                if (tag.Name == tagName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void Destroy()
