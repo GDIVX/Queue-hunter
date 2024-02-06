@@ -14,7 +14,7 @@ public class EntityInspector : MonoBehaviour
 
         components = new();
 
-        foreach (var component in entity.Components)
+        foreach (var component in entity.GetComponents())
         {
             components.Add(component as DataComponent);
         }

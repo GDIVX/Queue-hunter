@@ -25,7 +25,7 @@ namespace Assets.Scripts.Engine.ECS
         public Guid ID { get; private set; }
         public IArchetype Archetype { get; set; }
 
-        public List<IComponent> Components { get; private set; } = new();
+        public Dictionary<Type, IComponent> Components { get; private set; } = new();
 
         public List<ITag> Tags { get; private set; } = new();
         public bool IsActive
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Engine.ECS
                 //iterate throughout the components and tags and toggle them
                 foreach (var component in Components)
                 {
-                    component.IsActive = value;
+                    component.Value.IsActive = value;
                 }
 
                 foreach (var tag in Tags)
@@ -46,6 +46,8 @@ namespace Assets.Scripts.Engine.ECS
                 isActive = value;
             }
         }
+
+        public int ComponentsCount => throw new NotImplementedException();
 
         GameObject _GameObject;
 
@@ -59,7 +61,7 @@ namespace Assets.Scripts.Engine.ECS
         public Entity(List<IComponent> components)
         {
             this.ID = Guid.NewGuid();
-            Components = components;
+            Components = components.ToDictionary(c => c.GetType(), c => c);
             _signalBus.Fire(new EntityCreatedSignal(this));
         }
         private void OnModified()
@@ -74,11 +76,9 @@ namespace Assets.Scripts.Engine.ECS
         /// <returns></returns>
         public IEntity Clone()
         {
-            List<IComponent> components =
-            (from component in Components
-             let newComponent = component.Clone()
-             select newComponent).ToList();
-
+            List<IComponent> components = new();
+            components.AddRange(from component in Components
+                                select component.Value.Clone());
             Entity clone = new(components);
 
             Archetype.AddEntity(clone);
@@ -112,7 +112,7 @@ namespace Assets.Scripts.Engine.ECS
         /// <returns>The added component.</returns>
         public IComponent AddComponent(IComponent component)
         {
-            Components.Add(component);
+            Components[component.GetType()] = component;
             component.SetParent(this);
             OnModified();
             return component;
@@ -122,34 +122,21 @@ namespace Assets.Scripts.Engine.ECS
         /// Remove a component for the entity.
         /// </summary>
         /// <param name="component">The component to remove</param>
-        public void RemoveComponent(IComponent component)
+        public void RemoveComponent<T>() where T : IComponent
         {
-            Components.Remove(component);
+            var component = Components[typeof(T)];
+            Components.Remove(typeof(T));
             component.SetParent(null);
             OnModified();
         }
         public T GetComponent<T>() where T : IComponent
         {
-            foreach (var component in Components)
-            {
-                if (component is T t)
-                {
-                    return t;
-                }
-            }
-            return default;
+            return (T)Components[typeof(T)];
         }
 
         public bool HasComponent<T>() where T : IComponent
         {
-            foreach (var component in Components)
-            {
-                if (component is T)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Components.ContainsKey(typeof(T));
         }
 
         public bool TryGetComponent<T>(out T component) where T : IComponent
@@ -252,9 +239,9 @@ namespace Assets.Scripts.Engine.ECS
                 return false;
             }
 
-            for (int i = 0; i < Components.Count; i++)
+            foreach (IComponent component in components)
             {
-                if (Components[i].GetType() != components[i].GetType())
+                if (!HasComponent(component))
                 {
                     return false;
                 }
@@ -271,10 +258,22 @@ namespace Assets.Scripts.Engine.ECS
             return true;
         }
 
+        public bool HasComponent(IComponent component)
+        {
+            foreach (var pair in Components)
+            {
+                if (pair.Value == component)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool HasSameComposition(IEntity entity)
         {
             //We can do a simple 1 to 1 comparison of components and tags
-            if (Components.Count != entity.Components.Count)
+            if (Components.Count != entity.ComponentsCount)
             {
                 return false;
             }
@@ -284,12 +283,11 @@ namespace Assets.Scripts.Engine.ECS
                 return false;
             }
 
-            for (int i = 0; i < Components.Count; i++)
+            var arr = entity.GetComponents();
+
+            foreach (var component in arr)
             {
-                if (Components[i].GetType() != entity.Components[i].GetType())
-                {
-                    return false;
-                }
+                if (!HasComponent(component)) return false;
             }
 
             for (int i = 0; i < Components.Count; i++)
@@ -301,6 +299,11 @@ namespace Assets.Scripts.Engine.ECS
             }
 
             return true;
+        }
+
+        public IComponent[] GetComponents()
+        {
+            throw new NotImplementedException();
         }
 
 

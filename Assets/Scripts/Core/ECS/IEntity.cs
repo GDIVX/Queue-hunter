@@ -7,7 +7,6 @@ namespace Assets.Scripts.Engine.ECS
 {
     public interface IEntity : IActivable
     {
-        List<IComponent> Components { get; }
         Guid ID { get; }
         List<ITag> Tags { get; }
 
@@ -18,6 +17,8 @@ namespace Assets.Scripts.Engine.ECS
         void Destroy();
         bool Equals(object obj);
         T GetComponent<T>() where T : IComponent;
+        int ComponentsCount { get; }
+        IComponent[] GetComponents();
         T[] GetComponents<T>() where T : IComponent;
         GameObject GetGameObject();
         int GetHashCode();
@@ -25,12 +26,12 @@ namespace Assets.Scripts.Engine.ECS
         void AddTag(ITag tag);
         bool HasTag(string tag);
         void RemoveTag(ITag tag);
-        void RemoveComponent(IComponent component);
+        void RemoveComponent<T>() where T : IComponent;
         void SetRootGameObject(GameObject gameObject);
         string ToString();
         bool TryGetComponent<T>(out T component) where T : IComponent;
         bool HasSameComposition(IEntity entity);
         bool HasSameComposition(IComponent[] components, string[] tags);
-        
+        bool HasComponent(IComponent component);
     }
 }

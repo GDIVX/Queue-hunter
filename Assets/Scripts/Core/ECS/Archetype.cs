@@ -66,7 +66,7 @@ namespace Assets.Scripts.Engine.ECS
             Archetype archetype = new();
             archetype.Name = name;
 
-            foreach (IComponent component in entity.Components)
+            foreach (IComponent component in entity.GetComponents())
             {
                 archetype.AddComponent(component);
             }
