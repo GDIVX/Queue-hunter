@@ -4,9 +4,8 @@ namespace Assets.Scripts.Core.ECS
 {
     public interface IEntityGenerator
     {
-        Archetype CreateArchetype(string name, IComponent[] components, string[] tags = null);
         Entity CreateEntity(Archetype archetype);
-        Archetype FindArchetype(string name);
-        bool IsArchetypeExist(string name);
+        bool TryCreateEntity(string name, out Entity entity);
+        Entity CreateEntity(string name, IComponent[] components, string[] tags = null);
     }
 }

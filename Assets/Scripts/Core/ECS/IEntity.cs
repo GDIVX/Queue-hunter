@@ -30,5 +30,7 @@ namespace Assets.Scripts.Engine.ECS
         string ToString();
         bool TryGetComponent<T>(out T component) where T : IComponent;
         bool HasSameComposition(IEntity entity);
+        bool HasSameComposition(IComponent[] components, string[] tags);
+        
     }
 }

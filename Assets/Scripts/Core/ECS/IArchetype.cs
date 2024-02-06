@@ -19,5 +19,6 @@ namespace Assets.Scripts.Engine.ECS
         bool HasComponent<T>() where T : IComponent;
         IEntity GetEntity(Guid id);
         IEntity[] GetEntities();
+        bool IsValidComposition(IComponent[] components, string[] tags);
     }
 }

@@ -16,7 +16,7 @@ namespace Assets.Scripts.Engine.ECS
     /// It represent a game object in the ECS system
     /// </summary>
     [Serializable]
-    public class Entity : ICloneable, IEntity
+    public sealed class Entity : ICloneable, IEntity
     {
         #region Properties
         /// <summary>
@@ -221,6 +221,56 @@ namespace Assets.Scripts.Engine.ECS
         #endregion
 
 
+        #region Management
+
+
+        public override string ToString()
+        {
+            return $"Entity {ID}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Entity entity &&
+                   ID == entity.ID;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ID, Components, Tags);
+        }
+
+        public bool HasSameComposition(IComponent[] components, string[] tags)
+        {
+            if (Components.Count != components.Length)
+            {
+                return false;
+            }
+
+            if (Tags.Count != tags.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Components.Count; i++)
+            {
+                if (Components[i].GetType() != components[i].GetType())
+                {
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < Tags.Count; i++)
+            {
+                if (Tags[i].Name != tags[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public bool HasSameComposition(IEntity entity)
         {
             //We can do a simple 1 to 1 comparison of components and tags
@@ -252,24 +302,7 @@ namespace Assets.Scripts.Engine.ECS
 
             return true;
         }
-        #region Management
 
-
-        public override string ToString()
-        {
-            return $"Entity {ID}";
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Entity entity &&
-                   ID == entity.ID;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(ID, Components, Tags);
-        }
 
         #endregion
 
