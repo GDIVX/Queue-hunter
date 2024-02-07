@@ -1,4 +1,5 @@
 ﻿using Zenject;
+using UnityEngine;
 
 namespace Assets.Scripts.Engine.ECS.Common
 {

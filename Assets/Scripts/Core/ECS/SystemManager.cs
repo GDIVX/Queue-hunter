@@ -35,9 +35,10 @@ namespace Assets.Scripts.Core.ECS
             // Register to on destroyed event
             system.OnDestroyed += (IGameSystem s) => systems.Remove(s);
 
-            //Bind to tickable
-            _container.Bind<ITickable>().FromInstance(system).AsCached();
-            _container.Bind<ILateTickable>().FromInstance(system).AsCached();
+            // Manually register tickable and late tickable
+            var tickableManager = _container.Resolve<TickableManager>();
+            tickableManager.Add(system);
+            tickableManager.AddLate(system);
 
             return system;
         }

@@ -13,6 +13,8 @@ namespace Assets.Scripts.Engine.ECS
         protected List<IEntity> EntitiesToProcess = new List<IEntity>();
         protected Dictionary<string, Archetype> Archetypes = new();
 
+
+
         [Inject]
         SignalBus _signalBus;
 
@@ -58,6 +60,12 @@ namespace Assets.Scripts.Engine.ECS
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
+            }
+
+            //If we have already processed the entity, we can skip the check
+            if (EntitiesToProcess.Contains(entity))
+            {
+                return;
             }
 
             //schedule the entity to be checked
@@ -110,7 +118,6 @@ namespace Assets.Scripts.Engine.ECS
         /// <param name="entity"></param>
         public virtual void OnEntityAdded(IEntity entity)
         {
-            Debug.Log("Entity added to process list");
         }
 
         /// <summary>

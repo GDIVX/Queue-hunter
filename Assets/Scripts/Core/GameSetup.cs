@@ -90,5 +90,8 @@ public class GameSetup : MonoBehaviour
 
         //Model system
         _systemManager.Create<ModelSystem>();
+
+        //Position system
+        _systemManager.Create<PositionSystem>();
     }
 }
