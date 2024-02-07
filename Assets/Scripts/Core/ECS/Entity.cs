@@ -47,7 +47,7 @@ namespace Assets.Scripts.Engine.ECS
             }
         }
 
-        public int ComponentsCount => throw new NotImplementedException();
+        public int ComponentsCount => Components.Count;
 
         GameObject _GameObject;
 
@@ -138,7 +138,39 @@ namespace Assets.Scripts.Engine.ECS
         {
             return Components.ContainsKey(typeof(T));
         }
+        public bool HasComponent<T1, T2>()
+           where T1 : IComponent
+           where T2 : IComponent
+        {
+            return HasComponent<T1>() && HasComponent<T2>();
+        }
 
+        public bool HasComponent<T1, T2, T3>()
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+        {
+            return HasComponent<T1, T2>() && HasComponent<T3>();
+        }
+
+        public bool HasComponent<T1, T2, T3, T4>()
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+            where T4 : IComponent
+        {
+            return HasComponent<T1, T2, T3>() && HasComponent<T4>();
+        }
+
+        public bool HasComponent<T1, T2, T3, T4, T5>()
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+            where T4 : IComponent
+            where T5 : IComponent
+        {
+            return HasComponent<T1, T2, T3, T4>() && HasComponent<T5>();
+        }
         public bool TryGetComponent<T>(out T component) where T : IComponent
         {
             if (HasComponent<T>())
@@ -161,6 +193,23 @@ namespace Assets.Scripts.Engine.ECS
                 }
             }
             return components.ToArray();
+        }
+
+        public IComponent[] GetComponents()
+        {
+            return Components.Values.ToArray();
+        }
+
+        public void RemoveComponent(DataComponent dataComponent)
+        {
+            //find the component
+            var component = Components.Values.FirstOrDefault(c => c.GetType() == dataComponent.GetType());
+            if (component != null)
+            {
+                Components.Remove(component.GetType());
+                component.SetParent(null);
+                OnModified();
+            }
         }
         #endregion
 
@@ -301,10 +350,9 @@ namespace Assets.Scripts.Engine.ECS
             return true;
         }
 
-        public IComponent[] GetComponents()
-        {
-            throw new NotImplementedException();
-        }
+
+
+
 
 
         #endregion

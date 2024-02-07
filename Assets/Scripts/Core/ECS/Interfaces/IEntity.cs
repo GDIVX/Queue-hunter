@@ -23,6 +23,10 @@ namespace Assets.Scripts.Engine.ECS
         GameObject GetGameObject();
         int GetHashCode();
         bool HasComponent<T>() where T : IComponent;
+        bool HasComponent<T1, T2>() where T1 : IComponent where T2 : IComponent;
+        bool HasComponent<T1, T2, T3>() where T1 : IComponent where T2 : IComponent where T3 : IComponent;
+        bool HasComponent<T1, T2, T3, T4>() where T1 : IComponent where T2 : IComponent where T3 : IComponent where T4 : IComponent;
+        bool HasComponent<T1, T2, T3, T4, T5>() where T1 : IComponent where T2 : IComponent where T3 : IComponent where T4 : IComponent where T5 : IComponent;
         void AddTag(ITag tag);
         bool HasTag(string tag);
         void RemoveTag(ITag tag);
@@ -33,5 +37,6 @@ namespace Assets.Scripts.Engine.ECS
         bool HasSameComposition(IEntity entity);
         bool HasSameComposition(IComponent[] components, string[] tags);
         bool HasComponent(IComponent component);
+        void RemoveComponent(DataComponent dataComponent);
     }
 }
