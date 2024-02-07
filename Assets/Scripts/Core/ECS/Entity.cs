@@ -6,8 +6,10 @@ using UnityEngine;
 using Zenject;
 using System.Linq;
 using Assets.Scripts.ECS;
+using Assets.Scripts.Engine.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 
-namespace Assets.Scripts.Engine.ECS
+namespace Assets.Scripts.Core.ECS
 {
 
 
@@ -23,7 +25,7 @@ namespace Assets.Scripts.Engine.ECS
         /// Unique ID for this entity
         /// </summary>
         public Guid ID { get; private set; }
-        public IArchetype Archetype { get; set; }
+        public IArchetype Archetype { get; private set; }
 
         public Dictionary<Type, IComponent> Components { get; private set; } = new();
 
@@ -50,6 +52,8 @@ namespace Assets.Scripts.Engine.ECS
         public int ComponentsCount => Components.Count;
 
         GameObject _GameObject;
+        private DiContainer _container;
+
 
         [Inject]
         private SignalBus _signalBus;
@@ -58,12 +62,27 @@ namespace Assets.Scripts.Engine.ECS
         #endregion
 
         #region Lifecycle
-        public Entity(List<IComponent> components)
+        public Entity(List<IComponent> components, SignalBus signalBus)
         {
-            this.ID = Guid.NewGuid();
-            Components = components.ToDictionary(c => c.GetType(), c => c);
+            _signalBus = signalBus;
+            ID = Guid.NewGuid();
+            foreach (var component in components)
+            {
+                Components[component.GetType()] = component;
+                component.SetParent(this);
+            }
+        }
+
+        public void Initialize(Archetype archetype)
+        {
+            if (archetype is null)
+            {
+                throw new ArgumentNullException(nameof(archetype));
+            }
+            Archetype = archetype;
             _signalBus.Fire(new EntityCreatedSignal(this));
         }
+
         private void OnModified()
         {
             _signalBus.Fire(new EntityModifiedSignal(this));
@@ -79,11 +98,11 @@ namespace Assets.Scripts.Engine.ECS
             List<IComponent> components = new();
             components.AddRange(from component in Components
                                 select component.Value.Clone());
-            Entity clone = new(components);
+            Entity clone = _container.Instantiate<Entity>(new object[] { components.ToList(), _container.Resolve<SignalBus>() });
 
             Archetype.AddEntity(clone);
 
-            return clone as IEntity;
+            return clone;
         }
         public void Destroy()
         {

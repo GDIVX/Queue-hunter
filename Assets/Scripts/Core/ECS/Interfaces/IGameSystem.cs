@@ -1,8 +1,9 @@
 ﻿using System;
+using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public interface IGameSystem : IActivable
+    public interface IGameSystem : IActivable, ITickable, ILateTickable
     {
         void Initialize();
         void OnEntityAdded(IEntity entity);

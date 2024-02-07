@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Engine.ECS
+﻿using Assets.Scripts.Core.ECS;
+
+namespace Assets.Scripts.Engine.ECS
 {
     public class EntityCreatedSignal
     {

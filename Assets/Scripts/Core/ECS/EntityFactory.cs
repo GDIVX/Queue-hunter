@@ -1,18 +1,29 @@
+using Assets.Scripts.Core.ECS.Interfaces;
 using Assets.Scripts.ECS;
 using Assets.Scripts.Engine.ECS;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using Zenject;
+using IComponent = Assets.Scripts.Core.ECS.Interfaces.IComponent;
 
 namespace Assets.Scripts.Core.ECS
 {
-    public class EntityGenerator : IEntityGenerator
+    public class EntityFactory : IEntityFactory
     {
+        private readonly DiContainer _container;
+
+        public EntityFactory(DiContainer container)
+        {
+            _container = container;
+        }
 
         private Entity InitializeEntity(string name, IComponent[] components, string[] tags = null)
         {
-            Entity entity = new(components.ToList());
+            Entity entity = _container.Instantiate<Entity>(new object[] { components.ToList(), _container.Resolve<SignalBus>() });
+
 
             if (tags != null)
             {
@@ -22,7 +33,8 @@ namespace Assets.Scripts.Core.ECS
                     entity.AddTag(tag);
                 }
             }
-            Archetype.Create(name, entity);
+            var archetpye = Archetype.Create(name, entity);
+            entity.Initialize(archetpye);
             return entity;
         }
 
@@ -32,9 +44,11 @@ namespace Assets.Scripts.Core.ECS
         /// </summary>
         /// <param name="archetype"></param>
         /// <returns>A new entity that match the archetype</returns>
-        public Entity CreateEntity(Archetype archetype)
+        public Entity Create(Archetype archetype)
         {
-            return archetype.CreateEntity<Entity>();
+            var entity = archetype.CreateEntity<Entity>();
+            entity.Initialize(archetype);
+            return entity;
         }
 
         /// <summary>
@@ -45,7 +59,7 @@ namespace Assets.Scripts.Core.ECS
         /// <param name="tags">A list of tags to add to the entity</param>
         /// <returns>A new entity</returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public Entity CreateEntity(string name, IComponent[] components, string[] tags = null)
+        public Entity Create(string name, IComponent[] components, string[] tags = null)
         {
             //Dose the archetype exist?
             if (!Archetype.IsArchetypeExist(name))
@@ -66,7 +80,7 @@ namespace Assets.Scripts.Core.ECS
                 return InitializeEntity(name, components, tags);
             }
 
-            return CreateEntity(archetype);
+            return Create(archetype);
         }
 
         public bool TryCreateEntity(string name, out Entity entity)
@@ -77,8 +91,19 @@ namespace Assets.Scripts.Core.ECS
 
             Archetype archetype = Archetype.GetArchetype(name);
             entity = archetype.CreateEntity<Entity>();
+            entity.Initialize(archetype);
 
             return true;
+        }
+
+        public Entity Create(string name)
+        {
+            if (TryCreateEntity(name, out Entity entity))
+            {
+                return entity;
+            }
+            Debug.LogError($"Failed to create entity with name {name}");
+            return null;
         }
     }
 }

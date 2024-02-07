@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.ECS;
+﻿using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
+using Assets.Scripts.ECS;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +12,7 @@ namespace Assets.Scripts.Engine.ECS
         Guid ID { get; }
         List<ITag> Tags { get; }
 
-        IArchetype Archetype { get; set; }
+        IArchetype Archetype { get; }
 
         IComponent AddComponent(IComponent component);
         IEntity Clone();
@@ -38,5 +40,6 @@ namespace Assets.Scripts.Engine.ECS
         bool HasSameComposition(IComponent[] components, string[] tags);
         bool HasComponent(IComponent component);
         void RemoveComponent(DataComponent dataComponent);
+        void Initialize(Archetype archetype);
     }
 }

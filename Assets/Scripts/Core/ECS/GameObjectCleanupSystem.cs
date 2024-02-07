@@ -7,6 +7,9 @@ namespace Assets.Scripts.Engine.ECS
 {
     public class GameObjectCleanupSystem : GameSystem
     {
+        public GameObjectCleanupSystem(SignalBus signalBus) : base(signalBus)
+        {
+        }
 
         protected override bool ShouldProcessEntity(IEntity entity)
         {

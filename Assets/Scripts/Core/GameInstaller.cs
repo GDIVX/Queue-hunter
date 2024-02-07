@@ -1,6 +1,7 @@
 using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Engine.ECS;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using Zenject;
 
 public class GameInstaller : MonoInstaller
@@ -12,10 +13,11 @@ public class GameInstaller : MonoInstaller
         Container.DeclareSignal<EntityCreatedSignal>();
         Container.DeclareSignal<EntityModifiedSignal>();
 
-        Container.Bind<GameSystem>();
+        Container.Bind<IRequestable>().To<RequestHandler>().FromNewComponentOnNewGameObject().AsSingle();
+
         Container.Bind<ISystemManager>().To<SystemManager>().AsSingle();
-        Container.Bind<IRequestable>().To<RequestHandler>().AsSingle();
-        Container.Bind<IEntityGenerator>().To<EntityGenerator>().AsSingle();
+        Container.Bind<IEntityFactory>().To<EntityFactory>().AsSingle();
+        Container.Bind<IComponentsFactory>().To<ComponentsFactory>().AsSingle();
         #endregion
     }
 }

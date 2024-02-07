@@ -1,5 +1,5 @@
 ﻿
-using Assets.Scripts.Engine.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 
 namespace Assets.Scripts.ECS
 {

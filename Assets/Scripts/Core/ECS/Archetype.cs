@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Assets.Scripts.Core.ECS.Interfaces;
+using Assets.Scripts.Engine.ECS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Engine.ECS
+namespace Assets.Scripts.Core.ECS
 {
     public class Archetype : IArchetype
     {
@@ -33,27 +35,6 @@ namespace Assets.Scripts.Engine.ECS
         }
 
 
-        /// <summary>
-        /// Create an archetype from a list of components
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="components"></param>
-        /// <returns></returns>
-        public static Archetype Create(string name, List<IComponent> components)
-        {
-            Archetype archetype = new();
-            archetype.Name = name;
-
-            foreach (IComponent component in components)
-            {
-                archetype.AddComponent(component);
-            }
-
-            Archetypes.Add(name, archetype);
-
-            return archetype;
-        }
-
 
         /// <summary>
         /// Create an archetype from an entity
@@ -68,12 +49,23 @@ namespace Assets.Scripts.Engine.ECS
 
             foreach (IComponent component in entity.GetComponents())
             {
-                archetype.AddComponent(component);
+                archetype.MapTo(component, entity);
             }
 
             Archetypes.Add(name, archetype);
 
             return archetype;
+        }
+
+
+        private void MapTo(IComponent component, IEntity entity)
+        {
+            if (!Matrix.ContainsKey(entity.ID))
+            {
+                Matrix.Add(entity.ID, new Dictionary<Type, IComponent>());
+            }
+
+            Matrix[entity.ID].Add(component.GetType(), component);
         }
 
         public static bool IsArchetypeExist(string name)
@@ -182,7 +174,7 @@ namespace Assets.Scripts.Engine.ECS
             }
 
             Matrix.Add(entity.ID, new());
-            entity.Archetype = this;
+            entity.Initialize(this);
         }
 
         /// <summary>
@@ -230,20 +222,7 @@ namespace Assets.Scripts.Engine.ECS
             //Since all the entities of an archetype have the same components, we can just check the first one
             return FirstEntity.HasComponent<T>();
         }
-        private void AddComponent(IComponent component)
-        {
-            //We need to find the entity of the component
-            IEntity entity = component.GetParent();
 
-            //If the entity is not in the archetype, we add it
-            if (!Matrix.ContainsKey(entity.ID))
-            {
-                AddEntity(entity);
-            }
-
-            //We add the component to the entity
-            Matrix[entity.ID].Add(component.GetType(), component);
-        }
         public bool IsValidComposition(IComponent[] components, string[] tags)
         {
             return FirstEntity.HasSameComposition(components, tags);

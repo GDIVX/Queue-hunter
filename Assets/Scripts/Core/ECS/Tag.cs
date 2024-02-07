@@ -1,3 +1,4 @@
+using Assets.Scripts.Core.ECS.Interfaces;
 using Assets.Scripts.ECS;
 using Assets.Scripts.Engine.ECS;
 using Sirenix.OdinInspector;
@@ -5,33 +6,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Tag : ITag
+namespace Assets.Scripts.Core.ECS
 {
-    IEntity _parent;
-
-    [ShowInInspector]
-    public string Name { get; private set; }
-    public bool IsActive { get; set; }
-
-    public Tag(string name)
+    [System.Serializable]
+    public class Tag : ITag
     {
-        Name = name;
-        IsActive = true;
-    }
+        IEntity _parent;
 
-    public IComponent Clone()
-    {
-        return new Tag(Name);
-    }
+        [ShowInInspector]
+        public string Name { get; private set; }
+        public bool IsActive { get; set; }
 
-    public IEntity GetParent()
-    {
-        return _parent;
-    }
+        public Tag(string name)
+        {
+            Name = name;
+            IsActive = true;
+        }
 
-    public void SetParent(IEntity entity)
-    {
-        _parent = entity;
+        public IComponent Clone()
+        {
+            return new Tag(Name);
+        }
+
+        public IEntity GetParent()
+        {
+            return _parent;
+        }
+
+        public void SetParent(IEntity entity)
+        {
+            _parent = entity;
+        }
     }
 }

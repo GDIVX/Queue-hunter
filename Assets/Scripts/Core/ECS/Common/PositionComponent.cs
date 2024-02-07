@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Assets.Scripts.Core.ECS;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Assets.Scripts.Engine.ECS.Common

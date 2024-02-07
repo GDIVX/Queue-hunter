@@ -9,6 +9,9 @@ namespace Assets.Scripts.ECS.Common
 {
     public class ModelSystem : GameSystem
     {
+        public ModelSystem(SignalBus signalBus) : base(signalBus)
+        {
+        }
 
         protected override bool ShouldProcessEntity(IEntity entity)
         {

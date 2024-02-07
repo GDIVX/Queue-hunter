@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Engine.ECS
+﻿using Assets.Scripts.Engine.ECS;
+
+namespace Assets.Scripts.Core.ECS.Interfaces
 {
     public interface IComponent : IActivable
     {

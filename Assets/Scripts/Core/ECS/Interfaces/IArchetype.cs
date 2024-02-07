@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Core.ECS.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Engine.ECS

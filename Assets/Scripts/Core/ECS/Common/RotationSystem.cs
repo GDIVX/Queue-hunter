@@ -6,6 +6,9 @@ namespace Assets.Scripts.Engine.ECS.Common
 {
     public class RotationSystem : GameSystem
     {
+        public RotationSystem(SignalBus signalBus) : base(signalBus)
+        {
+        }
 
         protected override bool ShouldProcessEntity(IEntity entity)
         {

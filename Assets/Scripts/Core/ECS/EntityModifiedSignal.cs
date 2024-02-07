@@ -1,4 +1,4 @@
-using Assets.Scripts.Engine.ECS;
+using Assets.Scripts.Core.ECS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

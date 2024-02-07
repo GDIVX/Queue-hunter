@@ -3,20 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityInspector : MonoBehaviour
+namespace Assets.Scripts.Core.ECS.Common
 {
-    [SerializeField] int entityID;
-    [SerializeField] List<DataComponent> components;
-
-    public void Init(IEntity entity)
+    public class EntityInspector : MonoBehaviour
     {
-        entityID = entity.ID.GetHashCode();
+        [SerializeField] int entityID;
+        [SerializeField] List<DataComponent> components;
 
-        components = new();
-
-        foreach (var component in entity.GetComponents())
+        public void Init(IEntity entity)
         {
-            components.Add(component as DataComponent);
+            entityID = entity.ID.GetHashCode();
+
+            components = new();
+
+            foreach (var component in entity.GetComponents())
+            {
+                components.Add(component as DataComponent);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
+using Assets.Scripts.Core.ECS.Interfaces;
+using Assets.Scripts.Engine.ECS;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Engine.ECS
+namespace Assets.Scripts.Core.ECS
 
 {
     public abstract class DataComponent : ScriptableObject, IComponent, IDirty

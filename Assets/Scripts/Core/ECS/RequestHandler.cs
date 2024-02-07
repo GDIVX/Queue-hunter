@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public class RequestHandler : ILateTickable, IRequestable
+    public class RequestHandler : MonoBehaviour, IRequestable
     {
 
         Queue<Request> _requests = new();
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Engine.ECS
             return request;
         }
 
-        
+
 
         void ProcessRequests()
         {
@@ -48,10 +48,11 @@ namespace Assets.Scripts.Engine.ECS
             }
         }
 
-        public void LateTick()
+        private void LateUpdate()
         {
             if (_requests.Count > 0)
                 ProcessRequests();
         }
+
     }
 }

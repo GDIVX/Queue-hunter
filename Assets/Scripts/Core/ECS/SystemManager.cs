@@ -2,6 +2,7 @@ using Assets.Scripts.Engine.ECS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Core.ECS
 {
@@ -11,26 +12,37 @@ namespace Assets.Scripts.Core.ECS
     public class SystemManager : ISystemManager
     {
         List<IGameSystem> systems = new List<IGameSystem>();
+        DiContainer _container;
 
-        public T CreateSystem<T>() where T : IGameSystem, new()
+        public SystemManager(DiContainer container)
         {
-            //If we already have a system of this type, return it
+            _container = container;
+        }
 
+        public T Create<T>() where T : IGameSystem
+        {
+            // If we already have a system of this type, return it
             T existingSystem = GetSystem<T>();
             if (existingSystem != null)
             {
                 return existingSystem;
             }
 
-            T system = new T();
+            T system = _container.Instantiate<T>(new object[] { _container.Resolve<SignalBus>() });
             system.Initialize();
             systems.Add(system);
 
-            //register to on destroyed event
-            system.OnDestroyed += (IGameSystem system) => systems.Remove(system);
+            // Register to on destroyed event
+            system.OnDestroyed += (IGameSystem s) => systems.Remove(s);
+
+            //Bind to tickable
+            _container.Bind<ITickable>().FromInstance(system).AsCached();
+            _container.Bind<ILateTickable>().FromInstance(system).AsCached();
 
             return system;
         }
+
+
 
 
         public T GetSystem<T>() where T : IGameSystem

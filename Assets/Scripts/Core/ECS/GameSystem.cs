@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Assets.Scripts.Core.ECS;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,16 +8,22 @@ using Zenject;
 
 namespace Assets.Scripts.Engine.ECS
 {
-    public abstract class GameSystem : ITickable, ILateTickable, IGameSystem
+    public abstract class GameSystem : IGameSystem
     {
         protected List<IEntity> EntitiesToProcess = new List<IEntity>();
-        protected Dictionary<string, Archetype> Archetypes = new Dictionary<string, Archetype>();
+        protected Dictionary<string, Archetype> Archetypes = new();
 
         [Inject]
         SignalBus _signalBus;
 
         [Inject]
         IRequestable _requestHandler;
+
+        protected GameSystem(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
+
         event Action<IGameSystem> OnDestroyed;
 
         protected IRequestable RequestHandler { get => _requestHandler; private set => _requestHandler = value; }
@@ -43,20 +50,33 @@ namespace Assets.Scripts.Engine.ECS
             //subscribe to the entity created signal
             _signalBus.Subscribe<EntityCreatedSignal>(x => OnEntityCreatedOrModified(x.Entity));
             _signalBus.Subscribe<EntityModifiedSignal>(x => OnEntityCreatedOrModified(x.Entity));
+
         }
 
         public virtual void OnEntityCreatedOrModified(IEntity entity)
         {
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
             //schedule the entity to be checked
             RequestHandler.Schedule(() =>
             {
 
                 //If the entity is of an archetype that we are interested in
                 //we can skip the check and add it to the list
-                bool isEntityValid = Archetypes.ContainsKey(entity.Archetype.Name) ? true : ShouldProcessEntity(entity);
+                if (entity.Archetype is null)
+                {
+                    return;
+                }
+                if (Archetypes.ContainsKey(entity.Archetype.Name))
+                {
+                    AddEntity(entity);
+                    return;
+                }
+                bool isEntityValid = ShouldProcessEntity(entity);
 
-                //check if the entity is valid
-                isEntityValid = ShouldProcessEntity(entity);
 
                 //Are we processing this entity?
                 if (EntitiesToProcess.Contains(entity) && !isEntityValid)
@@ -73,6 +93,13 @@ namespace Assets.Scripts.Engine.ECS
             });
 
         }
+        protected void AddEntity(IEntity entity)
+        {
+            EntitiesToProcess.Add(entity);
+
+            OnEntityAdded(entity);
+
+        }
 
         /// <summary>
         /// Called when an entity is added to the system.
@@ -80,6 +107,7 @@ namespace Assets.Scripts.Engine.ECS
         /// <param name="entity"></param>
         public virtual void OnEntityAdded(IEntity entity)
         {
+            Debug.Log("Entity added to process list");
         }
 
         /// <summary>
@@ -135,15 +163,6 @@ namespace Assets.Scripts.Engine.ECS
         }
 
 
-        protected void AddEntity(IEntity entity)
-        {
-            if (!ShouldProcessEntity(entity) || EntitiesToProcess.Contains(entity)) return;
-
-            EntitiesToProcess.Add(entity);
-
-            OnEntityAdded(entity);
-
-        }
         public virtual void OnLateUpdate(IEntity entity)
         {
         }
