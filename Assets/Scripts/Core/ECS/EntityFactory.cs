@@ -33,8 +33,8 @@ namespace Assets.Scripts.Core.ECS
                     entity.AddTag(tag);
                 }
             }
-            var archetpye = Archetype.Create(name, entity);
-            entity.Initialize(archetpye);
+            var archetype = Archetype.Create(name, entity);
+            entity.Initialize(archetype);
             return entity;
         }
 

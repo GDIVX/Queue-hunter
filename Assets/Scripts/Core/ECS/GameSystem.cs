@@ -99,6 +99,9 @@ namespace Assets.Scripts.Engine.ECS
 
             OnEntityAdded(entity);
 
+            //Use a request to defer OnLateEntityAdded
+            RequestHandler.Schedule(() => OnLateEntityAdded(entity));
+
         }
 
         /// <summary>
