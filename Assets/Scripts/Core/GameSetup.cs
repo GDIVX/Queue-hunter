@@ -11,40 +11,12 @@ using UnityEngine.AddressableAssets;
 using Assets.Scripts.Core.ECS.Interfaces;
 using System.Threading.Tasks;
 using Assets.Scripts.Core.ECS.Common;
+using Assets.Scripts.Core;
 
-public class GameSetup : MonoBehaviour
+public class GameSetup : GameSetupBase
 {
-    //Test script to see if the ECS works
 
-    //We will attempt to create a cube using the ECS
-
-    //We will need to inject singletons
-    [Inject]
-    ISystemManager _systemManager;
-    [Inject]
-    IEntityFactory _entityFactory;
-    [Inject]
-    IComponentsFactory _componentsFactory;
-
-    private void Start()
-    {
-        StartCoroutine(Init());
-    }
-
-    private IEnumerator Init()
-    {
-        // First, create all the systems that we need
-        CreateSystem();
-
-        // Then, create the components and entities
-        yield return StartCoroutine(CreateComponentsCoroutine(components =>
-        {
-            // After components are created, create the entities
-            CreateEntities(components);
-        }));
-    }
-
-    private IEnumerator CreateComponentsCoroutine(Action<IComponent[]> callback)
+    protected override IEnumerator CreateComponentsCoroutine(Action<IComponent[]> callback)
     {
         List<IComponent> components = new List<IComponent>();
 
@@ -69,35 +41,14 @@ public class GameSetup : MonoBehaviour
         // Callback with the loaded components
         callback?.Invoke(components.ToArray());
     }
-
-
-    private IEnumerator LoadComponentAsync<T>(string address, Action<T> onSuccess, Action onFailure) where T : class, IComponent
-    {
-        Task<T> task = _componentsFactory.CreateComponentAsync<T>(address);
-        yield return new WaitUntil(() => task.IsCompleted);
-
-        if (task.Status == TaskStatus.RanToCompletion && task.Result != null)
-        {
-            onSuccess?.Invoke(task.Result);
-        }
-        else
-        {
-            Debug.LogError($"Failed to load {typeof(T).Name} with identifier \"{address}\".\n {task.Exception}");
-            onFailure?.Invoke();
-        }
-    }
-
-
-    private void CreateEntities(IComponent[] components)
+    protected override void CreateEntities(IComponent[] components)
     {
         // Create a cube entity
         _entityFactory.Create("Cube", components, new string[] { });
     }
 
-    private void CreateSystem()
+    protected override void CreateSystems()
     {
-        //Object creation system
-        //_systemManager.Create<GameObjectCreationSystem>();
 
         //Model system
         _systemManager.Create<ModelSystem>();
