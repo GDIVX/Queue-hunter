@@ -10,6 +10,7 @@ using Assets.Scripts.Engine.ECS.Common;
 using UnityEngine.AddressableAssets;
 using Assets.Scripts.Core.ECS.Interfaces;
 using System.Threading.Tasks;
+using Assets.Scripts.Core.ECS.Common;
 
 public class GameSetup : MonoBehaviour
 {
@@ -47,46 +48,56 @@ public class GameSetup : MonoBehaviour
     {
         List<IComponent> components = new List<IComponent>();
 
+        // Flag to keep track of any load failure
+        bool failed = false;
+
+        // Define an action to handle failure, which sets the failed flag and exits the coroutine
+        Action handleFailure = () => failed = true;
+
+        // Load asynchronously a game object
+        yield return LoadComponentAsync<GameObjectComponent>("GameObject", component => components.Add(component), handleFailure);
+        if (failed) yield break;
+
         // Load asynchronously a model
-        var c1Task = _componentsFactory.CreateComponentAsync<ModelComponent>("Cube");
-        yield return new WaitUntil(() => c1Task.IsCompleted); // Wait for completion
-        if (c1Task.Status == TaskStatus.RanToCompletion)
-        {
-            components.Add(c1Task.Result);
-        }
-        else
-        {
-            Debug.LogError("Failed to load ModelComponent.");
-            yield break; // Exit early if failed
-        }
+        yield return LoadComponentAsync<ModelComponent>("Cube", component => components.Add(component), handleFailure);
+        if (failed) yield break;
 
         // Load asynchronously a position
-        var c2Task = _componentsFactory.CreateComponentAsync<PositionComponent>("Position");
-        yield return new WaitUntil(() => c2Task.IsCompleted); // Wait for completion
-        if (c2Task.Status == TaskStatus.RanToCompletion)
-        {
-            components.Add(c2Task.Result);
-        }
-        else
-        {
-            Debug.LogError("Failed to load PositionComponent.");
-            yield break; // Exit early if failed
-        }
+        yield return LoadComponentAsync<PositionComponent>("Position", component => components.Add(component), handleFailure);
+        if (failed) yield break;
 
         // Callback with the loaded components
         callback?.Invoke(components.ToArray());
     }
 
+
+    private IEnumerator LoadComponentAsync<T>(string address, Action<T> onSuccess, Action onFailure) where T : class, IComponent
+    {
+        Task<T> task = _componentsFactory.CreateComponentAsync<T>(address);
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.Status == TaskStatus.RanToCompletion && task.Result != null)
+        {
+            onSuccess?.Invoke(task.Result);
+        }
+        else
+        {
+            Debug.LogError($"Failed to load {typeof(T).Name} with identifier \"{address}\".\n {task.Exception}");
+            onFailure?.Invoke();
+        }
+    }
+
+
     private void CreateEntities(IComponent[] components)
     {
         // Create a cube entity
-        _entityFactory.Create("Cube", components, new string[] { "HasGameObject" });
+        _entityFactory.Create("Cube", components, new string[] { });
     }
 
     private void CreateSystem()
     {
         //Object creation system
-        _systemManager.Create<GameObjectCreationSystem>();
+        //_systemManager.Create<GameObjectCreationSystem>();
 
         //Model system
         _systemManager.Create<ModelSystem>();

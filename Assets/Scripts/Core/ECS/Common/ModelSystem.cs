@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Engine.ECS;
+﻿using Assets.Scripts.Core.ECS.Common;
+using Assets.Scripts.Engine.ECS;
 using Assets.Scripts.Engine.ECS.Common;
 using System;
 using System.Diagnostics;
@@ -15,9 +16,7 @@ namespace Assets.Scripts.ECS.Common
 
         protected override bool ShouldProcessEntity(IEntity entity)
         {
-            var hasModel = entity.HasComponent<ModelComponent>();
-            var hasGameObject = entity.HasTag("HasGameObject");
-            return hasModel && hasGameObject;
+            return entity.HasComponent<ModelComponent, GameObjectComponent>();
         }
 
 
@@ -50,6 +49,7 @@ namespace Assets.Scripts.ECS.Common
 
             //instantiate a model as a child of the entity's root
             var modelCom = entity.GetComponent<ModelComponent>();
+            var gameObjectCom = entity.GetComponent<GameObjectComponent>();
 
             if (modelCom == null)
             {
@@ -58,7 +58,7 @@ namespace Assets.Scripts.ECS.Common
             }
 
             var prefab = modelCom.Model;
-            var model = UnityEngine.Object.Instantiate(prefab, entity.GetGameObject().transform);
+            var model = UnityEngine.Object.Instantiate(prefab, gameObjectCom.GameObject.transform);
             model.name = $"{entity}_Model";
 
             modelCom.Model = model;

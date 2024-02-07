@@ -51,7 +51,6 @@ namespace Assets.Scripts.Core.ECS
 
         public int ComponentsCount => Components.Count;
 
-        GameObject _GameObject;
         private DiContainer _container;
 
 
@@ -110,11 +109,6 @@ namespace Assets.Scripts.Core.ECS
 
             Archetype.RemoveEntity(ID);
             Archetype = null;
-
-            if (_GameObject != null)
-            {
-                UnityEngine.Object.Destroy(_GameObject);
-            }
         }
         object ICloneable.Clone()
         {
@@ -254,24 +248,6 @@ namespace Assets.Scripts.Core.ECS
                 }
             }
             return false;
-        }
-        #endregion
-
-        #region GameObject
-        public GameObject GetGameObject()
-        {
-            return _GameObject;
-        }
-
-        public void SetRootGameObject(GameObject gameObject)
-        {
-            if (_GameObject != null)
-            {
-                //we made a game object by accident.
-                Debug.LogWarning($"{gameObject.name} game object was created but not needed. It is being deactivated.");
-                gameObject.SetActive(false);
-            }
-            _GameObject = gameObject;
         }
         #endregion
 

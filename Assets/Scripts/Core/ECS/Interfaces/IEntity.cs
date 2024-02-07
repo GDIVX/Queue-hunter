@@ -22,7 +22,6 @@ namespace Assets.Scripts.Engine.ECS
         int ComponentsCount { get; }
         IComponent[] GetComponents();
         T[] GetComponents<T>() where T : IComponent;
-        GameObject GetGameObject();
         int GetHashCode();
         bool HasComponent<T>() where T : IComponent;
         bool HasComponent<T1, T2>() where T1 : IComponent where T2 : IComponent;
@@ -33,7 +32,6 @@ namespace Assets.Scripts.Engine.ECS
         bool HasTag(string tag);
         void RemoveTag(ITag tag);
         void RemoveComponent<T>() where T : IComponent;
-        void SetRootGameObject(GameObject gameObject);
         string ToString();
         bool TryGetComponent<T>(out T component) where T : IComponent;
         bool HasSameComposition(IEntity entity);
