@@ -1,3 +1,4 @@
+using Assets.Scripts.Core.Assets;
 using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Engine.ECS;
 using UnityEngine;
@@ -19,5 +20,11 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IEntityFactory>().To<EntityFactory>().AsSingle();
         Container.Bind<IComponentsFactory>().To<ComponentsFactory>().AsSingle();
         #endregion
+
+        #region Assets
+
+        Container.Bind<IAssetsManager>().To<AssetsManager>().AsSingle();
+        #endregion
+
     }
 }
