@@ -5,10 +5,12 @@ public abstract class BaseInstaller<T> : Installer<T> where T : Installer<T>
     public override void InstallBindings()
     {
         DeclareSignals();
+        BindHandlers();
+        BindFactories();
+        BindManagers();
         BindCommand();
         BindComponents();
         BindEntities();
-        BindManagers();
         BindSystems();
     }
 
