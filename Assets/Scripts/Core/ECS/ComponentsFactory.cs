@@ -11,7 +11,7 @@ namespace Assets.Scripts.Core.ECS
         private Dictionary<string, IComponent> _components = new();
 
 
-        public async Task<T> CreateComponentAsync<T>(string address) where T : class, IComponent
+        public async Task<T> CreateComponentAsync<T>(string address) where T : ScriptableObject, IComponent
         {
             if (_components.TryGetValue(address, out IComponent cachedComponent))
             {
@@ -21,14 +21,14 @@ namespace Assets.Scripts.Core.ECS
                     Debug.LogError($"Type mismatch for cached component at address {address}. Expected: {typeof(T)}, Found: {cachedComponent.GetType()}");
                     return null;
                 }
-                return (T)typedComponent.Clone();
+                return (T)typedComponent.Instantiate<T>();
             }
 
             var loadedAsset = await Addressables.LoadAssetAsync<UnityEngine.Object>(address).Task;
             if (loadedAsset is T loadedComponent)
             {
                 _components[address] = loadedComponent; // Cache the component
-                return (T)loadedComponent.Clone();
+                return (T)loadedComponent.Instantiate<T>();
             }
             else if (loadedAsset != null)
             {

@@ -95,8 +95,22 @@ namespace Assets.Scripts.Core.ECS
         public IEntity Clone()
         {
             List<IComponent> components = new();
-            components.AddRange(from component in Components
-                                select component.Value.Clone());
+
+            //iterate over the Components and call Instantiate<T> where T is the type of the component, and add the resulting clone to the list
+
+            foreach (var pair in Components)
+            {
+                Type type = pair.Key;
+                var methodInfo = pair.Value.GetType().GetMethod("Instantiate", new Type[] { type });
+                if (methodInfo == null)
+                {
+                    Debug.Log($"failed to clone component of tpye {type.Name}");
+                    continue;
+                }
+                IComponent component = (IComponent)methodInfo.Invoke(pair.Value, new object[] { type });
+                components.Add(component);
+            }
+
             Entity clone = _container.Instantiate<Entity>(new object[] { components.ToList(), _container.Resolve<SignalBus>() });
 
             Archetype.AddEntity(clone);

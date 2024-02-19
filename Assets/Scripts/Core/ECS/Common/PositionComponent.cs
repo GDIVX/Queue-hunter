@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -26,5 +27,6 @@ namespace Assets.Scripts.Engine.ECS.Common
                 IsDirty = true;
             }
         }
+
     }
 }

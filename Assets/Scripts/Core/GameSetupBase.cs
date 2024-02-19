@@ -36,7 +36,7 @@ namespace Assets.Scripts.Core
             }));
         }
 
-        protected IEnumerator LoadComponentAsync<T>(string address, Action<T> onSuccess, Action onFailure) where T : class, IComponent
+        protected IEnumerator LoadComponentAsync<T>(string address, Action<T> onSuccess, Action onFailure) where T : ScriptableObject, IComponent
         {
             Task<T> task = _componentsFactory.CreateComponentAsync<T>(address);
             yield return new WaitUntil(() => task.IsCompleted);
