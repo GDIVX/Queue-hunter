@@ -23,7 +23,7 @@ namespace Assets.Scripts.Core.ECS
             IsActive = true;
         }
 
-        public IComponent Clone()
+        public ITag Copy()
         {
             return new Tag(Name);
         }

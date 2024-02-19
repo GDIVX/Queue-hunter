@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts.Engine.ECS;
+using UnityEngine;
 
 namespace Assets.Scripts.Core.ECS.Interfaces
 {
     public interface IComponent : IActivable
     {
-        public IComponent Clone();
+        public T Instantiate<T>() where T : ScriptableObject, IComponent;
 
         public void SetParent(IEntity entity);
 

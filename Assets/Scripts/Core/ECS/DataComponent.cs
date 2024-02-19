@@ -2,6 +2,7 @@ using Assets.Scripts.Core.ECS.Interfaces;
 using Assets.Scripts.Engine.ECS;
 using Sirenix.OdinInspector;
 using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace Assets.Scripts.Core.ECS
@@ -41,18 +42,47 @@ namespace Assets.Scripts.Core.ECS
         public event Action<DataComponent, bool> OnDirty;
         public event Action<DataComponent> OnDestroyed;
 
-        public IComponent Clone()
+        public T Instantiate<T>() where T : ScriptableObject, IComponent
         {
-            var clone = Instantiate(this);
+            T original = this as T;
+
+            if (original == null)
+            {
+                Debug.LogError($"Failed to cast {this} to {typeof(T).Name}");
+                return null;
+            }
+
+            T clone = Instantiate(original);
+            CopyFields(original, clone);
 
             if (clone == null)
             {
                 Debug.LogError($"Failed to clone {nameof(DataComponent)}");
                 return null;
             }
-
-            clone.Initialize();
             return clone;
+        }
+
+        private void CopyFields<T>(T source, T destination) where T : ScriptableObject
+        {
+            // Get all fields of the object
+            FieldInfo[] fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            foreach (var field in fields)
+            {
+                object value = field.GetValue(source);
+
+                if (value is ICloneable cloneable)
+                {
+                    // If the field type supports cloning, clone it
+                    field.SetValue(destination, cloneable.Clone());
+                }
+                else
+                {
+                    // Otherwise, just set the value (works for value types and strings)
+                    field.SetValue(destination, value);
+                }
+            }
         }
         public IEntity GetParent()
         {
@@ -98,5 +128,6 @@ namespace Assets.Scripts.Core.ECS
             OnDestroyed?.Invoke(this);
             Entity.RemoveComponent(this);
         }
+
     }
 }
