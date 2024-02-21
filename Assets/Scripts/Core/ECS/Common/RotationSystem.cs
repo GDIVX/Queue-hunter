@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.ECS.Common;
+﻿using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Common;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -11,21 +12,31 @@ namespace Assets.Scripts.Engine.ECS.Common
         {
         }
 
-        protected override bool ShouldProcessEntity(IEntity entity)
+        protected override bool ShouldProcessArchetype(Archetype archetype)
         {
-            //we should process any entity with a position component and a model component
-            return entity.HasComponent<RotationComponent, GameObjectComponent>();
+            return archetype.HasComponents<RotationComponent, GameObjectComponent>();
         }
 
-        protected override void OnUpdate(IEntity entity)
+        protected override void OnUpdate(Archetype archetype)
         {
+
             //get the position component
-            var rotationComponent = entity.GetComponent<RotationComponent>();
-            var gameObjectComponent = entity.GetComponent<GameObjectComponent>();
+            var rotationBatch = archetype.GetComponents<RotationComponent>();
 
-            //update the entity root game object
+            //Get the game object component
+            var gameObjectBatch = archetype.GetComponents<GameObjectComponent>();
+
+            //Update the position of the game object
+            for (int i = 0; i < archetype.Count; i++)
+            {
+                UpdateRotation(gameObjectBatch[i], rotationBatch[i]);
+            }
+
+        }
+
+        private void UpdateRotation(GameObjectComponent gameObjectComponent, RotationComponent rotationComponent)
+        {
             gameObjectComponent.GameObject.transform.rotation = Quaternion.Euler(rotationComponent.Rotation);
-
         }
     }
 }

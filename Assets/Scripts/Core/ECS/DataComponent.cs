@@ -36,6 +36,7 @@ namespace Assets.Scripts.Core.ECS
             {
                 _isActive = value;
                 isDirty = true;
+                OnSetActive(value);
             }
         }
 
@@ -122,6 +123,8 @@ namespace Assets.Scripts.Core.ECS
             IsDirty = true;
             return reference;
         }
+
+        protected virtual void OnSetActive(bool value) { }
 
         private void OnDestroy()
         {

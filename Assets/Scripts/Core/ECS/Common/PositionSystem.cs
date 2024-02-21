@@ -1,6 +1,9 @@
 ﻿using Zenject;
 using UnityEngine;
 using Assets.Scripts.Core.ECS.Common;
+using Assets.Scripts.Core.ECS;
+using System.Linq;
+using System;
 
 namespace Assets.Scripts.Engine.ECS.Common
 {
@@ -10,24 +13,34 @@ namespace Assets.Scripts.Engine.ECS.Common
         {
         }
 
-        protected override bool ShouldProcessEntity(IEntity entity)
+        protected override bool ShouldProcessArchetype(Archetype archetype)
         {
             //we should process any entity with a position component and a model component
-            return entity.HasComponent<PositionComponent, GameObjectComponent>();
+            return archetype.HasComponents<PositionComponent, GameObjectComponent>();
         }
 
 
 
-        protected override void OnUpdate(IEntity entity)
+        protected override void OnUpdate(Archetype archetype)
         {
+
             //get the position component
-            var positionComponent = entity.GetComponent<PositionComponent>();
-            var gameObjectComponent = entity.GetComponent<GameObjectComponent>();
+            var positionBatch = archetype.GetComponents<PositionComponent>();
 
+            //Get the game object component
+            var gameObjectBatch = archetype.GetComponents<GameObjectComponent>();
 
-            //update the entity root game object
+            //Update the position of the game object
+            for (int i = 0; i < archetype.Count; i++)
+            {
+                UpdatePosition(gameObjectBatch[i], positionBatch[i]);
+            }
+
+        }
+
+        private void UpdatePosition(GameObjectComponent gameObjectComponent, PositionComponent positionComponent)
+        {
             gameObjectComponent.GameObject.transform.position = positionComponent.Position;
-
         }
     }
 }

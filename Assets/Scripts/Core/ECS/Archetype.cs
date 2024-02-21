@@ -1,39 +1,42 @@
 ﻿using Assets.Scripts.Core.ECS.Interfaces;
+using Assets.Scripts.ECS;
 using Assets.Scripts.Engine.ECS;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Core.ECS
 {
-    public class Archetype : IArchetype
+    public class Archetype
     {
         //An archetype is a matrix of components in relation to entities
         // the rows are the entities and the columns are the components
         // To find an entity, we use it guid
         // To find a component, we use it type
-        public Dictionary<Guid, Dictionary<Type, IComponent>> Matrix { get; private set; } = new();
-
-        public IEntity FirstEntity
-        {
-            get
-            {
-                return GetEntity(Matrix.Keys.First());
-            }
-        }
-
-        //We also want to give a name to the archetype to be able to find it easily
         public string Name { get; private set; }
+        public int Count => entityIds.Count;
 
-        //a static list of all the archetypes
-        public static Dictionary<string, Archetype> Archetypes { get; private set; } = new();
+        private List<Guid> entityIds = new List<Guid>();
+        private Dictionary<Type, IList> componentsByType = new Dictionary<Type, IList>();
+        private Dictionary<Guid, IEntity> entities = new Dictionary<Guid, IEntity>();
+        private List<ITag> tags = new();
+        // Stores the definitive set of component types for entities in this archetype
+        private HashSet<Type> componentTypesSignature = new HashSet<Type>();
+        private bool signatureDefined = false;
 
-        private Archetype()
+        // A static registry for easy access to all archetypes by name
+        public static Dictionary<string, Archetype> Archetypes = new Dictionary<string, Archetype>();
+
+        public static event Action<Archetype> OnArchetypeCreated;
+
+        private Archetype(string name)
         {
+            Name = name;
         }
-
 
 
         /// <summary>
@@ -44,28 +47,20 @@ namespace Assets.Scripts.Core.ECS
         /// <returns></returns>
         public static Archetype Create(string name, IEntity entity)
         {
-            Archetype archetype = new();
+            Archetype archetype = new(name);
             archetype.Name = name;
 
-            foreach (IComponent component in entity.GetComponents())
-            {
-                archetype.MapTo(component, entity);
-            }
+
+            //populate tag list
+            archetype.tags = entity.Tags;
+
+            archetype.AddEntity(entity);
 
             Archetypes.Add(name, archetype);
 
+            OnArchetypeCreated?.Invoke(archetype);
+
             return archetype;
-        }
-
-
-        private void MapTo(IComponent component, IEntity entity)
-        {
-            if (!Matrix.ContainsKey(entity.ID))
-            {
-                Matrix.Add(entity.ID, new Dictionary<Type, IComponent>());
-            }
-
-            Matrix[entity.ID].Add(component.GetType(), component);
         }
 
         public static bool IsArchetypeExist(string name)
@@ -86,15 +81,12 @@ namespace Assets.Scripts.Core.ECS
 
         public IEntity GetEntity(Guid id)
         {
-            var component = Matrix[id].Keys.First() as IComponent;
-
-            if (component == null)
+            if (!entities.ContainsKey(id))
             {
-                Debug.LogError("No component found for this entity");
+                Debug.LogError($"Archetype {Name} dose not contain entity with the ID {id}.");
                 return null;
             }
-
-            return component.GetParent();
+            return entities[id];
         }
 
         /// <summary>
@@ -117,99 +109,116 @@ namespace Assets.Scripts.Core.ECS
             return false;
         }
 
-        /// <summary>
-        /// Search for all the entities of a specific archetype
-        /// </summary>
-        /// <param name="name">The name of the archetype</param>
-        /// <param name="entities">A list of the entities found</param>
-        /// <returns>True if found entities</returns>
-        public static bool FindEntitiesOfArchetype(string name, out IEntity[] entities)
+
+        public IEntity CreateEntity(DiContainer container, SignalBus signalBus)
         {
-            entities = new IEntity[0];
-            if (!IsArchetypeExist(name))
-            {
-                return false;
-            }
+            //Create a list of components
+            var components = new IComponent[componentTypesSignature.Count].ToList();
 
-            Archetype archetype = GetArchetype(name);
-            entities = archetype.GetEntities();
+            //Create the entity
+            IEntity entity = new Entity(components, signalBus, container);
 
-            return true;
+            AddEntity(entity);
+            return entity;
         }
 
-        public T GetComponent<T>(Guid id) where T : IComponent
-        {
-            if (!Matrix[id].ContainsKey(typeof(T)))
-            {
-                Debug.LogError("No component found for this entity");
-                return default;
-            }
-
-            return (T)Matrix[id][typeof(T)];
-
-        }
-
-        public T CreateEntity<T>() where T : IEntity
-        {
-            T clone = (T)FirstEntity.Clone();
-            AddEntity(clone);
-            return clone;
-        }
 
         /// <summary>
         /// Add an entity to the archetype
         /// Warning: Do not use during gameplay, it will lead to unexpected behavior.
         /// </summary>
         /// <param name="entity"></param>
-        public void AddEntity(IEntity entity)
+        void AddEntity(Guid entityId, IComponent[] components)
         {
-            if (Matrix.ContainsKey(entity.ID))
+            if (entityIds.Contains(entityId))
             {
-                return;
-            }
-            if (IsValidEntity(entity) == false)
-            {
-                Debug.LogError("The entity is not valid for this archetype");
+                Debug.LogError("Entity already exists in this archetype.");
                 return;
             }
 
-            Matrix.Add(entity.ID, new());
+            // Define the archetype's component signature if it hasn't been defined yet
+            if (!signatureDefined)
+            {
+                foreach (var component in components)
+                {
+                    componentTypesSignature.Add(component.GetType());
+                }
+                signatureDefined = true;
+            }
+            else if (!ValidateComponentsMatchArchetype(components))
+            {
+                Debug.LogError($"Entity's components do not match the archetype's composition for archetype {Name}.");
+                return;
+            }
+
+            int index = Count;
+            entityIds.Add(entityId);
+
+            foreach (var component in components)
+            {
+                AddComponent(component.GetType(), component, index);
+            }
+        }
+
+        private void AddComponent(Type type, IComponent component, int index)
+        {
+            IList componentList;
+            if (!componentsByType.TryGetValue(type, out componentList))
+            {
+                // Create a new list for this component type if it doesn't exist
+                Type listType = typeof(List<>).MakeGenericType(type);
+                componentList = (IList)Activator.CreateInstance(listType);
+                componentsByType[type] = componentList;
+            }
+
+            // Ensure the list is extended to accommodate the new component at the correct index
+            while (componentList.Count <= index)
+            {
+                componentList.Add(null);
+            }
+
+            componentList[index] = component;
+        }
+
+        public void AddEntity(IEntity entity)
+        {
+            AddEntity(entity.ID, entity.GetComponents());
             entity.Initialize(this);
         }
 
-        /// <summary>
-        /// Remove an entity from the archetype. 
-        /// Warning: Do not use during gameplay, it will lead to unexpected behavior.
-        /// </summary>
-        /// <param name="id"></param>
-        public void RemoveEntity(Guid id)
-        {
-            //do we have this entity?
-            if (!HasEntity(id)) return;
-
-            //If this is the first entity, only deactivate it.
-            IEntity entity = GetEntity(id);
-            if (FirstEntity == entity)
-            {
-                entity.IsActive = false;
-                return;
-            }
-
-            //remove the entity
-            Matrix.Remove(id);
-        }
 
         #region Components
 
         /// <summary>
+        /// Get all components of a specific type associated with the archetype
+        /// </summary>
+        /// <typeparam name="T">The type of component to queary</typeparam>
+        /// <returns>An array of IComponent of type <typeparam name="T"> </returns>
+        public T[] GetComponents<T>() where T : IComponent
+        {
+            if (componentsByType.TryGetValue(typeof(T), out IList componentList))
+            {
+                return componentList.Cast<T>().ToArray();
+            }
+
+            return Array.Empty<T>();
+        }
+
+        /// <summary>
         /// Check if the entities of this archetype have a specific tag
         /// </summary>
-        /// <param name="tag"></param>
+        /// <param name="tagName"></param>
         /// <returns></returns>
-        public bool HasTag(string tag)
+        public bool HasTag(string tagName)
         {
-            //Since all the entities of an archetype have the same tags, we can just check the first one
-            return FirstEntity.HasTag(tag);
+            foreach (var tag in tags)
+            {
+                if (tag.Name == tagName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -219,13 +228,49 @@ namespace Assets.Scripts.Core.ECS
         /// <returns></returns>
         public bool HasComponent<T>() where T : IComponent
         {
-            //Since all the entities of an archetype have the same components, we can just check the first one
-            return FirstEntity.HasComponent<T>();
+            return componentsByType.ContainsKey(typeof(T));
+        }
+
+        public bool HasComponents<T1, T2>() where T1 : IComponent where T2 : IComponent
+        {
+            return HasComponent<T1>() && HasComponent<T2>();
+        }
+
+        public bool HasComponents<T1, T2, T3>() where T1 : IComponent where T2 : IComponent where T3 : IComponent
+        {
+            return HasComponent<T1>() && HasComponents<T2, T3>();
+        }
+
+        public bool HasComponents<T1, T2, T3, T4>()
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+            where T4 : IComponent
+        {
+            return HasComponent<T1>() && HasComponents<T2, T3, T4>();
+        }
+
+        public bool HasComponents<T1, T2, T3, T4, T5>()
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+            where T4 : IComponent
+            where T5 : IComponent
+        {
+            return HasComponent<T1>() && HasComponents<T2, T3, T4, T5>();
+        }
+        private bool ValidateComponentsMatchArchetype(IComponent[] components)
+        {
+            var componentTypes = new HashSet<Type>(components.Select(c => c.GetType()));
+
+            // Check if the entity's components exactly match the archetype's signature
+            return componentTypes.SetEquals(componentTypesSignature);
         }
 
         public bool IsValidComposition(IComponent[] components, string[] tags)
         {
-            return FirstEntity.HasSameComposition(components, tags);
+            string[] tagNames = this.tags.Select(t => t.Name).ToArray();
+            return tags.Equals(tags) && ValidateComponentsMatchArchetype(components);
         }
         #endregion
 
@@ -237,23 +282,15 @@ namespace Assets.Scripts.Core.ECS
         /// <returns>Array of <see cref="IEntity"</see>/> with the same composition </returns>
         public IEntity[] GetEntities()
         {
-            return Matrix.Keys.Select(id => GetEntity(id)).ToArray();
+            return entities.Select(x => x.Value).ToArray();
         }
 
         public bool HasEntity(Guid id)
         {
-            return Matrix.ContainsKey(id);
+            return entityIds.Contains(id);
         }
-        public bool IsValidEntity(IEntity entity)
-        {
-            //If the given entity has the same components as the first entity, it is valid
-            return FirstEntity.HasSameComposition(entity);
-        }
+
 
         #endregion
-
-
-
-
     }
 }

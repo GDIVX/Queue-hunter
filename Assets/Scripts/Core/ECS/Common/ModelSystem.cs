@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.ECS.Common;
+﻿using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Common;
 using Assets.Scripts.Engine.ECS;
 using Assets.Scripts.Engine.ECS.Common;
 using System;
@@ -14,18 +15,10 @@ namespace Assets.Scripts.ECS.Common
         {
         }
 
-        protected override bool ShouldProcessEntity(IEntity entity)
+        protected override bool ShouldProcessArchetype(Archetype archetype)
         {
-            return entity.HasComponent<ModelComponent, GameObjectComponent>();
+            return archetype.HasComponents<ModelComponent, GameObjectComponent>();
         }
-
-
-        public override void OnEntityAdded(IEntity entity)
-        {
-            base.OnEntityAdded(entity);
-            OnUpdate(entity);
-        }
-
 
         public override void OnEntityRemoved(IEntity entity)
         {
@@ -39,7 +32,7 @@ namespace Assets.Scripts.ECS.Common
 
         }
 
-        public override void OnLateEntityAdded(IEntity entity)
+        public override void OnLateEntityCreated(IEntity entity)
         {
             if (entity is null)
             {
