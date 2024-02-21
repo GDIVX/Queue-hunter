@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using Assets.Scripts.Core.ECS.Common;
 using Assets.Scripts.Core;
 using Assets.Scripts.ECS;
+using System.Reflection;
+using UnityEngine.Rendering.VirtualTexturing;
+using System.Linq;
 
 public class GameSetup : MonoBehaviour
 {
@@ -56,14 +59,23 @@ public class GameSetup : MonoBehaviour
 
     protected void CreateSystems()
     {
+        // Get all types in the current assembly that implement IGameSystem and are class (not interface)
+        var gameSystemTypes = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => typeof(IGameSystem).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
 
-        //Model system
-        _systemManager.Create<ModelSystem>();
-
-        //Position system
-        _systemManager.Create<PositionSystem>();
-
-        //rotation
-        _systemManager.Create<RotationSystem>();
+        foreach (var type in gameSystemTypes)
+        {
+            MethodInfo createMethod = _systemManager.GetType().GetMethod(nameof(ISystemManager.Create), BindingFlags.Instance | BindingFlags.Public);
+            if (createMethod != null)
+            {
+                // Assuming Create<T>() is a generic method we want to call on _systemManager
+                MethodInfo genericMethod = createMethod.MakeGenericMethod(type);
+                genericMethod.Invoke(_systemManager, null);
+            }
+            else
+            {
+                Debug.LogError($"Create method not found in {_systemManager.GetType().Name}.");
+            }
+        }
     }
 }
