@@ -40,6 +40,8 @@ namespace Assets.Scripts.Core.ECS
             tickableManager.Add(system);
             tickableManager.AddLate(system);
 
+            Debug.Log($"Created system {typeof(T).Name}");
+
             return system;
         }
 
