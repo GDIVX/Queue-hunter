@@ -25,6 +25,14 @@ namespace Assets.Scripts.Core.ECS.Common
             }
         }
 
+        protected override void OnSetActive(bool value)
+        {
+            if (gameObject != null)
+            {
+                gameObject.SetActive(value);
+            }
+        }
+
         void CreateGameObject()
         {
             if (Entity == null)
@@ -33,8 +41,8 @@ namespace Assets.Scripts.Core.ECS.Common
                 return;
             }
 
-            GameObject = new GameObject(Entity.ToString());
-            GameObject.AddComponent<EntityInspector>().Init(Entity);
+            gameObject = new GameObject(Entity.ToString());
+            gameObject.AddComponent<EntityInspector>().Init(Entity);
         }
 
         private void OnDestroy()

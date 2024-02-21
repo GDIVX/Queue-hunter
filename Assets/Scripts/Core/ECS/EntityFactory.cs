@@ -22,8 +22,7 @@ namespace Assets.Scripts.Core.ECS
 
         private Entity InitializeEntity(string name, IComponent[] components, string[] tags = null)
         {
-            Entity entity = _container.Instantiate<Entity>(new object[] { components.ToList(), _container.Resolve<SignalBus>() });
-
+            Entity entity = _container.Instantiate<Entity>(new object[] { components.ToList(), _container.Resolve<SignalBus>(), _container });
 
             if (tags != null)
             {
@@ -34,7 +33,6 @@ namespace Assets.Scripts.Core.ECS
                 }
             }
             var archetype = Archetype.Create(name, entity);
-            entity.Initialize(archetype);
             return entity;
         }
 
@@ -46,7 +44,7 @@ namespace Assets.Scripts.Core.ECS
         /// <returns>A new entity that match the archetype</returns>
         public Entity Create(Archetype archetype)
         {
-            var entity = archetype.CreateEntity<Entity>();
+            var entity = archetype.CreateEntity(_container, _container.Resolve<SignalBus>()) as Entity;
             entity.Initialize(archetype);
             return entity;
         }
@@ -90,7 +88,7 @@ namespace Assets.Scripts.Core.ECS
             if (!Archetype.IsArchetypeExist(name)) return false;
 
             Archetype archetype = Archetype.GetArchetype(name);
-            entity = archetype.CreateEntity<Entity>();
+            entity = (Entity)archetype.CreateEntity(_container, _container.Resolve<SignalBus>());
             entity.Initialize(archetype);
 
             return true;

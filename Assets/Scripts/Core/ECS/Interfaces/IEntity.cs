@@ -12,11 +12,10 @@ namespace Assets.Scripts.Engine.ECS
         Guid ID { get; }
         List<ITag> Tags { get; }
 
-        IArchetype Archetype { get; }
+        Archetype Archetype { get; }
 
         IComponent AddComponent(IComponent component);
         IEntity Clone();
-        void Destroy();
         bool Equals(object obj);
         T GetComponent<T>() where T : IComponent;
         int ComponentsCount { get; }

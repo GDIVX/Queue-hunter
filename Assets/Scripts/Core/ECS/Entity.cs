@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Engine.ECS.Common;
-using Sirenix.OdinInspector;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -8,6 +6,7 @@ using System.Linq;
 using Assets.Scripts.ECS;
 using Assets.Scripts.Engine.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
+using System.Reflection;
 
 namespace Assets.Scripts.Core.ECS
 {
@@ -25,7 +24,7 @@ namespace Assets.Scripts.Core.ECS
         /// Unique ID for this entity
         /// </summary>
         public Guid ID { get; private set; }
-        public IArchetype Archetype { get; private set; }
+        public Archetype Archetype { get; private set; }
 
         public Dictionary<Type, IComponent> Components { get; private set; } = new();
 
@@ -61,8 +60,9 @@ namespace Assets.Scripts.Core.ECS
         #endregion
 
         #region Lifecycle
-        public Entity(List<IComponent> components, SignalBus signalBus)
+        public Entity(List<IComponent> components, SignalBus signalBus , DiContainer container)
         {
+            _container = container;
             _signalBus = signalBus;
             ID = Guid.NewGuid();
             foreach (var component in components)
@@ -71,6 +71,8 @@ namespace Assets.Scripts.Core.ECS
                 component.SetParent(this);
             }
         }
+
+
 
         public void Initialize(Archetype archetype)
         {
@@ -94,36 +96,51 @@ namespace Assets.Scripts.Core.ECS
         /// <returns></returns>
         public IEntity Clone()
         {
-            List<IComponent> components = new();
-
-            //iterate over the Components and call Instantiate<T> where T is the type of the component, and add the resulting clone to the list
+            List<IComponent> components = new List<IComponent>();
 
             foreach (var pair in Components)
             {
-                Type type = pair.Key;
-                var methodInfo = pair.Value.GetType().GetMethod("Instantiate", new Type[] { type });
+                Type componentType = pair.Value.GetType();
+
+                // Get the generic method definition from the type
+                var methodInfo = componentType.GetMethod("Instantiate", BindingFlags.Public | BindingFlags.Instance);
+
                 if (methodInfo == null)
                 {
-                    Debug.Log($"failed to clone component of tpye {type.Name}");
+                    Debug.LogError($"Instantiate method not found on type {componentType.Name}");
                     continue;
                 }
-                IComponent component = (IComponent)methodInfo.Invoke(pair.Value, new object[] { type });
-                components.Add(component);
+
+                // Make the generic method specific by providing the component's type
+                var genericMethodInfo = methodInfo.MakeGenericMethod(new Type[] { componentType });
+
+                // Invoke the method with no parameters as it's a parameterless generic method
+                IComponent clonedComponent = (IComponent)genericMethodInfo.Invoke(pair.Value, null);
+
+                if (clonedComponent != null)
+                {
+                    components.Add(clonedComponent);
+                }
+                else
+                {
+                    Debug.LogError($"Failed to clone component of type {componentType.Name}");
+                }
             }
 
-            Entity clone = _container.Instantiate<Entity>(new object[] { components.ToList(), _container.Resolve<SignalBus>() });
+            if (_container == null)
+            {
+                _container = new DiContainer();
+            }
+
+            // Assuming _container and Archetype are accessible and correctly set up for this context
+            Entity clone = _container.Instantiate<Entity>(new object[] { components, _container.Resolve<SignalBus>() });
 
             Archetype.AddEntity(clone);
 
             return clone;
         }
-        public void Destroy()
-        {
-            _signalBus.Fire(new EntityDestroyedSignal(this));
 
-            Archetype.RemoveEntity(ID);
-            Archetype = null;
-        }
+
         object ICloneable.Clone()
         {
             return Clone();
@@ -359,16 +376,7 @@ namespace Assets.Scripts.Core.ECS
             return true;
         }
 
-
-
-
-
-
         #endregion
-
-
-
-
     }
 
 }

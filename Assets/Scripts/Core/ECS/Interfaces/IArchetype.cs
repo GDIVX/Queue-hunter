@@ -9,10 +9,12 @@ namespace Assets.Scripts.Engine.ECS
         Dictionary<Guid, Dictionary<Type, IComponent>> Matrix { get; }
         string Name { get; }
 
+        event Action<IArchetype> OnUpdated;
+
         T CreateEntity<T>() where T : IEntity;
         void RemoveEntity(Guid id);
         void AddEntity(IEntity entity);
-        T GetComponent<T>(Guid id) where T : IComponent;
+        T[] GetComponentsBatch<T>() where T : IComponent;
 
         bool HasEntity(Guid id);
         bool HasTag(string tag);
