@@ -12,42 +12,49 @@ using Assets.Scripts.Core.ECS.Interfaces;
 using System.Threading.Tasks;
 using Assets.Scripts.Core.ECS.Common;
 using Assets.Scripts.Core;
+using Assets.Scripts.ECS;
 
-public class GameSetup : GameSetupBase
+public class GameSetup : MonoBehaviour
 {
+    [Inject]
+    protected ISystemManager _systemManager;
+    [Inject]
+    protected IEntityFactory _entityFactory;
+    [Inject]
+    protected IComponentsFactory _componentsFactory;
 
-    protected override IEnumerator CreateComponentsCoroutine(Action<IComponent[]> callback)
+    [SerializeField] List<ArchetypeAsset> _archetypes;
+
+    private void Start()
     {
-        List<IComponent> components = new List<IComponent>();
-
-        // Flag to keep track of any load failure
-        bool failed = false;
-
-        // Define an action to handle failure, which sets the failed flag and exits the coroutine
-        Action handleFailure = () => failed = true;
-
-        // Load asynchronously a game object
-        yield return LoadComponentAsync<GameObjectComponent>("GameObject", component => components.Add(component), handleFailure);
-        if (failed) yield break;
-
-        // Load asynchronously a model
-        yield return LoadComponentAsync<ModelComponent>("Cube", component => components.Add(component), handleFailure);
-        if (failed) yield break;
-
-        // Load asynchronously a position
-        yield return LoadComponentAsync<PositionComponent>("Position", component => components.Add(component), handleFailure);
-        if (failed) yield break;
-
-        // Callback with the loaded components
-        callback?.Invoke(components.ToArray());
-    }
-    protected override void CreateEntities(IComponent[] components)
-    {
-        // Create a cube entity
-        _entityFactory.Create("Cube", components, new string[] { });
+        Init();
     }
 
-    protected override void CreateSystems()
+    private void Init()
+    {
+        CreateSystems();
+
+        foreach (var archetype in _archetypes)
+        {
+            CreateArchetype(archetype);
+        }
+    }
+
+    private void CreateArchetype(ArchetypeAsset archetype)
+    {
+        //Create components
+        var components = new List<IComponent>();
+        foreach (var component in archetype.components)
+        {
+            IComponent initComponent = _componentsFactory.Instantiate(component);
+            components.Add(initComponent);
+        }
+
+        //Create entity
+        IEntity entity = _entityFactory.Create(archetype.name, components.ToArray(), archetype.Tags.ToArray());
+    }
+
+    protected void CreateSystems()
     {
 
         //Model system
@@ -55,5 +62,8 @@ public class GameSetup : GameSetupBase
 
         //Position system
         _systemManager.Create<PositionSystem>();
+
+        //rotation
+        _systemManager.Create<RotationSystem>();
     }
 }

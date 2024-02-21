@@ -27,8 +27,7 @@ namespace Assets.Scripts.Core.ECS
             var loadedAsset = await Addressables.LoadAssetAsync<UnityEngine.Object>(address).Task;
             if (loadedAsset is T loadedComponent)
             {
-                _components[address] = loadedComponent; // Cache the component
-                return (T)loadedComponent.Instantiate<T>();
+                return Create(address, loadedComponent);
             }
             else if (loadedAsset != null)
             {
@@ -38,6 +37,17 @@ namespace Assets.Scripts.Core.ECS
 
             Debug.LogError($"Could not find component with address {address}.");
             return null;
+        }
+
+        public T Create<T>(string address, T loadedComponent) where T : ScriptableObject, IComponent
+        {
+            _components[address] = loadedComponent;
+            return Instantiate(loadedComponent);
+        }
+
+        public T Instantiate<T>(T loadedComponent) where T : ScriptableObject, IComponent
+        {
+            return (T)loadedComponent.Instantiate<T>();
         }
     }
 }
