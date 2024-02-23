@@ -1,9 +1,9 @@
 ﻿using System;
-using Tzipory.GameplayLogic.Managers.MainGameManagers;
-using Tzipory.Tools.Enums;
+using Queue.GameplayLogic.Managers.MainGameManagers;
+using Queue.Tools.Enums;
 using UnityEngine;
 
-namespace Tzipory.Systems.UISystem
+namespace Queue.Systems.UISystem
 {
     public abstract class BaseUIElement : MonoBehaviour, IUIElement
     {

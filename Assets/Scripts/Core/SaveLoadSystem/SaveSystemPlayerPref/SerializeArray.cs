@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Tzipory.Systems.SaveLoadSystem.PlayerPref
+namespace Queue.Systems.SaveLoadSystem.PlayerPref
 {
     [System.Serializable]
     public class SerializeArray<T> where T : ISave

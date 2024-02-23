@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Tzipory.Systems.UISystem
+namespace Queue.Systems.UISystem
 {
     public abstract class BaseInteractiveToggelButtonUI : BaseInteractiveUIElement
     {

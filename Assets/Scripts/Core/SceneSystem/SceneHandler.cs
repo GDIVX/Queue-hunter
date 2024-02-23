@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
+using Queue.Tools.Debag;
+using Queue.Tools.LoadingScreen;
 using Sirenix.OdinInspector;
-using Tzipory.Tools.Debag;
-using Tzipory.Tools.LoadingScreen;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Tzipory.Systems.SceneSystem
+namespace Queue.Systems.SceneSystem
 {
     public class SceneHandler : MonoBehaviour , ISceneHandler
     {

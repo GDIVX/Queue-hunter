@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Tzipory.Helpers;
-using Tzipory.Tools.Debag;
+using Queue.Helpers;
+using Queue.Tools.Debag;
 using UnityEngine;
 
-namespace Tzipory.Tools.TimeSystem
+namespace Queue.Tools.TimeSystem
 {
     public class GAME_TIME : MonoBehaviour
     {

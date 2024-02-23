@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Queue.Systems.SaveLoadSystem.SaveSystemJson;
+using Queue.Tools.Debag;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities.Editor;
-using Tzipory.Systems.SaveLoadSystem.SaveSystemJson;
-using Tzipory.Tools.Debag;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tzipory.Editor
+namespace Queue.Editor
 {
     public class LogGroupEditor : OdinMenuEditorWindow
     {

@@ -1,4 +1,4 @@
-﻿namespace Tzipory.Systems.SaveLoadSystem
+﻿namespace Queue.Systems.SaveLoadSystem
 {
     /// <summary>
     /// A tag that is used to catalog which class should be saved

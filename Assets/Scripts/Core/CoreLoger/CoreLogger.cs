@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Tzipory.Helpers;
-using Tzipory.Systems.SaveLoadSystem.SaveSystemJson;
+using Queue.Systems.SaveLoadSystem.SaveSystemJson;
+using Queue.Helpers;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tzipory.Tools.Debag
+namespace Queue.Tools.Debag
 {
 #if UNITY_EDITOR 
     [InitializeOnLoad]

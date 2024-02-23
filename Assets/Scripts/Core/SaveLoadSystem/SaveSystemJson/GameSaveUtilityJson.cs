@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Tzipory.Systems.SaveLoadSystem.PlayerPref;
-using Tzipory.Tools.Debag;
+using Queue.Systems.SaveLoadSystem.PlayerPref;
+using Queue.Tools.Debag;
 using UnityEngine;
 
-namespace Tzipory.Systems.SaveLoadSystem.SaveSystemJson
+namespace Queue.Systems.SaveLoadSystem.SaveSystemJson
 {
     public static class GameSaveUtilityJson
     {

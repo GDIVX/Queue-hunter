@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
+using Queue.ConfigFiles.ToolTipConfig;
 using Sirenix.OdinInspector;
 using TMPro;
-using Tzipory.ConfigFiles.ToolTipConfig;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tzipory.Tools.LoadingScreen
+namespace Queue.Tools.LoadingScreen
 {
     public class LoadingScreenHandler : MonoBehaviour
     { 
