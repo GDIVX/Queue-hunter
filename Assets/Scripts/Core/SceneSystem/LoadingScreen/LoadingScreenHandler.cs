@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -19,8 +20,16 @@ namespace Tzipory.Tools.LoadingScreen
         [SerializeField,MinMaxSlider(2,7),TabGroup("ToolTip")] private Vector2 _toolTipDelay;
         
         private float _toolTipDelayTimer;
+
+        private bool _useToolTip = true;
         
         public bool IsFadeIn { get; private set; } = true;
+
+        private void Start()
+        {
+            if (_toolTip is null || _toolTipText is null)
+                _useToolTip = false;
+        }
 
         private void Update()
         {
@@ -28,6 +37,9 @@ namespace Tzipory.Tools.LoadingScreen
                 return;
             
             _toolTipDelayTimer  -= Time.deltaTime;
+
+            if (!_useToolTip)
+                return;
             
             if (0 > _toolTipDelayTimer)
             {
@@ -48,9 +60,12 @@ namespace Tzipory.Tools.LoadingScreen
                 yield return null;
                 _backGround.color = color;
             }
-            
-            _toolTipDelayTimer = UnityEngine.Random.Range(_toolTipDelay.x, _toolTipDelay.y);
-            _toolTipText.text = _toolTip.GetToolTip();
+
+            if (_useToolTip)
+            {
+                _toolTipDelayTimer = UnityEngine.Random.Range(_toolTipDelay.x, _toolTipDelay.y);
+                _toolTipText.text = _toolTip.GetToolTip();   
+            }
             
             _uiScreen.SetActive(true);
             IsFadeIn = true;

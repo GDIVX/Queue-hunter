@@ -46,7 +46,9 @@ namespace Tzipory.Tools.Debag
             if (!LogGroups.TryGetValue(groupName,out LogGroup logGroup))
             {
                 //group not found!
-                throw new System.Exception($"Log group {groupName} not found! from object {message.GetType().Name}");
+                Debug.LogWarning($"Log group {groupName} not found! from object {message.GetType().Name}");
+                Debug.Log(message);
+                return;
             }
 
             if (!logGroup.IsActive)
@@ -67,8 +69,9 @@ namespace Tzipory.Tools.Debag
             
             if (!LogGroups.TryGetValue(groupName,out LogGroup logGroup))
             {
-                //group not found!
-                throw new System.Exception($"Log group {groupName} not found! from object {message.GetType().Name}");
+                Debug.LogWarning($"Log group {groupName} not found! from object {message.GetType().Name}");
+                Debug.LogWarning(message);
+                return;
             }
 
             if (!logGroup.IsActive)
@@ -88,8 +91,9 @@ namespace Tzipory.Tools.Debag
             
             if (!LogGroups.TryGetValue(groupName,out LogGroup logGroup))
             {
-                //group not found!
-                throw new System.Exception($"Log group {groupName} not found! from object {message.GetType().Name}");
+                Debug.LogWarning($"Log group {groupName} not found! from object {message.GetType().Name}");
+                Debug.LogError(message);
+                return;
             }
 
             if (!logGroup.IsActive)
