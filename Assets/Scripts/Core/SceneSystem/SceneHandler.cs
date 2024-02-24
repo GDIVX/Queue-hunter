@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Sirenix.OdinInspector;
 using Tzipory.Tools.Debag;
 using Tzipory.Tools.LoadingScreen;
 using UnityEngine;
@@ -13,13 +14,14 @@ namespace Tzipory.Systems.SceneSystem
         
         public static event Action<SceneType> OnSceneLoaded;
         
-        private const int MAIN_MENU_SCENE_INDEX = 1;
-        private const int MAP_SCENE_INDEX = 2;
-        private const int GAME_SCENE_INDEX = 3;
+        private const int MAIN_MENU_SCENE_INDEX = -1;//not in use!
+        private const int GAME_SCENE_INDEX = 1;
         
         [SerializeField] private float _minLoadTime;
         
         [SerializeField] private LoadingScreenHandler _loadingScreenHandler;
+
+        [SerializeField] private SceneType _sceneToLoad;
         
         private float _loadTime;
         
@@ -45,7 +47,6 @@ namespace Tzipory.Systems.SceneSystem
             int sceneIndex = sceneType switch
             {
                 SceneType.MainMenu => MAIN_MENU_SCENE_INDEX,
-                SceneType.Map => MAP_SCENE_INDEX,
                 SceneType.Game => GAME_SCENE_INDEX,
                 _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null)
             };
@@ -112,6 +113,12 @@ namespace Tzipory.Systems.SceneSystem
             StartCoroutine(LoadSceneAsync(sceneType));
         }
 
+        [Button]
+        public void LoadSceneManualy()
+        {
+            LoadScene(_sceneToLoad);
+        }
+
         private void OnValidate()
         {
             if (_loadingScreenHandler == null)
@@ -121,13 +128,13 @@ namespace Tzipory.Systems.SceneSystem
 
     public interface ISceneHandler
     {
+        public static Scene CurrentScene { get; }
         public void LoadScene(SceneType sceneType);
     }
 
     public enum SceneType
     {
         MainMenu,
-        Map,
         Game
     }
 }
