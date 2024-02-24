@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tzipory.Tools.TimeSystem
+namespace Queue.Tools.TimeSystem
 {
     public interface ITimer
     {

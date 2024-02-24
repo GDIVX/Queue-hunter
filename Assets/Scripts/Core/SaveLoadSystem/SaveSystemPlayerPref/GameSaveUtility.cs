@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tzipory.Systems.SaveLoadSystem.PlayerPref
+namespace Queue.Systems.SaveLoadSystem.PlayerPref
 {
     public static class GameSaveUtilityPlayerPrefs
     {

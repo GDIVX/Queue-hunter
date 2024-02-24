@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Tzipory.Helpers
+namespace Queue.Helpers
 {
     public static class Vector2Helper
     {

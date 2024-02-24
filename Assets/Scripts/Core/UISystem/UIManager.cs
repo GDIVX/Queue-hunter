@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tzipory.Systems.UISystem;
-using Tzipory.Tools.Enums;
+using Queue.Systems.UISystem;
+using Queue.Tools.Enums;
 using UnityEngine;
 
-namespace Tzipory.GameplayLogic.Managers.MainGameManagers
+namespace Queue.GameplayLogic.Managers.MainGameManagers
 {
     public class UIManager : MonoBehaviour
     {

@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Tzipory.Systems.UISystem
+namespace Queue.Systems.UISystem
 {
     public abstract class BaseCounterUIHandler : BaseUIElement
     {

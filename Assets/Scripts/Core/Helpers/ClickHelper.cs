@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Tzipory.Helpers
+namespace Queue.Helpers
 {
     public class ClickHelper : MonoBehaviour , IPointerClickHandler , IPointerEnterHandler , IPointerExitHandler
     {

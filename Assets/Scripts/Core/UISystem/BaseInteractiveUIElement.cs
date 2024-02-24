@@ -1,10 +1,10 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using Tzipory.Tools.TimeSystem;
+using Queue.Tools.TimeSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Tzipory.Systems.UISystem
+namespace Queue.Systems.UISystem
 {
     public abstract class BaseInteractiveUIElement : BaseUIElement , IPointerEnterHandler,IPointerExitHandler , IPointerClickHandler ,IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
     {

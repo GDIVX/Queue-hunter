@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tzipory.Tools.Enums
+namespace Queue.Tools.Enums
 {
     [Flags]
     public enum UIGroup

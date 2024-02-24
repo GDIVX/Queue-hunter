@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Tzipory.Helpers
+namespace Queue.Helpers
 {
     public abstract class MonoSingleton<T> : MonoBehaviour where T : Component
     {

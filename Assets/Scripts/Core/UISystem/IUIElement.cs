@@ -1,6 +1,6 @@
-﻿using Tzipory.Tools.Enums;
+﻿using Queue.Tools.Enums;
 
-namespace Tzipory.Systems.UISystem
+namespace Queue.Systems.UISystem
 {
     public interface IUIElement 
     {

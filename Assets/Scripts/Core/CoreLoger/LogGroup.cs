@@ -1,9 +1,9 @@
-﻿using Sirenix.OdinInspector;
-using Tzipory.Systems.SaveLoadSystem;
-using Tzipory.Systems.SaveLoadSystem.SaveSystemJson;
+﻿using Queue.Systems.SaveLoadSystem;
+using Queue.Systems.SaveLoadSystem.SaveSystemJson;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Tzipory.Tools.Debag
+namespace Queue.Tools.Debag
 {
     [System.Serializable]
     public class LogGroup : ISave
