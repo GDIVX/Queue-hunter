@@ -16,6 +16,8 @@ using Assets.Scripts.ECS;
 using System.Reflection;
 using UnityEngine.Rendering.VirtualTexturing;
 using System.Linq;
+using Assets.Scripts.Game.Movement;
+using Assets.Scripts.Game.Input;
 
 public class GameSetup : MonoBehaviour
 {
@@ -59,23 +61,31 @@ public class GameSetup : MonoBehaviour
 
     protected void CreateSystems()
     {
-        // Get all types in the current assembly that implement IGameSystem and are class (not interface)
-        var gameSystemTypes = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => typeof(IGameSystem).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+        //// Get all types in the current assembly that implement IGameSystem and are class (not interface)
+        //var gameSystemTypes = Assembly.GetExecutingAssembly().GetTypes()
+        //    .Where(t => typeof(IGameSystem).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
 
-        foreach (var type in gameSystemTypes)
-        {
-            MethodInfo createMethod = _systemManager.GetType().GetMethod(nameof(ISystemManager.Create), BindingFlags.Instance | BindingFlags.Public);
-            if (createMethod != null)
-            {
-                // Assuming Create<T>() is a generic method we want to call on _systemManager
-                MethodInfo genericMethod = createMethod.MakeGenericMethod(type);
-                genericMethod.Invoke(_systemManager, null);
-            }
-            else
-            {
-                Debug.LogError($"Create method not found in {_systemManager.GetType().Name}.");
-            }
-        }
+        //foreach (var type in gameSystemTypes)
+        //{
+        //    MethodInfo createMethod = _systemManager.GetType().GetMethod(nameof(ISystemManager.Create), BindingFlags.Instance | BindingFlags.Public);
+        //    if (createMethod != null)
+        //    {
+        //        // Assuming Create<T>() is a generic method we want to call on _systemManager
+        //        MethodInfo genericMethod = createMethod.MakeGenericMethod(type);
+        //        genericMethod.Invoke(_systemManager, null);
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError($"Create method not found in {_systemManager.GetType().Name}.");
+        //    }
+        //}
+
+        _systemManager.Create<ModelSystem>();
+        _systemManager.Create<PositionSystem>();
+        _systemManager.Create<RotationSystem>();
+        _systemManager.Create<MovementSystem>();
+        _systemManager.Create<InputHandler>();
+        _systemManager.Create<DashSystem>();
+
     }
 }
