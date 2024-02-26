@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Scripts.Core.ECS
 {
@@ -9,6 +10,6 @@ namespace Assets.Scripts.Core.ECS
     {
         public string Name;
         public List<string> Tags;
-        public List<DataComponent> components;
+        public List<AssetReferenceT<DataComponent>> components;
     }
 }
