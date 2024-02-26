@@ -10,6 +10,7 @@ namespace Core.ECS
         {
             Container.DeclareSignal<EntityCreatedSignal>();
             Container.DeclareSignal<EntityDestroyedSignal>();
+            Container.DeclareSignal<EntityModifiedSignal>();
         }
 
         protected override void BindHandlers()
