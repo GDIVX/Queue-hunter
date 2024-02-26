@@ -18,17 +18,17 @@ MonoBehaviour:
   m_GUID: 704d8d7cc12daf94e963a9c62531970e
   m_SerializeEntries:
   - m_GUID: 85596f8e77e8447428a830e4f6795db1
-    m_Address: Position
+    m_Address: PositionComponent
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 68b77a4a601a3db4a904c147fcd59c3d
-    m_Address: Rotation
+    m_Address: RotationComponent
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d05040496d1c6d45adc2f65a9c26424
-    m_Address: GameObject
+    m_Address: GameObjectComponent
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
