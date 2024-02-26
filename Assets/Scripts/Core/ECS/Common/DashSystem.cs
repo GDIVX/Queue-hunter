@@ -17,7 +17,7 @@ public class DashSystem : GameSystem
     }
     protected override bool ShouldProcessArchetype(Archetype archetype)
     {
-        return archetype.HasComponents<PlayerDash, PlayerInput, PositionComponent, MovementParams>();
+        return archetype.HasComponents<DashComponent, PlayerInputComponent, PositionComponent, MovementParamsComponent>();
     }
 
     //protected override bool ShouldProcessEntity(IEntity entity)
@@ -41,13 +41,13 @@ public class DashSystem : GameSystem
 
     protected override void OnUpdate(Archetype archetype) 
     {
-        var playerDashBatch = archetype.GetComponents<PlayerDash>();
+        var playerDashBatch = archetype.GetComponents<DashComponent>();
 
-        var playerInputBatch = archetype.GetComponents<PlayerInput>();
+        var playerInputBatch = archetype.GetComponents<PlayerInputComponent>();
 
         var positionBatch = archetype.GetComponents<PositionComponent>();
 
-        var moveParamsBatch = archetype.GetComponents<MovementParams>();
+        var moveParamsBatch = archetype.GetComponents<MovementParamsComponent>();
 
         for (int i = 0; i < archetype.Count; i++)
         {
@@ -65,7 +65,7 @@ public class DashSystem : GameSystem
 
 
     #region DASH_FUNCS
-    void StartDash(PlayerDash playerDash, MovementParams movementParams)
+    void StartDash(DashComponent playerDash, MovementParamsComponent movementParams)
     {
         playerDash.CanDash = false;
         playerDash.IsDashing = true;
@@ -77,7 +77,7 @@ public class DashSystem : GameSystem
         playerDash.DashStartTime = Time.time;
     }
 
-    void DuringDash(PlayerDash playerDash, PositionComponent posComp)
+    void DuringDash(DashComponent playerDash, PositionComponent posComp)
     {
         float dashTimeElapsed = Time.time - playerDash.DashStartTime;
         if (dashTimeElapsed < playerDash.DashDuration)
@@ -94,14 +94,14 @@ public class DashSystem : GameSystem
         }
     }
 
-    void EndDash(PlayerDash playerDash)
+    void EndDash(DashComponent playerDash)
     {
         playerDash.IsDashing = false;
         CoroutineHelper.Instance.StartCoroutine(ResetDash(playerDash));
     }
 
 
-    public IEnumerator ResetDash(PlayerDash playerDash)
+    public IEnumerator ResetDash(DashComponent playerDash)
     {
         yield return new WaitForSeconds(playerDash.DashCooldown);
         playerDash.CanDash = true;

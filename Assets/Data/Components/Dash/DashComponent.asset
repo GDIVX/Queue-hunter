@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b9ca2a9981c5f846ad89a3c058a165d, type: 3}
-  m_Name: PlayerInput
+  m_Script: {fileID: 11500000, guid: 89bb6ee103b482a4db66ca9cc97eb6fa, type: 3}
+  m_Name: DashComponent
   m_EditorClassIdentifier: 
   _isActive: 1

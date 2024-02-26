@@ -6,19 +6,19 @@ using UnityEngine.Windows;
 
 namespace Assets.Scripts.Game.Input
 {
-    public class InputHandler : GameSystem
+    public class InputSystem : GameSystem
     {
-        public InputHandler(Zenject.SignalBus signalBus) : base(signalBus)
+        public InputSystem(Zenject.SignalBus signalBus) : base(signalBus)
         {
         }
         protected override bool ShouldProcessArchetype(Archetype archetype)
         {
-            return archetype.HasComponent<PlayerInput>();
+            return archetype.HasComponent<PlayerInputComponent>();
         }
 
         protected override void OnUpdate(Archetype archetype)
         {
-            var inputBatch = archetype.GetComponents<PlayerInput>();
+            var inputBatch = archetype.GetComponents<PlayerInputComponent>();
 
             for (int i = 0; i < archetype.Count; i++)
             {

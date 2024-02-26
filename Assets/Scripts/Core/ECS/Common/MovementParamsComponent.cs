@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts.Game.Movement
 {
     [CreateAssetMenu(fileName = "Movement", menuName = "Game/Movement/MovementParams")]
-    public class MovementParams : DataComponent
+    public class MovementParamsComponent : DataComponent
     {
         [ShowInInspector]
         private float speed;

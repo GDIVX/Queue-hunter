@@ -84,7 +84,7 @@ public class GameSetup : MonoBehaviour
         _systemManager.Create<PositionSystem>();
         _systemManager.Create<RotationSystem>();
         _systemManager.Create<MovementSystem>();
-        _systemManager.Create<InputHandler>();
+        _systemManager.Create<InputSystem>();
         _systemManager.Create<DashSystem>();
 
     }

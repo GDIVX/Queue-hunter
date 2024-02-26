@@ -19,7 +19,7 @@ namespace Assets.Scripts.Game.Movement
         }
         protected override bool ShouldProcessArchetype(Archetype archetype)
         {
-            return archetype.HasComponents<PlayerInput, MovementParams, PositionComponent, RotationComponent>();
+            return archetype.HasComponents<PlayerInputComponent, MovementParamsComponent, PositionComponent, RotationComponent>();
         }
 
         //protected override bool ShouldProcessEntity(IEntity entity)
@@ -49,9 +49,9 @@ namespace Assets.Scripts.Game.Movement
 
         protected override void OnUpdate(Archetype archetype)
         {
-            var inputBatch = archetype.GetComponents<PlayerInput>();
+            var inputBatch = archetype.GetComponents<PlayerInputComponent>();
 
-            var movementParamsBatch = archetype.GetComponents<MovementParams>();
+            var movementParamsBatch = archetype.GetComponents<MovementParamsComponent>();
 
             var positionBatch = archetype.GetComponents<PositionComponent>();
 
@@ -79,14 +79,14 @@ namespace Assets.Scripts.Game.Movement
 
 
         #region MOVE_FUNCS
-        void Move(PositionComponent posComp, MovementParams moveParamsComp)
+        void Move(PositionComponent posComp, MovementParamsComponent moveParamsComp)
         {
             posComp.Position += moveParamsComp.LastDir * Time.deltaTime * moveParamsComp.Speed;
         }
         #endregion
 
         #region ROT_FUNCS
-        Vector3 GetRelativeRotation(PositionComponent posComp, MovementParams moveParamsComp)
+        Vector3 GetRelativeRotation(PositionComponent posComp, MovementParamsComponent moveParamsComp)
         {
             var relative = (posComp.Position + moveParamsComp.LastDir) - posComp.Position;
             return relative;
