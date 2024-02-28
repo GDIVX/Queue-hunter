@@ -9,8 +9,8 @@ namespace Assets.Scripts.Core.ECS.Common
 
         public override object Instantiate()
         {
-            GameObject gameObject = new(_value.Name);
-            GameObjectComponent component = new(gameObject, _value.Name);
+            GameObject gameObject = new(Value.Name);
+            GameObjectComponent component = new(gameObject, Value.Name);
             return component;
 
         }

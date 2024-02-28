@@ -1,10 +1,12 @@
 using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Movement
 {
+    [Serializable]
     public struct MovementParamsComponent : IComponent
     {
         public float speed;

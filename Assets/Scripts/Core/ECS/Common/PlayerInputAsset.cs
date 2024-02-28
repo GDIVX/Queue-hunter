@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Game.Movement;
+﻿using Assets.Scripts.Game.Input;
 using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Core.ECS.Common
 {
-    [CreateAssetMenu(fileName = "Movement", menuName = "Game/Movement/PlayerDash")]
-    public class DashComponentAsset : ComponentAsset<DashComponent>
+    [CreateAssetMenu(fileName = "Player Input", menuName = "Game/InputComponent")]
+    public class PlayerInputAsset : ComponentAsset<PlayerInputComponent>
     {
         public override object Instantiate()
         {

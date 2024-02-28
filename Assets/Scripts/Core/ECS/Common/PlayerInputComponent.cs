@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Input
 {
-    //[CreateAssetMenu(fileName = "PlayerInput", menuName = "Game/Input/PlayerInput")]
+    [Serializable]
     public struct PlayerInputComponent : IComponent
     {
         [ShowInInspector]

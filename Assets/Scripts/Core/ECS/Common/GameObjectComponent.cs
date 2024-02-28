@@ -9,7 +9,7 @@ namespace Assets.Scripts.Core.ECS.Common
     public struct GameObjectComponent : IComponent
     {
         [ReadOnly] public GameObject GameObject;
-        [SerializeField] public string Name;
+        [SerializeField] private string name;
 
         private bool isActive;
         public GameObjectComponent(GameObject gameObject, string name) : this()
@@ -18,6 +18,14 @@ namespace Assets.Scripts.Core.ECS.Common
             Name = name;
             IsActive = true;
             IsDirty = true;
+        }
+        public string Name
+        {
+            get => name; set
+            {
+                name = value;
+                GameObject.name = name;
+            }
         }
 
         public bool IsActive

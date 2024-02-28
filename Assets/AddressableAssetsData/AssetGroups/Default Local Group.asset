@@ -53,7 +53,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e1623105bef94cf45968be5ebeddebed
-    m_Address: Assets/Data/Components/Models/Cube.asset
+    m_Address: Cube
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

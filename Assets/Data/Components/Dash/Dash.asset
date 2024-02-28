@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb96d302ca8c82a498b061985e95a6fc, type: 3}
-  m_Name: PositionComponent 1
+  m_Script: {fileID: 11500000, guid: 9b44ce057938d6349a584b38cda1b2df, type: 3}
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  _value:
-    Position: {x: 0, y: 0, z: 0}

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc40eda21ff332441bec68c5de6b9c53, type: 3}
   m_Name: A_Cube
   m_EditorClassIdentifier: 
-  Name: Cube
+  Name: Cube Player
   Tags: []
   components:
+  - {fileID: 11400000, guid: 6d05040496d1c6d45adc2f65a9c26424, type: 2}
   - {fileID: 11400000, guid: ef4719e326de58d4b9d552fb906321ae, type: 2}
+  - {fileID: 11400000, guid: e1623105bef94cf45968be5ebeddebed, type: 2}

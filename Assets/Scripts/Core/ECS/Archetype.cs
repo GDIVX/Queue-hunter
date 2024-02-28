@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.ECS.Interfaces;
+﻿using Assets.Scripts.Core.ECS.Common;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Assets.Scripts.ECS;
 using Assets.Scripts.Engine.ECS;
 using System;
@@ -59,6 +60,8 @@ namespace Assets.Scripts.Core.ECS
             Archetypes.Add(name, archetype);
 
             OnArchetypeCreated?.Invoke(archetype);
+
+
 
             return archetype;
         }
@@ -177,6 +180,15 @@ namespace Assets.Scripts.Core.ECS
         public void AddEntity(IEntity entity)
         {
             AddEntity(entity.ID, entity.GetComponents());
+
+            //If the entity has game component, rename it
+            if (entity.HasComponent<GameObjectComponent>())
+            {
+                var gameObjectCom = entity.GetComponent<GameObjectComponent>();
+                gameObjectCom.Name = Name;
+                gameObjectCom.GameObject.AddComponent<EntityInspector>();
+            }
+
             entity.Initialize(this);
         }
 

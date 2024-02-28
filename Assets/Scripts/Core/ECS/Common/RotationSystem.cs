@@ -36,9 +36,11 @@ namespace Assets.Scripts.Engine.ECS.Common
 
         private void UpdateRotation(GameObjectComponent gameObjectComponent, RotationComponent rotationComponent)
         {
-            var rot = Quaternion.LookRotation(rotationComponent.rotation, Vector3.up);
-            gameObjectComponent.GameObject.transform.rotation = 
-                Quaternion.RotateTowards(gameObjectComponent.GameObject.transform.rotation, rot, 360 * Time.deltaTime);
+            //TODO : This throw notifications. Fix this
+
+            //var rot = Quaternion.LookRotation(rotationComponent.rotation, Vector3.up);
+            //gameObjectComponent.GameObject.transform.rotation = 
+            //    Quaternion.RotateTowards(gameObjectComponent.GameObject.transform.rotation, rot, 360 * Time.deltaTime);
         }
     }
 }

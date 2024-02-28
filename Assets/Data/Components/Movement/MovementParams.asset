@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38dc5fba63c01bb418305bd6d4ad164f, type: 3}
-  m_Name: MovementParamsComponent
+  m_Script: {fileID: 11500000, guid: 1c1c21b2dcfb93340908e541e70ec5e2, type: 3}
+  m_Name: MovementParams
   m_EditorClassIdentifier: 
-  _isActive: 1
+  Value:
+    speed: 0
+    lastDir: {x: 0, y: 0, z: 0}

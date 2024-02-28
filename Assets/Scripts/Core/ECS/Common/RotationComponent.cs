@@ -1,12 +1,13 @@
 ﻿using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
+using System;
 using System.Collections;
 using UnityEngine;
 
 
 namespace Assets.Scripts.Engine.ECS.Common
 {
-    //[CreateAssetMenu(fileName = "RotationComponent", menuName = "ECS/Components/RotationComponent")]
+    [Serializable]
     public struct RotationComponent : IComponent
     {
         public Vector3 rotation;

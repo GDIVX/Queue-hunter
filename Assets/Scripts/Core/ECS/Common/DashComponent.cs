@@ -1,12 +1,14 @@
 using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Movement
 {
+    [Serializable]
     public struct DashComponent : IComponent
     {
         public float dashDuration;

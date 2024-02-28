@@ -4,7 +4,7 @@ namespace Assets.Scripts.Core.ECS
 {
     public abstract class ComponentAsset<T> : ComponentAsset
     {
-        [SerializeField] protected T _value;
+        [SerializeField] protected T Value;
 
     }
 

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Core.ECS.Common
     {
         public override object Instantiate()
         {
-            return _value.Clone();
+            return Value.Clone();
         }
     }
 }
