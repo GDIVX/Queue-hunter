@@ -22,31 +22,6 @@ namespace Assets.Scripts.Game.Movement
             return archetype.HasComponents<PlayerInputComponent, MovementParamsComponent, PositionComponent, RotationComponent>();
         }
 
-        //protected override bool ShouldProcessEntity(IEntity entity)
-        //{
-        //    return entity.HasComponent<PlayerInput, MovementParams, PositionComponent, RotationComponent>();
-        //}
-
-        //protected override void OnUpdate(IEntity entity)
-        //{
-
-        //    var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-        //    var skewedInput = matrix.MultiplyPoint3x4(entity.GetComponent<PlayerInput>().MovementInput);
-
-        //    //rot detection
-        //    if (skewedInput != Vector3.zero)
-        //    {
-        //        entity.GetComponent<RotationComponent>().Rotation = GetRelativeRotation(entity);
-        //    }
-
-        //    //move detection
-        //    if (skewedInput != Vector3.zero)
-        //    {
-        //        entity.GetComponent<MovementParams>().LastDir = skewedInput;
-        //        Move(entity);
-        //    }
-        //}
-
         protected override void OnUpdate(Archetype archetype)
         {
             var inputBatch = archetype.GetComponents<PlayerInputComponent>();

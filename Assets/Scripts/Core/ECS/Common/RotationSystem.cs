@@ -29,15 +29,17 @@ namespace Assets.Scripts.Engine.ECS.Common
             //Update the position of the game object
             for (int i = 0; i < archetype.Count; i++)
             {
-                UpdateRotation(gameObjectBatch[i], rotationBatch[i]);
+                if (!archetype.HasTag("MainCamera"))
+                {
+                    UpdateRotation(gameObjectBatch[i], rotationBatch[i]);
+                }
             }
-
         }
 
         private void UpdateRotation(GameObjectComponent gameObjectComponent, RotationComponent rotationComponent)
         {
             var rot = Quaternion.LookRotation(rotationComponent.Rotation, Vector3.up);
-            gameObjectComponent.GameObject.transform.rotation = 
+            gameObjectComponent.GameObject.transform.rotation =
                 Quaternion.RotateTowards(gameObjectComponent.GameObject.transform.rotation, rot, 360 * Time.deltaTime);
         }
     }
