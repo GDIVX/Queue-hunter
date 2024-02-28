@@ -1,56 +1,39 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
+using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Core.ECS.Common
 {
-    [CreateAssetMenu(fileName = "GameObjectComponent", menuName = "ECS/GameObjectComponent")]
-    public class GameObjectComponent : DataComponent
+    [Serializable]
+    public struct GameObjectComponent : IComponent
     {
-        [ShowInInspector, ReadOnly]
-        private GameObject gameObject;
+        [ReadOnly] public GameObject GameObject;
+        [SerializeField] public string Name;
 
-        public GameObject GameObject
+        private bool isActive;
+        public GameObjectComponent(GameObject gameObject, string name) : this()
         {
-            get
-            {
-                if (gameObject == null)
-                {
-                    CreateGameObject();
-                }
-                return gameObject;
-            }
-            private set
-            {
-                SafeSet(ref gameObject, value);
-            }
+            GameObject = gameObject;
+            Name = name;
+            IsActive = true;
+            IsDirty = true;
         }
 
-        protected override void OnSetActive(bool value)
+        public bool IsActive
         {
-            if (gameObject != null)
+            get => isActive;
+            set
             {
-                gameObject.SetActive(value);
+                isActive = value;
+                GameObject.SetActive(value);
             }
         }
+        public bool IsDirty { get; set; }
 
-        void CreateGameObject()
+        public object Clone()
         {
-            if (Entity == null)
-            {
-                Debug.LogError("Entity is null");
-                return;
-            }
-
-            gameObject = new GameObject(Entity.ToString());
-            gameObject.AddComponent<EntityInspector>().Init(Entity);
-        }
-
-        private void OnDestroy()
-        {
-            if (gameObject != null)
-            {
-                Destroy(gameObject);
-            }
+            return new GameObjectComponent(GameObject, Name);
         }
     }
 }

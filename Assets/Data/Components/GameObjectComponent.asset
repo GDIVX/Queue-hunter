@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e085021a3be4645972c73ae30a9c54, type: 3}
   m_Name: GameObjectComponent
   m_EditorClassIdentifier: 
-  _isActive: 1
+  _value:
+    GameObject: {fileID: 0}
+    Name: Entity

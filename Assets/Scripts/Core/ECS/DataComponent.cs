@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts.Core.ECS
 
 {
-    public abstract class DataComponent : ScriptableObject, IComponent, IDirty
+    public abstract class DataComponent : ScriptableObject
     {
         [InfoBox("$InfoBoxMessage")]
 
@@ -43,70 +43,8 @@ namespace Assets.Scripts.Core.ECS
         public event Action<DataComponent, bool> OnDirty;
         public event Action<DataComponent> OnDestroyed;
 
-        public T Instantiate<T>() where T : ScriptableObject, IComponent
-        {
-            T original = this as T;
 
-            if (original == null)
-            {
-                Debug.LogError($"Failed to cast {this} to {typeof(T).Name}");
-                return null;
-            }
 
-            T clone = Instantiate(original);
-            CopyFields(original, clone);
-
-            if (clone == null)
-            {
-                Debug.LogError($"Failed to clone {nameof(DataComponent)}");
-                return null;
-            }
-            return clone;
-        }
-
-        private void CopyFields<T>(T source, T destination) where T : ScriptableObject
-        {
-            // Get all fields of the object
-            FieldInfo[] fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            foreach (var field in fields)
-            {
-                object value = field.GetValue(source);
-
-                if (value is ICloneable cloneable)
-                {
-                    // If the field type supports cloning, clone it
-                    field.SetValue(destination, cloneable.Clone());
-                }
-                else
-                {
-                    // Otherwise, just set the value (works for value types and strings)
-                    field.SetValue(destination, value);
-                }
-            }
-        }
-        public IEntity GetParent()
-        {
-            return Entity;
-        }
-
-        virtual public void Initialize() { }
-
-        public void SetParent(IEntity entity)
-        {
-            Entity = entity;
-        }
-
-        public string ToJson()
-        {
-            return JsonUtility.ToJson(this);
-        }
-
-        public DataComponent FromJson(string json)
-        {
-            JsonUtility.FromJsonOverwrite(json, this);
-            return this;
-        }
 
         /// <summary>
         /// Helper method to set a value and mark the component as dirty
@@ -129,8 +67,12 @@ namespace Assets.Scripts.Core.ECS
         private void OnDestroy()
         {
             OnDestroyed?.Invoke(this);
-            Entity.RemoveComponent(this);
+            //Entity.RemoveComponent(this);
         }
 
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

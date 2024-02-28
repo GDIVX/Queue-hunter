@@ -1,4 +1,5 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Common;
 using Assets.Scripts.Engine.ECS;
 using Assets.Scripts.Engine.ECS.Common;
 using Assets.Scripts.Game.Input;
@@ -65,13 +66,13 @@ namespace Assets.Scripts.Game.Movement
                 //rot detection
                 if (skewedInput != Vector3.zero)
                 {
-                    rotationBatch[i].Rotation = GetRelativeRotation(positionBatch[i], movementParamsBatch[i]);
+                    rotationBatch[i].rotation = GetRelativeRotation(positionBatch[i], movementParamsBatch[i]);
                 }
 
                 //move detection
                 if (skewedInput != Vector3.zero)
                 {
-                    movementParamsBatch[i].LastDir = skewedInput;
+                    movementParamsBatch[i].lastDir = skewedInput;
                     Move(positionBatch[i], movementParamsBatch[i]);
                 }
             }
@@ -81,14 +82,14 @@ namespace Assets.Scripts.Game.Movement
         #region MOVE_FUNCS
         void Move(PositionComponent posComp, MovementParamsComponent moveParamsComp)
         {
-            posComp.Position += moveParamsComp.LastDir * Time.deltaTime * moveParamsComp.Speed;
+            posComp.Position += moveParamsComp.lastDir * Time.deltaTime * moveParamsComp.speed;
         }
         #endregion
 
         #region ROT_FUNCS
         Vector3 GetRelativeRotation(PositionComponent posComp, MovementParamsComponent moveParamsComp)
         {
-            var relative = (posComp.Position + moveParamsComp.LastDir) - posComp.Position;
+            var relative = (posComp.Position + moveParamsComp.lastDir) - posComp.Position;
             return relative;
         }
 

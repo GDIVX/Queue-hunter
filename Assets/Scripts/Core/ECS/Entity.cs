@@ -60,7 +60,7 @@ namespace Assets.Scripts.Core.ECS
         #endregion
 
         #region Lifecycle
-        public Entity(List<IComponent> components, SignalBus signalBus , DiContainer container)
+        public Entity(List<IComponent> components, SignalBus signalBus, DiContainer container)
         {
             _container = container;
             _signalBus = signalBus;
@@ -68,7 +68,6 @@ namespace Assets.Scripts.Core.ECS
             foreach (var component in components)
             {
                 Components[component.GetType()] = component;
-                component.SetParent(this);
             }
         }
 
@@ -157,7 +156,6 @@ namespace Assets.Scripts.Core.ECS
         public IComponent AddComponent(IComponent component)
         {
             Components[component.GetType()] = component;
-            component.SetParent(this);
             OnModified();
             return component;
         }
@@ -170,79 +168,9 @@ namespace Assets.Scripts.Core.ECS
         {
             var component = Components[typeof(T)];
             Components.Remove(typeof(T));
-            component.SetParent(null);
             OnModified();
         }
-        public T GetComponent<T>() where T : IComponent
-        {
-            return (T)Components[typeof(T)];
-        }
 
-        public bool HasComponent<T>() where T : IComponent
-        {
-            return Components.ContainsKey(typeof(T));
-        }
-        public bool HasComponent<T1, T2>()
-           where T1 : IComponent
-           where T2 : IComponent
-        {
-            return HasComponent<T1>() && HasComponent<T2>();
-        }
-
-        public bool HasComponent<T1, T2, T3>()
-            where T1 : IComponent
-            where T2 : IComponent
-            where T3 : IComponent
-        {
-            return HasComponent<T1, T2>() && HasComponent<T3>();
-        }
-
-        public bool HasComponent<T1, T2, T3, T4>()
-            where T1 : IComponent
-            where T2 : IComponent
-            where T3 : IComponent
-            where T4 : IComponent
-        {
-            return HasComponent<T1, T2, T3>() && HasComponent<T4>();
-        }
-
-        public bool HasComponent<T1, T2, T3, T4, T5>()
-            where T1 : IComponent
-            where T2 : IComponent
-            where T3 : IComponent
-            where T4 : IComponent
-            where T5 : IComponent
-        {
-            return HasComponent<T1, T2, T3, T4>() && HasComponent<T5>();
-        }
-        public bool TryGetComponent<T>(out T component) where T : IComponent
-        {
-            if (HasComponent<T>())
-            {
-                component = GetComponent<T>();
-                return true;
-            }
-            component = default;
-            return false;
-        }
-
-        public T[] GetComponents<T>() where T : IComponent
-        {
-            var components = new List<T>();
-            foreach (var component in Components)
-            {
-                if (component is T t)
-                {
-                    components.Add(t);
-                }
-            }
-            return components.ToArray();
-        }
-
-        public IComponent[] GetComponents()
-        {
-            return Components.Values.ToArray();
-        }
 
         public void RemoveComponent(DataComponent dataComponent)
         {
@@ -251,7 +179,6 @@ namespace Assets.Scripts.Core.ECS
             if (component != null)
             {
                 Components.Remove(component.GetType());
-                component.SetParent(null);
                 OnModified();
             }
         }
@@ -374,6 +301,21 @@ namespace Assets.Scripts.Core.ECS
             }
 
             return true;
+        }
+
+        public bool HasComponent<T>()
+        {
+            return Components.ContainsKey(typeof(T));
+        }
+
+        public T GetComponent<T>()
+        {
+            return (T)Components[typeof(T)];
+        }
+
+        public IComponent[] GetComponents()
+        {
+            return Components.Values.ToArray();
         }
 
         #endregion

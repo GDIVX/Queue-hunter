@@ -1,12 +1,14 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 
 namespace Assets.Scripts.Game.Input
 {
-    [CreateAssetMenu(fileName = "PlayerInput", menuName = "Game/Input/PlayerInput")]
-    public class PlayerInputComponent : DataComponent
+    //[CreateAssetMenu(fileName = "PlayerInput", menuName = "Game/Input/PlayerInput")]
+    public struct PlayerInputComponent : IComponent
     {
         [ShowInInspector]
         private Vector3 movementInput;
@@ -14,22 +16,16 @@ namespace Assets.Scripts.Game.Input
         [ShowInInspector]
         private KeyCode pressedKey;
 
-        public Vector3 MovementInput
-        {
-            get => movementInput;
-            set
-            {
-                SafeSet(ref movementInput, value);
-            }
-        }
+        public Vector3 MovementInput;
 
-        public KeyCode PressedKey
+        public KeyCode PressedKey;
+
+        public bool IsActive { get; set; }
+        public bool IsDirty { get; set; }
+
+        public object Clone()
         {
-            get => pressedKey;
-            set
-            {
-                SafeSet(ref pressedKey, value);
-            }
+            return new PlayerInputComponent();
         }
     }
 }

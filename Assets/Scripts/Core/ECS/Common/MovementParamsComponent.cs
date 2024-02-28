@@ -1,34 +1,30 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Movement
 {
-    [CreateAssetMenu(fileName = "Movement", menuName = "Game/Movement/MovementParams")]
-    public class MovementParamsComponent : DataComponent
+    public struct MovementParamsComponent : IComponent
     {
-        [ShowInInspector]
-        private float speed;
+        public float speed;
 
-        [ShowInInspector]
-        private Vector3 lastDir;
+        public Vector3 lastDir;
 
-        public Vector3 LastDir
+        public MovementParamsComponent(float speed) : this()
         {
-            get => lastDir; 
-            set
-            {
-                SafeSet(ref lastDir, value);
-            }
+            this.speed = speed;
+
+            IsActive = true;
+            IsDirty = true;
         }
 
-        public float Speed
+        public bool IsActive { get; set; }
+        public bool IsDirty { get; set; }
+
+        public object Clone()
         {
-            get => speed;
-            set
-            {
-                SafeSet(ref speed, value);
-            }
+            return new MovementParamsComponent(this.speed);
         }
     }
 }

@@ -1,31 +1,27 @@
-﻿using Assets.Scripts.Core.ECS;
-using Assets.Scripts.Core.ECS.Interfaces;
-using Sirenix.OdinInspector;
+﻿using Assets.Scripts.Core.ECS.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.Engine.ECS.Common
+namespace Assets.Scripts.Core.ECS.Common
 {
-    [CreateAssetMenu(fileName = "PositionComponent", menuName = "ECS/Components/Position")]
-    public class PositionComponent : DataComponent
+    [System.Serializable]
+    public struct PositionComponent : IComponent
     {
-        Vector3 position;
+        public Vector3 Position;
 
-        [ShowInInspector]
-        public Vector3 Position
+        public PositionComponent(Vector3 position) : this()
         {
-            get
-            {
-                return position;
-            }
+            Position = position;
+            IsActive = true;
+            IsDirty = true;
+        }
 
-            set
-            {
-                //when disabled, the component is read only
-                if (!IsActive) return;
+        public bool IsActive { get; set; }
+        public bool IsDirty { get; set; }
 
-                position = value;
-                IsDirty = true;
-            }
+        public object Clone()
+        {
+            PositionComponent component = new PositionComponent(Position);
+            return component;
         }
 
     }

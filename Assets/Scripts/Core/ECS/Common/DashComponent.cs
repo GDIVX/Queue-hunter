@@ -1,92 +1,44 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
 using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Movement
 {
-    [CreateAssetMenu(fileName = "Movement", menuName = "Game/Movement/PlayerDash")]
-    public class DashComponent : DataComponent
+    public struct DashComponent : IComponent
     {
-        [ShowInInspector]
-        private float dashDuration;
+        public float dashDuration;
+        public float dashDistance;
+        public float dashCooldown;
+        public bool canDash;
+        public bool isDashing;
+        public Vector3 dashDirection;
+        public float dashStartTime;
 
-        [ShowInInspector]
-        private float dashDistance;
-
-        [ShowInInspector]
-        private float dashCooldown;
-
-        private bool canDash = true;
-        
-        private bool isDashing;
-
-        private Vector3 dashDirection;
-
-        private float dashStartTime;
-
-        public bool CanDash
+        public DashComponent(float dashDuration, float dashDistance, float dashCooldown)
         {
-            get => canDash;
-            set
-            {
-                SafeSet(ref canDash, value);
-            }
+            this.dashDuration = dashDuration;
+            this.dashDistance = dashDistance;
+            this.dashCooldown = dashCooldown;
+
+            //TODO: Set defualt values
+            this.canDash = true;
+            this.isDashing = false;
+            this.dashDirection = default;
+            this.dashStartTime = 0;
+
+            IsActive = true;
+            IsDirty = true;
         }
 
-        public Vector3 DashDirection
-        {
-            get => dashDirection;
-            set
-            {
-                SafeSet(ref dashDirection, value);
-            }
-        }
+        public bool IsActive { get; set; }
+        public bool IsDirty { get; set; }
 
-        public float DashStartTime
+        public object Clone()
         {
-            get => dashStartTime; 
-            set
-            {
-                SafeSet(ref dashStartTime, value);
-            }
-        }
-
-        public float DashCooldown
-        {
-            get => dashCooldown;
-            set
-            {
-                SafeSet(ref dashCooldown, value);
-            }
-        }
-
-        public float DashDuration
-        {
-            get => dashDuration;
-            set
-            {
-                SafeSet(ref dashDuration, value);
-            }
-        }
-
-        public float DashDistance
-        {
-            get => dashDistance;
-            set
-            {
-                SafeSet(ref dashDistance, value);
-            }
-        }
-
-        public bool IsDashing
-        {
-            get => isDashing;
-            set
-            {
-                SafeSet(ref isDashing, value);
-            }
+            return new DashComponent(dashDuration, dashDistance, dashCooldown);
         }
     }
 }

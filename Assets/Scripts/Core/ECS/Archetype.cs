@@ -171,13 +171,7 @@ namespace Assets.Scripts.Core.ECS
                 componentsByType[type] = componentList;
             }
 
-            // Ensure the list is extended to accommodate the new component at the correct index
-            while (componentList.Count <= index)
-            {
-                componentList.Add(null);
-            }
-
-            componentList[index] = component;
+            componentList.Insert(index, component);
         }
 
         public void AddEntity(IEntity entity)

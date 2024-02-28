@@ -17,11 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 704d8d7cc12daf94e963a9c62531970e
   m_SerializeEntries:
-  - m_GUID: 85596f8e77e8447428a830e4f6795db1
-    m_Address: PositionComponent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 68b77a4a601a3db4a904c147fcd59c3d
     m_Address: RotationComponent
     m_ReadOnly: 0
@@ -49,6 +44,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 13a60b16c376ed34db9242aef4b47252
     m_Address: DashComponent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef4719e326de58d4b9d552fb906321ae
+    m_Address: PositionComponent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1623105bef94cf45968be5ebeddebed
+    m_Address: Assets/Data/Components/Models/Cube.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

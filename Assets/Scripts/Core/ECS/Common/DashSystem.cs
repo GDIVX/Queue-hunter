@@ -1,4 +1,5 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Common;
 using Assets.Scripts.Engine.ECS;
 using Assets.Scripts.Engine.ECS.Common;
 using Assets.Scripts.Game.Input;
@@ -39,7 +40,7 @@ public class DashSystem : GameSystem
     //    }
     //}
 
-    protected override void OnUpdate(Archetype archetype) 
+    protected override void OnUpdate(Archetype archetype)
     {
         var playerDashBatch = archetype.GetComponents<DashComponent>();
 
@@ -51,12 +52,12 @@ public class DashSystem : GameSystem
 
         for (int i = 0; i < archetype.Count; i++)
         {
-            if (playerDashBatch[i].CanDash && playerInputBatch[i].PressedKey == KeyCode.Space)
+            if (playerDashBatch[i].canDash && playerInputBatch[i].PressedKey == KeyCode.Space)
             {
                 StartDash(playerDashBatch[i], moveParamsBatch[i]);
             }
 
-            if (playerDashBatch[i].IsDashing)
+            if (playerDashBatch[i].isDashing)
             {
                 DuringDash(playerDashBatch[i], positionBatch[i]);
             }
@@ -67,25 +68,25 @@ public class DashSystem : GameSystem
     #region DASH_FUNCS
     void StartDash(DashComponent playerDash, MovementParamsComponent movementParams)
     {
-        playerDash.CanDash = false;
-        playerDash.IsDashing = true;
+        playerDash.canDash = false;
+        playerDash.isDashing = true;
 
         // Get the dash direction based on player input
-        playerDash.DashDirection = movementParams.LastDir;
+        playerDash.dashDirection = movementParams.lastDir;
 
         // Record start time of dash
-        playerDash.DashStartTime = Time.time;
+        playerDash.dashStartTime = Time.time;
     }
 
     void DuringDash(DashComponent playerDash, PositionComponent posComp)
     {
-        float dashTimeElapsed = Time.time - playerDash.DashStartTime;
-        if (dashTimeElapsed < playerDash.DashDuration)
+        float dashTimeElapsed = Time.time - playerDash.dashStartTime;
+        if (dashTimeElapsed < playerDash.dashDuration)
         {
             // Calculate progress of dash
-            float t = dashTimeElapsed / playerDash.DashDuration;
+            float t = dashTimeElapsed / playerDash.dashDuration;
             // Apply the lerp to move the player
-            posComp.Position = Vector3.Lerp(posComp.Position, posComp.Position + playerDash.DashDirection * playerDash.DashDistance, t);
+            posComp.Position = Vector3.Lerp(posComp.Position, posComp.Position + playerDash.dashDirection * playerDash.dashDistance, t);
         }
         else
         {
@@ -96,15 +97,15 @@ public class DashSystem : GameSystem
 
     void EndDash(DashComponent playerDash)
     {
-        playerDash.IsDashing = false;
+        playerDash.isDashing = false;
         CoroutineHelper.Instance.StartCoroutine(ResetDash(playerDash));
     }
 
 
     public IEnumerator ResetDash(DashComponent playerDash)
     {
-        yield return new WaitForSeconds(playerDash.DashCooldown);
-        playerDash.CanDash = true;
+        yield return new WaitForSeconds(playerDash.dashCooldown);
+        playerDash.canDash = true;
     }
 
 

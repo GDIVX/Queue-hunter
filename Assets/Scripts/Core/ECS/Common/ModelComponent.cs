@@ -1,30 +1,26 @@
-﻿using Assets.Scripts.Core.ECS;
-using Sirenix.OdinInspector;
+﻿using Assets.Scripts.Core.ECS.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.Engine.ECS.Common
+namespace Assets.Scripts.Core.ECS.Common
 {
-    [CreateAssetMenu(fileName = "ModelComponent", menuName = "ECS/Components/Model")]
-    public class ModelComponent : DataComponent
+    [System.Serializable]
+    public struct ModelComponent : IComponent
     {
-        [SerializeField] private GameObject model;
+        public GameObject Model;
 
-        public GameObject Model
+        public ModelComponent(GameObject model) : this()
         {
-            get
-            {
-                return model;
-            }
-            set
-            {
-                //if the entity is disabled, it is read only
-                if (IsActive) model = value;
-            }
+            Model = model;
+            IsActive = true;
+            IsDirty = true;
         }
 
-        private void OnDestroy()
+        public bool IsActive { get; set; }
+        public bool IsDirty { get; set; }
+
+        public object Clone()
         {
-            Destroy(model);
+            return new ModelComponent(Model);
         }
     }
 }
