@@ -20,25 +20,6 @@ public class DashSystem : GameSystem
         return archetype.HasComponents<DashComponent, PlayerInputComponent, PositionComponent, MovementParamsComponent>();
     }
 
-    //protected override bool ShouldProcessEntity(IEntity entity)
-    //{
-    //    return entity.HasComponent<PlayerDash, PlayerInput>();
-    //}
-
-    //protected override void OnUpdate(IEntity entity)
-    //{
-    //    //dash detection
-    //    if (entity.GetComponent<PlayerDash>().CanDash && entity.GetComponent<PlayerInput>().PressedKey == KeyCode.Space)
-    //    {
-    //        StartDash(entity);
-    //    }
-
-    //    if (entity.GetComponent<PlayerDash>().IsDashing)
-    //    {
-    //        DuringDash(entity);
-    //    }
-    //}
-
     protected override void OnUpdate(Archetype archetype) 
     {
         var playerDashBatch = archetype.GetComponents<DashComponent>();
