@@ -1,4 +1,6 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
+using Assets.Scripts.Game.Input;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +14,10 @@ public class MeleeAttackComponent : DataComponent
 
     [ShowInInspector]
     float attackRange;
+
+    public ColliderTriggerHandler triggerHandler;
+
+
 
     public Vector3 Position
     {
@@ -31,4 +37,13 @@ public class MeleeAttackComponent : DataComponent
         }
     }
 
+    public override IComponent Instantiate()
+    {
+        MeleeAttackComponent component = new MeleeAttackComponent()
+        {
+            Position = position,
+            AttackRange = attackRange
+        };
+        return component;
+    }
 }
