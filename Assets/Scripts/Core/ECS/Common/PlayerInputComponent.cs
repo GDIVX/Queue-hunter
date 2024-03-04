@@ -1,17 +1,18 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 
 namespace Assets.Scripts.Game.Input
 {
-    [CreateAssetMenu(fileName = "PlayerInput", menuName = "Game/Input/PlayerInput")]
+    [System.Serializable]
     public class PlayerInputComponent : DataComponent
     {
-        [ShowInInspector]
+        [ShowInInspector , ReadOnly]
         private Vector3 movementInput;
 
-        [ShowInInspector]
+        [ShowInInspector , ReadOnly]
         private KeyCode pressedKey;
 
         public Vector3 MovementInput
@@ -30,6 +31,16 @@ namespace Assets.Scripts.Game.Input
             {
                 SafeSet(ref pressedKey, value);
             }
+        }
+
+        public override IComponent Instantiate()
+        {
+            PlayerInputComponent component = new PlayerInputComponent()
+            {
+                MovementInput = movementInput,
+                PressedKey = pressedKey
+            };
+            return component;
         }
     }
 }

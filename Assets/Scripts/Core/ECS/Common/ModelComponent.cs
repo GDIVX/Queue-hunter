@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Assets.Scripts.Engine.ECS.Common
 {
-    [CreateAssetMenu(fileName = "ModelComponent", menuName = "ECS/Components/Model")]
+    [System.Serializable]
     public class ModelComponent : DataComponent
     {
         [SerializeField] private GameObject model;
@@ -22,9 +23,15 @@ namespace Assets.Scripts.Engine.ECS.Common
             }
         }
 
-        private void OnDestroy()
+        public override IComponent Instantiate()
         {
-            Destroy(model);
+            ModelComponent component = new ModelComponent()
+            {
+                Model = model
+            };
+            return component;
         }
+
     }
+
 }

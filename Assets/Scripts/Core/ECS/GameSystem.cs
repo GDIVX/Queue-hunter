@@ -57,7 +57,14 @@ namespace Assets.Scripts.Engine.ECS
             };
 
             //subscribe to the entity created signal
-            _signalBus.Subscribe<EntityCreatedSignal>(x => OnEntityCreated(x.Entity));
+            _signalBus.Subscribe<EntityCreatedSignal>(x =>
+            {
+                if (!ShouldProcessArchetype(x.Entity.Archetype))
+                {
+                    return;
+                }
+                OnEntityCreated(x.Entity);
+            });
             _signalBus.Subscribe<EntityDestroyedSignal>(x => OnEntityRemoved(x.Entity));
 
         }
