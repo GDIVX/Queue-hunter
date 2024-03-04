@@ -17,38 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 704d8d7cc12daf94e963a9c62531970e
   m_SerializeEntries:
-  - m_GUID: 85596f8e77e8447428a830e4f6795db1
-    m_Address: PositionComponent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 68b77a4a601a3db4a904c147fcd59c3d
-    m_Address: RotationComponent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6d05040496d1c6d45adc2f65a9c26424
-    m_Address: GameObjectComponent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ddfb47cf511a7a64b95a1c8c1ebee36d
     m_Address: GameObject_Cube
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ded5d2984bc0c424fbd62375b505181f
-    m_Address: MovementParamsComponent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 51f792c6a9ea766428a6df534f926e88
-    m_Address: PlayerInputComponent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13a60b16c376ed34db9242aef4b47252
-    m_Address: DashComponent
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

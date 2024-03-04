@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89bb6ee103b482a4db66ca9cc97eb6fa, type: 3}
-  m_Name: DashComponent
+  m_Script: {fileID: 11500000, guid: 62c660f001201b14f9eb6e1c521a4193, type: 3}
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  _isActive: 1
+  component:
+    _isActive: 1

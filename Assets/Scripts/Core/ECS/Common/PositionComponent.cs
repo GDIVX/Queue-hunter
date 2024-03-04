@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Engine.ECS.Common
 {
-    [CreateAssetMenu(fileName = "PositionComponent", menuName = "ECS/Components/Position")]
+    [System.Serializable]
     public class PositionComponent : DataComponent
     {
         Vector3 position;
@@ -28,5 +28,13 @@ namespace Assets.Scripts.Engine.ECS.Common
             }
         }
 
+        public override IComponent Instantiate()
+        {
+            PositionComponent component = new PositionComponent()
+            {
+                Position = position
+            };
+            return component;
+        }
     }
 }

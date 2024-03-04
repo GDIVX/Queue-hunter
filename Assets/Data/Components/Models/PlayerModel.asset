@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08c0316bcb3ea984685592cc5405b5da, type: 3}
-  m_Name: CameraModelComponent 1
+  m_Script: {fileID: 11500000, guid: f86054c023ad0bd489c77b8d809ac7c1, type: 3}
+  m_Name: PlayerModel
   m_EditorClassIdentifier: 
-  _isActive: 1
-  model: {fileID: 8434872977390754331, guid: 5ff98f2c9fefb60498eee3e116ee7ad9, type: 3}
+  component:
+    _isActive: 1
+    model: {fileID: 829126003478264873, guid: ea73d9e2d4698f14b9b21f4fb77aa755, type: 3}

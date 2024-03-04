@@ -9,6 +9,6 @@ namespace Assets.Scripts.Core.ECS
     {
         public string Name;
         public List<string> Tags;
-        public List<DataComponent> components;
+        public List<ComponentParams> components;
     }
 }

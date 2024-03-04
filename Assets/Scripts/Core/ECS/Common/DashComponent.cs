@@ -1,12 +1,14 @@
 using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Movement
 {
-    [CreateAssetMenu(fileName = "Movement", menuName = "Game/Movement/PlayerDash")]
+    [Serializable]
     public class DashComponent : DataComponent
     {
         [ShowInInspector]
@@ -19,7 +21,7 @@ namespace Assets.Scripts.Game.Movement
         private float dashCooldown;
 
         private bool canDash = true;
-        
+
         private bool isDashing;
 
         private Vector3 dashDirection;
@@ -46,7 +48,7 @@ namespace Assets.Scripts.Game.Movement
 
         public float DashStartTime
         {
-            get => dashStartTime; 
+            get => dashStartTime;
             set
             {
                 SafeSet(ref dashStartTime, value);
@@ -87,6 +89,17 @@ namespace Assets.Scripts.Game.Movement
             {
                 SafeSet(ref isDashing, value);
             }
+        }
+
+        public override IComponent Instantiate()
+        {
+            DashComponent component = new DashComponent()
+            {
+                DashDuration = dashDuration,
+                DashDistance = dashDistance,
+                DashCooldown = dashCooldown
+            };
+            return component;
         }
     }
 }

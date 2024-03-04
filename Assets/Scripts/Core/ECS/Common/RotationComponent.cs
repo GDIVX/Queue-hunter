@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Core.ECS;
+using Assets.Scripts.Core.ECS.Interfaces;
 using System.Collections;
 using UnityEngine;
 
 
 namespace Assets.Scripts.Engine.ECS.Common
 {
-    [CreateAssetMenu(fileName = "RotationComponent", menuName = "ECS/Components/RotationComponent")]
+    [System.Serializable]
     public class RotationComponent : DataComponent
     {
         [SerializeField] Vector3 _rotation;
@@ -17,6 +18,16 @@ namespace Assets.Scripts.Engine.ECS.Common
             {
                 SafeSet<Vector3>(ref _rotation, value);
             }
+        }
+
+        public override IComponent Instantiate()
+        {
+            RotationComponent component = new RotationComponent()
+            {
+                Rotation = _rotation
+            };
+
+            return component;
         }
     }
 }

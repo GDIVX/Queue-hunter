@@ -51,7 +51,7 @@ public class GameSetup : MonoBehaviour
         var components = new List<IComponent>();
         foreach (var component in archetype.components)
         {
-            IComponent initComponent = _componentsFactory.Instantiate(component);
+            IComponent initComponent = component.GetComponent();
             components.Add(initComponent);
         }
 

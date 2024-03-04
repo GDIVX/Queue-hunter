@@ -23,13 +23,13 @@ namespace Assets.Scripts.ECS.Common
         public override void OnEntityRemoved(IEntity entity)
         {
             //remove the model
-            if (entity.HasComponent<ModelComponent>())
+
+            if (entity.TryGetComponent(out ModelComponent component))
             {
-                var model = entity.GetComponent<ModelComponent>().Model;
+                var model = component.Model;
                 UnityEngine.Object.Destroy(model);
+
             }
-
-
         }
 
         public override void OnLateEntityCreated(IEntity entity)

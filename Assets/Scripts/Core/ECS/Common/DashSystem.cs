@@ -17,7 +17,7 @@ public class DashSystem : GameSystem
     }
     protected override bool ShouldProcessArchetype(Archetype archetype)
     {
-        return archetype.HasComponents<DashComponent, PlayerInputComponent, PositionComponent, MovementParamsComponent>();
+        return archetype.HasComponents<DashComponent, PlayerInputComponent, PositionComponent, MovementComponent>();
     }
 
     protected override void OnUpdate(Archetype archetype) 
@@ -28,7 +28,7 @@ public class DashSystem : GameSystem
 
         var positionBatch = archetype.GetComponents<PositionComponent>();
 
-        var moveParamsBatch = archetype.GetComponents<MovementParamsComponent>();
+        var moveParamsBatch = archetype.GetComponents<MovementComponent>();
 
         for (int i = 0; i < archetype.Count; i++)
         {
@@ -46,7 +46,7 @@ public class DashSystem : GameSystem
 
 
     #region DASH_FUNCS
-    void StartDash(DashComponent playerDash, MovementParamsComponent movementParams)
+    void StartDash(DashComponent playerDash, MovementComponent movementParams)
     {
         playerDash.CanDash = false;
         playerDash.IsDashing = true;

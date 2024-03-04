@@ -1,4 +1,5 @@
 using Assets.Scripts.Engine.ECS;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,8 @@ namespace Assets.Scripts.Core.ECS.Common
 {
     public class EntityInspector : MonoBehaviour
     {
-        [SerializeField] int entityID;
-        [SerializeField] List<DataComponent> components;
+        [ShowInInspector , ReadOnly] int entityID;
+        [SerializeReference] List<DataComponent> components;
 
         public void Init(IEntity entity)
         {
