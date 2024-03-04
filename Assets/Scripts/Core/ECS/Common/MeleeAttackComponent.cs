@@ -2,14 +2,14 @@ using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
 using Assets.Scripts.Game.Input;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MeleeAttackComponent", menuName = "Game/Combat/MeleeAttackComponent")]
+[Serializable]
 public class MeleeAttackComponent : DataComponent
 {
-    [ShowInInspector]
     Vector3 position;
 
     [ShowInInspector]

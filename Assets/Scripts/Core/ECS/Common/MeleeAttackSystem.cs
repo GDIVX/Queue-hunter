@@ -11,6 +11,8 @@ using Zenject;
 
 public class MeleeAttackSystem : GameSystem
 {
+    private const string LogGroupName = "MeleeSystem";
+
     public MeleeAttackSystem(SignalBus signalBus) : base(signalBus)
     {
     }
@@ -62,8 +64,22 @@ public class MeleeAttackSystem : GameSystem
 
     ColliderTriggerHandler GetMeleeCollider(GameObjectComponent goComp)
     {
-        Debug.Log("got collider");
-        return goComp.GameObject.GetComponent<ColliderTriggerHandler>();
+        if (goComp.GameObject.TryGetComponent(out ColliderTriggerHandler handler))
+        {
+            CoreLogger.Log("got collider", LogGroupName);
+            return handler;
+        }
+
+        var hanler = goComp.GameObject.GetComponentInChildren<ColliderTriggerHandler>();
+
+        if (hanler == null)
+        {
+            CoreLogger.Log("Failed getting colliderr", LogGroupName);
+
+            return null;
+        }
+
+        return hanler;
     }
 
 }

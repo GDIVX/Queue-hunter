@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08d433c803b443b4f92f8a78b2894f38, type: 3}
+  m_Script: {fileID: 11500000, guid: 16ba47a61fcf1174d809d6f3cb735ac6, type: 3}
   m_Name: MeleeAttackComponent
   m_EditorClassIdentifier: 
-  _isActive: 1
+  component:
+    _isActive: 1
+    triggerHandler: {fileID: 0}
