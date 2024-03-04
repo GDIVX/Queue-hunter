@@ -11,7 +11,7 @@ namespace Assets.Scripts.Core.ECS
         private Dictionary<string, IComponent> _components = new();
 
 
-        public async Task<T> CreateComponentAsync<T>(string address) where T : ScriptableObject, IComponent
+        public async Task<T> CreateComponentAsync<T>(string address) where T : IComponent
         {
             if (_components.TryGetValue(address, out IComponent cachedComponent))
             {
@@ -19,9 +19,9 @@ namespace Assets.Scripts.Core.ECS
                 if (cachedComponent is not T typedComponent)
                 {
                     Debug.LogError($"Type mismatch for cached component at address {address}. Expected: {typeof(T)}, Found: {cachedComponent.GetType()}");
-                    return null;
+                    return default;
                 }
-                return (T)typedComponent.Instantiate<T>();
+                return (T)typedComponent.Instantiate();
             }
 
             var loadedAsset = await Addressables.LoadAssetAsync<UnityEngine.Object>(address).Task;
@@ -36,18 +36,18 @@ namespace Assets.Scripts.Core.ECS
             }
 
             Debug.LogError($"Could not find component with address {address}.");
-            return null;
+            return default;
         }
 
-        public T Create<T>(string address, T loadedComponent) where T : ScriptableObject, IComponent
+        public T Create<T>(string address, T loadedComponent) where T : IComponent
         {
             _components[address] = loadedComponent;
             return Instantiate(loadedComponent);
         }
 
-        public T Instantiate<T>(T loadedComponent) where T : ScriptableObject, IComponent
+        public T Instantiate<T>(T loadedComponent) where T : IComponent
         {
-            return (T)loadedComponent.Instantiate<T>();
+            return (T)loadedComponent.Instantiate();
         }
     }
 }

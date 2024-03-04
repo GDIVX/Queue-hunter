@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
+using Assets.Scripts.Core.ECS.Interfaces;
 
 namespace Assets.Scripts.Core.ECS.Common
 {
-    [CreateAssetMenu(fileName = "GameObjectComponent", menuName = "ECS/GameObjectComponent")]
+    [System.Serializable]
     public class GameObjectComponent : DataComponent
     {
-        [ShowInInspector, ReadOnly]
+        [SerializeField]
         private GameObject gameObject;
 
         public GameObject GameObject
@@ -23,6 +24,19 @@ namespace Assets.Scripts.Core.ECS.Common
             {
                 SafeSet(ref gameObject, value);
             }
+        }
+
+        public override IComponent Instantiate()
+        {
+
+            GameObjectComponent component = new();
+
+            if (gameObject != null)
+            {
+                component.GameObject = gameObject;
+            }
+
+            return component;
         }
 
         protected override void OnSetActive(bool value)
@@ -43,14 +57,6 @@ namespace Assets.Scripts.Core.ECS.Common
 
             gameObject = new GameObject(Entity.ToString());
             gameObject.AddComponent<EntityInspector>().Init(Entity);
-        }
-
-        private void OnDestroy()
-        {
-            if (gameObject != null)
-            {
-                Destroy(gameObject);
-            }
         }
     }
 }
