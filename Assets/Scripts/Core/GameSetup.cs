@@ -86,5 +86,7 @@ public class GameSetup : MonoBehaviour
         _systemManager.Create<MovementSystem>();
         _systemManager.Create<InputSystem>();
         _systemManager.Create<DashSystem>();
+        _systemManager.Create<GameObjectHandlerSystem>();
+        _systemManager.Create<CollisionInstallerSystem>();
     }
 }
