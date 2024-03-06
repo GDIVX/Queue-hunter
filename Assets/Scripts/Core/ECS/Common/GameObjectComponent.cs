@@ -10,6 +10,9 @@ namespace Assets.Scripts.Core.ECS.Common
         [SerializeField]
         private GameObject gameObject;
 
+        [SerializeField]
+        bool createOnAwake;
+
         public GameObject GameObject
         {
             get
@@ -36,6 +39,11 @@ namespace Assets.Scripts.Core.ECS.Common
                 component.GameObject = gameObject;
             }
 
+            if (createOnAwake)
+            {
+                component.CreateGameObject();
+            }
+
             return component;
         }
 
@@ -49,14 +57,14 @@ namespace Assets.Scripts.Core.ECS.Common
 
         void CreateGameObject()
         {
-            if (Entity == null)
-            {
-                Debug.LogError("Entity is null");
-                return;
-            }
+            string name = Entity == null ? gameObject == null ? "GameObject" : gameObject.name : Entity.ToString();
 
-            gameObject = new GameObject(Entity.ToString());
-            gameObject.AddComponent<EntityInspector>().Init(Entity);
+            gameObject = gameObject == null ? new GameObject(name) : Object.Instantiate(gameObject);
+
+            if (Entity != null)
+            {
+                gameObject.AddComponent<EntityInspector>().Init(Entity);
+            }
         }
     }
 }
