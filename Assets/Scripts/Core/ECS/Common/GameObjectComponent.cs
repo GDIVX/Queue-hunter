@@ -10,17 +10,14 @@ namespace Assets.Scripts.Core.ECS.Common
         [SerializeField]
         private GameObject gameObject;
 
+
         public GameObject GameObject
         {
             get
             {
-                if (gameObject == null)
-                {
-                    CreateGameObject();
-                }
                 return gameObject;
             }
-            private set
+            set
             {
                 SafeSet(ref gameObject, value);
             }
@@ -47,16 +44,6 @@ namespace Assets.Scripts.Core.ECS.Common
             }
         }
 
-        void CreateGameObject()
-        {
-            if (Entity == null)
-            {
-                Debug.LogError("Entity is null");
-                return;
-            }
 
-            gameObject = new GameObject(Entity.ToString());
-            gameObject.AddComponent<EntityInspector>().Init(Entity);
-        }
     }
 }

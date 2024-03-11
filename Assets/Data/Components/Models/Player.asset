@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f86054c023ad0bd489c77b8d809ac7c1, type: 3}
-  m_Name: PlayerModel
+  m_Name: Player
   m_EditorClassIdentifier: 
   component:
     _isActive: 1
-    model: {fileID: 829126003478264873, guid: ea73d9e2d4698f14b9b21f4fb77aa755, type: 3}
+    model: {fileID: 8908304102715343901, guid: ddfb47cf511a7a64b95a1c8c1ebee36d, type: 3}

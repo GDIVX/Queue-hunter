@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ed7fd0b79529a47a3745a1aca1a129, type: 3}
-  m_Name: MainCameraGO
+  m_Script: {fileID: 11500000, guid: a71d45fba938e3f46b1becf4ee4e9ec2, type: 3}
+  m_Name: Collision
   m_EditorClassIdentifier: 
   component:
     _isActive: 1
-    gameObject: {fileID: 8434872977390754331, guid: 5ff98f2c9fefb60498eee3e116ee7ad9,
-      type: 3}
-    createOnAwake: 1
+    _unityComponent: {fileID: 0}
