@@ -12,9 +12,11 @@ namespace Assets.Scripts.Core.ECS.Common
         [SerializeReference] List<DataComponent> components;
 
         public Guid EntityGuid { get; private set; }
+        public IEntity Entity { get; private set; }
 
         public void Init(IEntity entity)
         {
+            Entity = entity;
             entityID = entity.ID.GetHashCode();
 
             EntityGuid = entity.ID;

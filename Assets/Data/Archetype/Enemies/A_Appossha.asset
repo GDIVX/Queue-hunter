@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc40eda21ff332441bec68c5de6b9c53, type: 3}
-  m_Name: A_Cube
+  m_Name: A_Appossha
   m_EditorClassIdentifier: 
-  Name: Cube
-  Tags:
-  - Player
+  Name: Appossha
+  Tags: []
   components:
-  - {fileID: 11400000, guid: 39d91444c8615994ab102f54440230e3, type: 2}
+  - {fileID: 11400000, guid: d2a006d9b37b2b446ae2251b72e4fef5, type: 2}
+  - {fileID: 11400000, guid: 0a38f344d6616404ab2d5c60b346e7ee, type: 2}
+  - {fileID: 11400000, guid: 501773a6eb3f3854dbe91249c830f910, type: 2}
   - {fileID: 11400000, guid: 37f4aa2990de76e44a83d9f0c032c43d, type: 2}
-  - {fileID: 11400000, guid: bddd1af2b140fc344a25c09486e8f908, type: 2}
   - {fileID: 11400000, guid: 85596f8e77e8447428a830e4f6795db1, type: 2}
   - {fileID: 11400000, guid: 68b77a4a601a3db4a904c147fcd59c3d, type: 2}
-  - {fileID: 11400000, guid: 501773a6eb3f3854dbe91249c830f910, type: 2}
-  - {fileID: 11400000, guid: 78ba782d0c21f354980bf515c47da934, type: 2}
+  - {fileID: 0}

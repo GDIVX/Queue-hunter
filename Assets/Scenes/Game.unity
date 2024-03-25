@@ -444,6 +444,7 @@ MonoBehaviour:
   _archetypes:
   - {fileID: 11400000, guid: 0f8273ca6d8a1104e9aa4926dad427bd, type: 2}
   - {fileID: 11400000, guid: 77e44214c3cec204f9e350b4c75c1d45, type: 2}
+  - {fileID: 11400000, guid: 22989b8bd96a46f46bb2a75b56747d53, type: 2}
 --- !u!4 &1465489529
 Transform:
   m_ObjectHideFlags: 0
