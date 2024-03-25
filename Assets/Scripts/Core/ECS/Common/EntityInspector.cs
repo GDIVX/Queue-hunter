@@ -8,13 +8,16 @@ namespace Assets.Scripts.Core.ECS.Common
 {
     public class EntityInspector : MonoBehaviour
     {
-
-        [ReadOnly] public int EntityID;
+        [ShowInInspector, ReadOnly] int entityID;
         [SerializeReference] List<DataComponent> components;
+
+        public Guid EntityGuid { get; private set; }
 
         public void Init(IEntity entity)
         {
-            EntityID = entity.ID.GetHashCode();
+            entityID = entity.ID.GetHashCode();
+
+            EntityGuid = entity.ID;
 
             components = new();
 
