@@ -90,5 +90,6 @@ public class GameSetup : MonoBehaviour
         _systemManager.Create<GameObjectHandlerSystem>();
         _systemManager.Create<CollisionInstallerSystem>();
         _systemManager.Create<FindEntitiesOfArchetypeSystem>();
+        _systemManager.Create<FollowEntitySystem>();
     }
 }

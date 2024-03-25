@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: A_Appossha
   m_EditorClassIdentifier: 
   Name: Appossha
-  Tags: []
+  Tags:
+  - FollowEntity
   components:
   - {fileID: 11400000, guid: d2a006d9b37b2b446ae2251b72e4fef5, type: 2}
   - {fileID: 11400000, guid: 0a38f344d6616404ab2d5c60b346e7ee, type: 2}
@@ -21,4 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 37f4aa2990de76e44a83d9f0c032c43d, type: 2}
   - {fileID: 11400000, guid: 85596f8e77e8447428a830e4f6795db1, type: 2}
   - {fileID: 11400000, guid: 68b77a4a601a3db4a904c147fcd59c3d, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 94598a67064cb184bb09f760eb1bb86f, type: 2}
+  - {fileID: 11400000, guid: 8f566a4b1b6821347a85d0ab43e64ddd, type: 2}

@@ -22,7 +22,9 @@ namespace Assets.Scripts.Core.ECS
         private List<Guid> entityIds = new List<Guid>();
         private Dictionary<Type, IList> componentsByType = new Dictionary<Type, IList>();
         private Dictionary<Guid, IEntity> entities = new Dictionary<Guid, IEntity>();
+
         private List<ITag> tags = new();
+
         // Stores the definitive set of component types for entities in this archetype
         private HashSet<Type> componentTypesSignature = new HashSet<Type>();
         private bool signatureDefined = false;
@@ -85,6 +87,7 @@ namespace Assets.Scripts.Core.ECS
                 Debug.LogError($"Archetype {Name} dose not contain entity with the ID {id}.");
                 return null;
             }
+
             return entities[id];
         }
 
@@ -105,6 +108,7 @@ namespace Assets.Scripts.Core.ECS
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -142,6 +146,7 @@ namespace Assets.Scripts.Core.ECS
                 {
                     componentTypesSignature.Add(component.GetType());
                 }
+
                 signatureDefined = true;
             }
             else if (!ValidateComponentsMatchArchetype(components))
@@ -182,6 +187,7 @@ namespace Assets.Scripts.Core.ECS
         public void AddEntity(IEntity entity)
         {
             AddEntity(entity.ID, entity.GetComponents());
+            entities.Add(entity.ID, entity);
             entity.Initialize(this);
         }
 
@@ -217,6 +223,7 @@ namespace Assets.Scripts.Core.ECS
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -258,6 +265,7 @@ namespace Assets.Scripts.Core.ECS
         {
             return HasComponent<T1>() && HasComponents<T2, T3, T4, T5>();
         }
+
         private bool ValidateComponentsMatchArchetype(IComponent[] components)
         {
             var componentTypes = new HashSet<Type>(components.Select(c => c.GetType()));
@@ -271,10 +279,12 @@ namespace Assets.Scripts.Core.ECS
             string[] tagNames = this.tags.Select(t => t.Name).ToArray();
             return tags.Equals(tags) && ValidateComponentsMatchArchetype(components);
         }
+
         #endregion
 
 
         #region Entities
+
         /// <summary>
         /// Get all the entities of this archetype
         /// </summary>
@@ -288,7 +298,6 @@ namespace Assets.Scripts.Core.ECS
         {
             return entityIds.Contains(id);
         }
-
 
         #endregion
     }

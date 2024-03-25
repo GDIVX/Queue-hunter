@@ -36,7 +36,6 @@ namespace Game.AI
 
                 component.Entities = entities.ToList();
                 
-                CoreLogger.Log($"Find Entities of arch {component.ArchetypeName} : \n {component.Entities}");
             }
         }
     }

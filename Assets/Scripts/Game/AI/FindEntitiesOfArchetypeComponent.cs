@@ -11,7 +11,7 @@ namespace Game.AI
     [Serializable]
     public class FindEntitiesOfArchetypeComponent : DataComponent
     {
-        [ReadOnly , SerializeField]public List<IEntity> Entities;
+        public List<IEntity> Entities { get; set; }
         public string ArchetypeName;
 
         public override IComponent Instantiate()
