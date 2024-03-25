@@ -52,7 +52,7 @@ public class MeleeAttackSystem : GameSystem
                     {
                         if (item.TryGetComponent<EntityInspector>(out EntityInspector entity))
                         {
-                            int id = entity.EntityID;
+                            int id = entity.entityID;
                             CoreLogger.Log($"hit entity with ID of {id}", "MeleeSystem");
 
                         }

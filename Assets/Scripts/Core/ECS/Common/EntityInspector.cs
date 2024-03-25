@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Engine.ECS;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -8,7 +9,7 @@ namespace Assets.Scripts.Core.ECS.Common
 {
     public class EntityInspector : MonoBehaviour
     {
-        [ShowInInspector, ReadOnly] int entityID;
+        [ShowInInspector, ReadOnly] public int entityID;
         [SerializeReference] List<DataComponent> components;
 
         public Guid EntityGuid { get; private set; }
