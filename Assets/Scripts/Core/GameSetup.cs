@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Core.ECS;
@@ -7,17 +5,11 @@ using Zenject;
 using Assets.Scripts.ECS.Common;
 using Assets.Scripts.Engine.ECS;
 using Assets.Scripts.Engine.ECS.Common;
-using UnityEngine.AddressableAssets;
 using Assets.Scripts.Core.ECS.Interfaces;
-using System.Threading.Tasks;
 using Assets.Scripts.Core.ECS.Common;
-using Assets.Scripts.Core;
-using Assets.Scripts.ECS;
-using System.Reflection;
-using UnityEngine.Rendering.VirtualTexturing;
-using System.Linq;
 using Assets.Scripts.Game.Movement;
 using Assets.Scripts.Game.Input;
+using Game.Projectiles;
 
 public class GameSetup : MonoBehaviour
 {
@@ -88,5 +80,6 @@ public class GameSetup : MonoBehaviour
         _systemManager.Create<DashSystem>();
         _systemManager.Create<GameObjectHandlerSystem>();
         _systemManager.Create<CollisionInstallerSystem>();
+        _systemManager.Create<ProjectileMovementSystem>();
     }
 }
