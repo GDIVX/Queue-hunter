@@ -5,13 +5,15 @@ namespace Assets.Scripts.Core
     public class BindableProperty<T> : IBindable<T>, IDisposable
     {
         private T _value;
+        private readonly string _name;
 
-        public BindableProperty(T value)
+        public BindableProperty(T value, string name)
         {
             Value = value;
+            _name = name;
         }
 
-        public event Action<T> OnValueChanged;
+        public event Action<string,T> OnValueChanged;
 
         public T Value
         {
@@ -23,8 +25,8 @@ namespace Assets.Scripts.Core
                     return;
                 }
                 _value = value;
-                Action<T> handler = OnValueChanged;
-                handler?.Invoke(value);
+                Action<string, T> handler = OnValueChanged;
+                handler?.Invoke(_name, value);
             }
         }
 
