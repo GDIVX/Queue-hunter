@@ -2,29 +2,54 @@ using UnityEngine;
 
 public class QProjectile : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
-    [SerializeField] float projectileSpeed;
-    Vector3 lastMPos;
-    Vector3 target;
+    private Camera _mainCamera;
+    [SerializeField] private float projectileSpeed;
+    private Vector3 _dir;
+
+    private Vector3 _mousePos;
+
+    public Camera MainCamera
+    {
+        get
+        {
+            if (_mainCamera is null)
+            {
+                _mainCamera = Camera.main;
+
+                if (_mainCamera is null)
+                {
+                    return null;
+                }
+
+                return _mainCamera;
+            }
+            return _mainCamera;
+        }
+    }
 
     private void Start()
     {
-        mainCamera = Camera.main;
-        target = GetMousePosition() - transform.position;
+        _dir = GetMousePosition() - ShotPostionHelper.Player.transform.position;
     }
 
     private void Update()
     {
-        if (target != Vector3.zero) transform.position += new Vector3 (target.x, 0, target.z).normalized * Time.deltaTime * projectileSpeed;
+        transform.position += new Vector3(_dir.x, 0, _dir.z).normalized * (Time.deltaTime * projectileSpeed);
     }
 
-    Vector3 GetMousePosition()
+    private Vector3 GetMousePosition()
     {
-        var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (MainCamera is null)
+        {
+            return Vector3.zero;
+        }
 
+        var ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+
+      
         if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
         {
-            lastMPos = hitInfo.point;
+            _mousePos = hitInfo.point;
             return hitInfo.point;
         }
         else
@@ -33,5 +58,9 @@ public class QProjectile : MonoBehaviour
         }
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_mousePos, 1);
+    }
 }
