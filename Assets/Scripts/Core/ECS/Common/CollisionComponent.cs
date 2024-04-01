@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts.Core.ECS.Common
 {
     [System.Serializable]
-    public class CollisionComponent : UnityComponentToECS<Collider>
+    public class CollisionComponent : UnityComponentToECS<BoxCollider>
     {
         public Collider Collider => UnityComponent;
 
@@ -14,13 +14,15 @@ namespace Assets.Scripts.Core.ECS.Common
         public event Action<IEntity, IEntity> OnTriggerStay;
         public event Action<IEntity, IEntity> OnTriggerExit;
 
-        public override void Install(GameObject gameObject)
+        public override Component Install(GameObject gameObject)
         {
             base.Install(gameObject);
 
             // Register Unity collision event handlers
             var triggerEventBridge = gameObject.AddComponent<CollisionEventBridge>();
             triggerEventBridge.Initialize(this);
+
+            return UnityComponent;
         }
 
         // This method is called by the TriggerEventBridge when a trigger event occurs in Unity.

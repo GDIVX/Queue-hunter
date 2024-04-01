@@ -31,8 +31,6 @@ namespace Game.AI
 
                 Vector3 followPosition = GetFollowPosition(findBatch[i]);
                 pathfinderBatch[i].Target = followPosition;
-                
-                CoreLogger.Log(followPosition);
             }
         }
 

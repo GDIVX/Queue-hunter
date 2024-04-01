@@ -9,7 +9,7 @@ namespace Assets.Scripts.Core.ECS.Common
         [ReadOnly, SerializeField] T _unityComponent;
         public T UnityComponent { get => _unityComponent; private set => _unityComponent = value; }
 
-        public override void Install(GameObject gameObject)
+        public override Component Install(GameObject gameObject)
         {
             if (gameObject.TryGetComponent(out T unityComponent))
             {
@@ -24,6 +24,7 @@ namespace Assets.Scripts.Core.ECS.Common
                 }
             }
 
+            return unityComponent;
         }
 
         public abstract override IComponent Instantiate();
@@ -31,6 +32,6 @@ namespace Assets.Scripts.Core.ECS.Common
 
     public abstract class UnityComponentToECS : DataComponent
     {
-        public abstract void Install(GameObject gameObject);
+        public abstract Component Install(GameObject gameObject);
     }
 }

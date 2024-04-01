@@ -22,12 +22,9 @@ using Game.AI;
 
 public class GameSetup : MonoBehaviour
 {
-    [Inject]
-    protected ISystemManager _systemManager;
-    [Inject]
-    protected IEntityFactory _entityFactory;
-    [Inject]
-    protected IComponentsFactory _componentsFactory;
+    [Inject] protected ISystemManager _systemManager;
+    [Inject] protected IEntityFactory _entityFactory;
+    [Inject] protected IComponentsFactory _componentsFactory;
 
     [SerializeField] List<ArchetypeAsset> _archetypes;
 
@@ -91,5 +88,6 @@ public class GameSetup : MonoBehaviour
         _systemManager.Create<CollisionInstallerSystem>();
         _systemManager.Create<FindEntitiesOfArchetypeSystem>();
         _systemManager.Create<FollowEntitySystem>();
+        _systemManager.Create<AIMovementSystem>();
     }
 }
