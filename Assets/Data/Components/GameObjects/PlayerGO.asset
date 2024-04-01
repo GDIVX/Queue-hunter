@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   component:
     _isActive: 1
-    gameObject: {fileID: 8908304102715343901, guid: ddfb47cf511a7a64b95a1c8c1ebee36d,
+    gameObject: {fileID: 3806776927472339550, guid: 750405d65ecc9224d8a0a6d71c69687f,
       type: 3}
-    createOnAwake: 0

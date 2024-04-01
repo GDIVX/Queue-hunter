@@ -6,7 +6,7 @@ namespace Assets.Scripts.Core
 {
     public interface IBindable<T>
     {
-        public event Action<T> OnValueChanged;
+        public event Action<string, T> OnValueChanged;
 
         T Value { get; set; }
     }

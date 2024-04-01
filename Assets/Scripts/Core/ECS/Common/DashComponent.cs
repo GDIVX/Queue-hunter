@@ -1,3 +1,4 @@
+using Assets.Scripts.Core;
 using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
@@ -11,6 +12,8 @@ namespace Assets.Scripts.Game.Movement
     [Serializable]
     public class DashComponent : DataComponent
     {
+        public BindableProperty<bool> DashTrigger = new(false, "DashTrigger");
+
         [ShowInInspector]
         private float dashDuration;
 
