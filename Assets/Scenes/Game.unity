@@ -664,8 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd64a38247d29b945b592c6f357bf3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  projectile: {fileID: 4659578419947797897, guid: a64ee0961ad06f94ba68db72fd4894b3,
+  projectile: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
     type: 3}
   _queueSystem: {fileID: 1482112083}
   speed: 1

@@ -117,7 +117,7 @@ public class QPlayerController : MonoBehaviour
     {
         if (_queueSystem.GetMorbole(out var morbel))
         {
-            var proj = Instantiate(projectile, new Vector3(_player.transform.position.x, _player.transform.position.y + 1, _player.transform.position.z), Quaternion.identity);
+            var proj = Instantiate(projectile, new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f, _player.transform.position.z), Quaternion.identity);
             Debug.Log($"Fire marble");
         }
     }

@@ -47,10 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da4862514aaa124db3d144afd052e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  projectileSpeed: 20
-  explosion: {fileID: 7957083765476993412, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
+  _expolotion: {fileID: 7957083765476993412, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
     type: 3}
+  projectileSpeed: 20
 --- !u!135 &5864189544722974423
 SphereCollider:
   m_ObjectHideFlags: 0

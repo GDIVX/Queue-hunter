@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class QProjectile : MonoBehaviour
 {
+    [SerializeField] private GameObject _expolotion;
     private Camera _mainCamera;
     [SerializeField] private float projectileSpeed;
     private Vector3 _dir;
@@ -58,9 +59,9 @@ public class QProjectile : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(_mousePos, 1);
+        Instantiate(_expolotion, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
