@@ -1,6 +1,8 @@
+using UnityEngine;
+
 namespace Game.MeleeSystem
 {
-    public class DamageReciver
+    public class DamageReciver : MonoBehaviour
     {
         public void TakeDamage(int damage)
         {
