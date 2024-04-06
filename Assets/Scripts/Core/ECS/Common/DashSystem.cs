@@ -50,7 +50,8 @@ public class DashSystem : GameSystem
     {
         playerDash.CanDash = false;
         playerDash.IsDashing = true;
-
+        playerDash.DashTrigger.Value = true;
+        playerDash.DashTrigger.Value = false;
         // Get the dash direction based on player input
         playerDash.DashDirection = movementParams.LastDir;
 

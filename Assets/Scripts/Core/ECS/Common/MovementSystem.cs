@@ -49,6 +49,8 @@ namespace Assets.Scripts.Game.Movement
                     movementParamsBatch[i].LastDir = skewedInput;
                     Move(positionBatch[i], movementParamsBatch[i]);
                 }
+                else movementParamsBatch[i].isRunning.Value = false;
+
             }
         }
 
@@ -57,6 +59,7 @@ namespace Assets.Scripts.Game.Movement
         void Move(PositionComponent posComp, MovementComponent moveParamsComp)
         {
             posComp.Position += moveParamsComp.LastDir * Time.deltaTime * moveParamsComp.Speed;
+            moveParamsComp.isRunning.Value = true;
         }
         #endregion
 

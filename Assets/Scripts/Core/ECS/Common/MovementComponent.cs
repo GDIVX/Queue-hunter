@@ -1,3 +1,4 @@
+using Assets.Scripts.Core;
 using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
@@ -14,6 +15,8 @@ namespace Assets.Scripts.Game.Movement
 
         [ShowInInspector , ReadOnly]
         private Vector3 lastDir;
+
+        public BindableProperty<bool> isRunning = new(false, "isRunning");
 
         public Vector3 LastDir
         {
