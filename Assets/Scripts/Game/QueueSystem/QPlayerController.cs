@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class QPlayerController : MonoBehaviour
@@ -12,6 +13,7 @@ public class QPlayerController : MonoBehaviour
     [SerializeField] float speed;
 
     private GameObject _player;
+    [SerializeField] Animator _anim;
 
     public Camera MainCamera
     {
@@ -109,7 +111,7 @@ public class QPlayerController : MonoBehaviour
             moveDir = new Vector2(-1, -1);
         }
 
-        if (Input.GetMouseButtonDown(0)) Shoot();
+        if (Input.GetMouseButtonDown(0)) StartCoroutine(ShootMarble());
 
     }
 
@@ -120,5 +122,12 @@ public class QPlayerController : MonoBehaviour
             var proj = Instantiate(projectile, new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f, _player.transform.position.z), Quaternion.identity);
             Debug.Log($"Fire marble");
         }
+    }
+
+    IEnumerator ShootMarble()
+    {
+        _anim.SetTrigger("1HSpellTrigger");
+        yield return new WaitForSeconds(1);
+        Shoot();
     }
 }
