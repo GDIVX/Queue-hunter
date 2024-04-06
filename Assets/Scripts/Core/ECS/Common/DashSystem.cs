@@ -32,7 +32,7 @@ public class DashSystem : GameSystem
 
         for (int i = 0; i < archetype.Count; i++)
         {
-            if (playerDashBatch[i].CanDash && playerInputBatch[i].PressedKey == KeyCode.Space)
+            if (playerDashBatch[i].CanDash && playerInputBatch[i].PressedKeys.Contains(KeyCode.Space))
             {
                 StartDash(playerDashBatch[i], moveParamsBatch[i]);
             }
