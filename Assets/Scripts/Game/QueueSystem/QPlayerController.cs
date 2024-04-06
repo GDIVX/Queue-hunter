@@ -5,6 +5,7 @@ public class QPlayerController : MonoBehaviour
     Camera _mainCamera;
     [SerializeField] GameObject projectile;
     [SerializeField] private QueueSystem _queueSystem;
+    [SerializeField] private MeleeController _meleeController;
     Vector3 lastMPos;
     Vector2 moveDir;
     Vector3 lookDir;
@@ -110,7 +111,8 @@ public class QPlayerController : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(0)) Shoot();
-
+        
+        if (Input.GetMouseButtonDown(1)) _meleeController.Attack();
     }
 
     void Shoot()
