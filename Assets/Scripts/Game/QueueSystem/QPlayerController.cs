@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class QPlayerController : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
+    Camera _mainCamera;
     [SerializeField] GameObject projectile;
     [SerializeField] private QueueSystem _queueSystem;
     Vector3 lastMPos;
@@ -11,17 +11,37 @@ public class QPlayerController : MonoBehaviour
 
     [SerializeField] float speed;
 
+    private GameObject _player;
+
+    public Camera MainCamera
+    {
+        get
+        {
+            if (_mainCamera is null)
+            {
+                _mainCamera = Camera.main;
+
+                if (_mainCamera is null)
+                {
+                    return null;
+                }
+
+                return _mainCamera;
+            }
+            return _mainCamera;
+        }
+    }
 
     private void Start()
     {
-       // mainCamera = Camera.main;
+        _player = ShotPostionHelper.Player;
     }
 
     private void Update()
     {
         LookAtMouse();
         GetInput();
-       // Move();
+        // Move();
     }
 
     void LookAtMouse()
@@ -33,7 +53,12 @@ public class QPlayerController : MonoBehaviour
 
     Vector3 GetMousePosition()
     {
-        var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (MainCamera is null)
+        {
+            return Vector3.zero;
+        }
+
+        var ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
         {
@@ -44,13 +69,6 @@ public class QPlayerController : MonoBehaviour
         {
             return lastMPos;
         }
-    }
-
-    void Move()
-    {
-        transform.position += new Vector3 (moveDir.x, 0 , moveDir.y) * Time.deltaTime * speed;
-        mainCamera.transform.position += new Vector3(moveDir.x, 0, moveDir.y) * Time.deltaTime * speed;
-        moveDir = Vector2.zero;
     }
 
     void GetInput()
@@ -99,7 +117,7 @@ public class QPlayerController : MonoBehaviour
     {
         if (_queueSystem.GetMorbole(out var morbel))
         {
-            var proj = Instantiate(projectile, transform.position, Quaternion.identity);
+            var proj = Instantiate(projectile, new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f, _player.transform.position.z), Quaternion.identity);
             Debug.Log($"Fire marble");
         }
     }
