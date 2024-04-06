@@ -31,7 +31,7 @@ public class MeleeAttackSystem : GameSystem
             return;
 
         var go = entity.GetComponent<GameObjectComponent>();
-        var mc = entity.GetComponent<MeleeAttackComponent>();
+        var mc = entity.GetComponent<MeleeAttackComponent>(); 
 
         mc.triggerHandler = GetMeleeCollider(go);
     }
