@@ -77,6 +77,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3195373164216409770}
+  - component: {fileID: 1567656751418896691}
   m_Layer: 0
   m_Name: QueueObject
   m_TagString: Untagged
@@ -102,6 +103,18 @@ Transform:
   - {fileID: 6174406657027089264}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1567656751418896691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010880664681247001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4df1aa39dd1b043a58eab7fda5dcf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4476307522613021765
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +202,8 @@ GameObject:
   - component: {fileID: 1710465877396333225}
   - component: {fileID: 7721227877791193529}
   - component: {fileID: 7243575316823279756}
+  - component: {fileID: 980726922312596575}
+  - component: {fileID: 880854920001068348}
   m_Layer: 0
   m_Name: QueueSystem
   m_TagString: Untagged
@@ -239,7 +254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 9216726636155972067}
-  _marbelUI: {fileID: 4256346174890411725, guid: f83cf298b37da443eaad5b3fff9e0946, type: 3}
+  _marbelUI: {fileID: 4256346174890411725, guid: f83cf298b37da443eaad5b3fff9e0946,
+    type: 3}
   _parent: {fileID: 4780900624074806198}
   _queueSystem: {fileID: 1710465877396333225}
 --- !u!114 &7243575316823279756
@@ -255,6 +271,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _queueSystem: {fileID: 1710465877396333225}
+--- !u!114 &980726922312596575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397218738698904757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd64a38247d29b945b592c6f357bf3a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
+    type: 3}
+  _queueSystem: {fileID: 1710465877396333225}
+  _meleeController: {fileID: 880854920001068348}
+  speed: 1
+--- !u!114 &880854920001068348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397218738698904757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17881b779b5203842998e97600df6b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 5
 --- !u!1 &7527935796504064077
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,4 +402,4 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
