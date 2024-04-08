@@ -57,7 +57,7 @@ public class QueueSystem : MonoBehaviour, ILoader
     {
         var morble = new Morbel(morbaleConfig,this, _mirableId);
         _morbales.Add(morble);
-        Debug.Log($"Start dissenting at speed: {morbaleConfig.speed}, id{_mirableId}");
+        //Debug.Log($"Start dissenting at speed: {morbaleConfig.speed}, id{_mirableId}");
         _mirableId++;
         _queueUI.AddNewUiMarbel(morble);
     }

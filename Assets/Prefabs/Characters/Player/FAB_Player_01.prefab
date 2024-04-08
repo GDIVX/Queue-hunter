@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3057414995249861856}
   - component: {fileID: 655996268921421714}
   - component: {fileID: 3331978408063808399}
+  - component: {fileID: -9128325581194176193}
   m_Layer: 0
   m_Name: FAB_Player_01
   m_TagString: Player
@@ -93,8 +94,25 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &-9128325581194176193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806776927472339550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb31758219218704ba3cac11017cc698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  canBeDamaged: 1
+  OnDeathUnityEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1020595159579944485
 PrefabInstance:
   m_ObjectHideFlags: 0
