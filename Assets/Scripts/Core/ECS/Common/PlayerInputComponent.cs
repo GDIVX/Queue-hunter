@@ -2,6 +2,8 @@ using Assets.Scripts.Core.ECS;
 using Assets.Scripts.Core.ECS.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 
 namespace Assets.Scripts.Game.Input
@@ -12,8 +14,10 @@ namespace Assets.Scripts.Game.Input
         [ShowInInspector , ReadOnly]
         private Vector3 movementInput;
 
-        [ShowInInspector , ReadOnly]
-        private KeyCode pressedKey;
+        [ShowInInspector]
+        //private KeyCode[] pressedKeys;
+
+        private List<KeyCode> pressedKeys = new List<KeyCode>();
 
         public Vector3 MovementInput
         {
@@ -24,12 +28,12 @@ namespace Assets.Scripts.Game.Input
             }
         }
 
-        public KeyCode PressedKey
+        public List<KeyCode> PressedKeys
         {
-            get => pressedKey;
+            get => pressedKeys;
             set
             {
-                SafeSet(ref pressedKey, value);
+                SafeSet(ref pressedKeys, value);
             }
         }
 
@@ -38,7 +42,7 @@ namespace Assets.Scripts.Game.Input
             PlayerInputComponent component = new PlayerInputComponent()
             {
                 MovementInput = movementInput,
-                PressedKey = pressedKey
+                PressedKeys = pressedKeys
             };
             return component;
         }

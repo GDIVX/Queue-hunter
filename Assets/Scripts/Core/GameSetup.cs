@@ -18,6 +18,7 @@ using UnityEngine.Rendering.VirtualTexturing;
 using System.Linq;
 using Assets.Scripts.Game.Movement;
 using Assets.Scripts.Game.Input;
+using Scirpts;
 
 public class GameSetup : MonoBehaviour
 {
@@ -87,6 +88,7 @@ public class GameSetup : MonoBehaviour
         _systemManager.Create<InputSystem>();
         _systemManager.Create<DashSystem>();
         _systemManager.Create<GameObjectHandlerSystem>();
-        _systemManager.Create<CollisionInstallerSystem>();
+        //_systemManager.Create<CollisionInstallerSystem>();
+        _systemManager.Create<PostionHelperSystem>();
     }
 }
