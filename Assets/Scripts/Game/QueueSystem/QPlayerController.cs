@@ -38,6 +38,7 @@ public class QPlayerController : MonoBehaviour
     private void Start()
     {
         _player = ShotPostionHelper.Player;
+        StartCoroutine(GetAnim());
     }
 
     private void Update()
@@ -112,9 +113,13 @@ public class QPlayerController : MonoBehaviour
             moveDir = new Vector2(-1, -1);
         }
 
-        if (Input.GetMouseButtonDown(0)) Shoot();
-        
-        if (Input.GetMouseButtonDown(1)) _meleeController.Attack();
+        if (Input.GetMouseButtonDown(0)) StartCoroutine(ShootMarble());
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            _meleeController.Attack();
+            _anim.SetTrigger("MeleeAttackTrigger");
+        }
     }
 
     void Shoot()
@@ -131,5 +136,11 @@ public class QPlayerController : MonoBehaviour
         _anim.SetTrigger("1HSpellTrigger");
         yield return new WaitForSeconds(1);
         Shoot();
+    }
+
+    IEnumerator GetAnim()
+    {
+        yield return new WaitForSeconds(3);
+        _anim = FindObjectOfType<Animator>();
     }
 }

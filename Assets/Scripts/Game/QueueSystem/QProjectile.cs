@@ -47,7 +47,7 @@ public class QProjectile : MonoBehaviour
 
         var ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
-      
+
         if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
         {
             _mousePos = hitInfo.point;
@@ -61,7 +61,10 @@ public class QProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Instantiate(_expolotion, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (!other.CompareTag("Player"))
+        {
+            Instantiate(_expolotion, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }
