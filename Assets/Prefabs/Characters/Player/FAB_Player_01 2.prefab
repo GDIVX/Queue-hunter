@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 655996268921421714}
   - component: {fileID: 3331978408063808399}
   - component: {fileID: 3379563981730518155}
-  - component: {fileID: 6935895053616689896}
   m_Layer: 0
-  m_Name: FAB_Player_01 1
+  m_Name: FAB_Player_01 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,47 +110,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   lastDir: {x: 0, y: 0, z: 0}
---- !u!114 &6935895053616689896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3806776927472339550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb31758219218704ba3cac11017cc698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 20
-  canBeDamaged: 1
-  OnDeathUnityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 3806776927472339550}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  dashDuration: 0.3
+  dashDistance: 0.3
+  dashCooldown: 2
 --- !u!1001 &2609231837543375649
 PrefabInstance:
   m_ObjectHideFlags: 0
