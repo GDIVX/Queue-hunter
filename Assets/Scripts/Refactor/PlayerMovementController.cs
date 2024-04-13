@@ -14,6 +14,7 @@ public class PlayerMovementController : MonoBehaviour
     Vector3 movementInput;
     Vector3 relative;
     bool isRunning;
+    bool canMove = true;
     #endregion
 
     #region DashParams
@@ -47,12 +48,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //move detection
-        if (skewedInput != Vector3.zero)
+        if (skewedInput != Vector3.zero && canMove)
         {
             lastDir = skewedInput;
             Move();
         }
         else anim.SetBool("isRunning", false);
+
+        if (isDashing) DuringDash();
 
     }
 
@@ -80,47 +83,50 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
 
     #region DashFunctions
-    void StartDash(DashComponent playerDash, MovementComponent movementParams)
+    public void StartDash()
     {
-        playerDash.CanDash = false;
-        playerDash.IsDashing = true;
-        playerDash.DashTrigger.Value = true;
-        playerDash.DashTrigger.Value = false;
+        if (!canDash) return;
+        canDash = false;
+        isDashing = true;
+
+        //animation trigger
+        anim.SetTrigger("DashTrigger");
+
         // Get the dash direction based on player input
-        playerDash.DashDirection = movementParams.LastDir;
+        dashDirection = lastDir;
 
         // Record start time of dash
-        playerDash.DashStartTime = Time.time;
+        dashStartTime = Time.time;
     }
 
-    void DuringDash(DashComponent playerDash, PositionComponent posComp)
+    void DuringDash()
     {
-        float dashTimeElapsed = Time.time - playerDash.DashStartTime;
-        if (dashTimeElapsed < playerDash.DashDuration)
+        float dashTimeElapsed = Time.time - dashStartTime;
+        if (dashTimeElapsed < dashDuration)
         {
             // Calculate progress of dash
-            float t = dashTimeElapsed / playerDash.DashDuration;
+            float t = dashTimeElapsed / dashDuration;
             // Apply the lerp to move the player
-            posComp.Position = Vector3.Lerp(posComp.Position, posComp.Position + playerDash.DashDirection * playerDash.DashDistance, t);
+            transform.position = Vector3.Lerp(transform.position, transform.position + dashDirection * dashDistance, t);
         }
         else
         {
             // End dash
-            EndDash(playerDash);
+            EndDash();
         }
     }
 
-    void EndDash(DashComponent playerDash)
+    void EndDash()
     {
-        playerDash.IsDashing = false;
-        CoroutineHelper.Instance.StartCoroutine(ResetDash(playerDash));
+        isDashing = false;
+        StartCoroutine(ResetDash());
     }
 
 
-    public IEnumerator ResetDash(DashComponent playerDash)
+    public IEnumerator ResetDash()
     {
-        yield return new WaitForSeconds(playerDash.DashCooldown);
-        playerDash.CanDash = true;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
     #endregion
 }
