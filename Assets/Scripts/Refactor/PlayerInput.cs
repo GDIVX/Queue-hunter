@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
     public UnityEvent OnSpaceBarPressed;
     public UnityEvent OnLeftMousePressed;
     public UnityEvent OnRightMousePressed;
+    public UnityEvent OnECSPressed;
 
     private void Update()
     {
@@ -17,5 +18,6 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1)) OnRightMousePressed.Invoke();
 
+        if (Input.GetKeyDown(KeyCode.Escape)) OnECSPressed.Invoke();
     }
 }
