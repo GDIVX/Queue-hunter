@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class QPlayerController : MonoBehaviour
@@ -13,6 +14,7 @@ public class QPlayerController : MonoBehaviour
     [SerializeField] float speed;
 
     private GameObject _player;
+    [SerializeField] Animator _anim;
 
     public Camera MainCamera
     {
@@ -36,6 +38,7 @@ public class QPlayerController : MonoBehaviour
     private void Start()
     {
         _player = ShotPostionHelper.Player;
+        StartCoroutine(GetAnim());
     }
 
     private void Update()
@@ -110,9 +113,13 @@ public class QPlayerController : MonoBehaviour
             moveDir = new Vector2(-1, -1);
         }
 
-        if (Input.GetMouseButtonDown(0)) Shoot();
-        
-        if (Input.GetMouseButtonDown(1)) _meleeController.Attack();
+        if (Input.GetMouseButtonDown(0)) StartCoroutine(ShootMarble());
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            _meleeController.Attack();
+            _anim.SetTrigger("MeleeAttackTrigger");
+        }
     }
 
     void Shoot()
@@ -122,5 +129,18 @@ public class QPlayerController : MonoBehaviour
             var proj = Instantiate(projectile, new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f, _player.transform.position.z), Quaternion.identity);
             Debug.Log($"Fire marble");
         }
+    }
+
+    IEnumerator ShootMarble()
+    {
+        _anim.SetTrigger("1HSpellTrigger");
+        yield return new WaitForSeconds(1);
+        Shoot();
+    }
+
+    IEnumerator GetAnim()
+    {
+        yield return new WaitForSeconds(3);
+        _anim = FindObjectOfType<Animator>();
     }
 }

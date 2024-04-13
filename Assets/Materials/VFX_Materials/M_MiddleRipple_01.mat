@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MiddleRipple
+  m_Name: M_MiddleRipple_01
   m_Shader: {fileID: -6465566751694194690, guid: 0d1a68d8f12245342af717d0b89d31cd,
     type: 3}
   m_Parent: {fileID: 0}

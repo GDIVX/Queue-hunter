@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6032307725223429082}
   - component: {fileID: 8451734793388063986}
   - component: {fileID: 331004338399703722}
-  - component: {fileID: 4405243978782014999}
+  - component: {fileID: 1487301268319652016}
   m_Layer: 0
   m_Name: FAB_SM_MiniHousePole_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4405243978782014999
+--- !u!65 &1487301268319652016
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.009321595, y: 0.024965612, z: 0.009916477}
-  m_Center: {x: 0.00000008591451, y: 0.012446488, z: -0.0000000027939677}
+  m_Size: {x: 9.321594, y: 24.965612, z: 9.916477}
+  m_Center: {x: 0.00008583069, y: 12.446488, z: -0.000002861023}
