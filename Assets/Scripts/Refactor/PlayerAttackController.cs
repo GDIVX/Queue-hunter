@@ -82,7 +82,7 @@ public class PlayerAttackController : MonoBehaviour
         playerMovementController.speed *= .5f;
         anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         playerMovementController.speed *= 2;
         playerMovementController.canMove = true;
         canUseMelee = true;
