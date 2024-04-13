@@ -16,4 +16,3 @@ MonoBehaviour:
     _isActive: 1
     gameObject: {fileID: 8434872977390754331, guid: 5ff98f2c9fefb60498eee3e116ee7ad9,
       type: 3}
-    createOnAwake: 1
