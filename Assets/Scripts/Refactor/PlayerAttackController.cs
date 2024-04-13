@@ -1,6 +1,7 @@
 using Combat;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,6 +18,7 @@ public class PlayerAttackController : MonoBehaviour
     #region MeleeParams
     [SerializeField] private int meleeDamage;
     private List<IDamageable> EntityInRange;
+    bool canUseMelee = true;
 
     public int MeleeDamage
     {
@@ -67,6 +69,7 @@ public class PlayerAttackController : MonoBehaviour
 
     public void InitMeleeAttack()
     {
+        if (!canUseMelee) return;
         var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
         transform.LookAt(new Vector3(pos.x, 0, pos.z));
         StartCoroutine(PunchCoroutine());
@@ -74,13 +77,15 @@ public class PlayerAttackController : MonoBehaviour
 
     IEnumerator PunchCoroutine()
     {
+        canUseMelee = false;
         playerMovementController.canMove = false;
         playerMovementController.speed *= .5f;
         anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(.5f);
         playerMovementController.speed *= 2;
         playerMovementController.canMove = true;
+        canUseMelee = true;
     }
 
     public void DoDamage()

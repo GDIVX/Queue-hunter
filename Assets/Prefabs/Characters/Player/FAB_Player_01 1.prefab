@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3331978408063808399}
   - component: {fileID: 3379563981730518155}
   - component: {fileID: 6935895053616689896}
+  - component: {fileID: 982436022322974332}
+  - component: {fileID: 6704466814056615879}
   m_Layer: 0
   m_Name: FAB_Player_01 1
   m_TagString: Player
@@ -70,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d61a0b6ca147b14ab27a3ab33fc78ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!54 &3331978408063808399
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -110,7 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  rotationSpeed: 360
   lastDir: {x: 0, y: 0, z: 0}
+  canMove: 1
+  canRotate: 1
   dashDuration: 0.3
   dashDistance: 0.3
   dashCooldown: 2
@@ -155,6 +161,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &982436022322974332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806776927472339550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b29c9c02a40b64c8622dc8f7e57084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  queueSystem: {fileID: 0}
+  projectile: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
+    type: 3}
+  playerMovementController: {fileID: 0}
+  meleeDamage: 1
+--- !u!114 &6704466814056615879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806776927472339550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4df1aa39dd1b043a58eab7fda5dcf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2609231837543375649
 PrefabInstance:
   m_ObjectHideFlags: 0
