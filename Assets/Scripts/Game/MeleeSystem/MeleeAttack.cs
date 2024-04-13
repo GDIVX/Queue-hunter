@@ -4,10 +4,10 @@ using Game.MeleeSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class MeleeRange : MonoBehaviour
+public class MeleeAttack : MonoBehaviour
 {
-    public static List<IDamageable> EntityInRange;
     [SerializeField] private int damage;
+    private List<IDamageable> EntityInRange;
 
     public int Damage
     {
@@ -23,15 +23,17 @@ public class MeleeRange : MonoBehaviour
     [Button]
     public void DoDamage()
     {
+        Debug.Log("Attacking");
         foreach (IDamageable target in EntityInRange)
         {
             target.HandleDamage(Damage);
+            Debug.Log("!");
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy")) return;
+        if (!other.gameObject.CompareTag("Enemy")) return;
         if (other.TryGetComponent(out IDamageable target))
         {
             EntityInRange.Add(target);
@@ -40,7 +42,7 @@ public class MeleeRange : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy")) return;
+        if (!other.gameObject.CompareTag("Enemy")) return;
 
         if (other.TryGetComponent(out IDamageable target))
         {

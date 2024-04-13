@@ -57,14 +57,12 @@ namespace Combat
 
         IEnumerator Attack(IDamageable damageable)
         {
-            Debug.Log("Start Attack");
             isAttacking = true;
             //windup
             OnAttackWindup?.Invoke();
             yield return new WaitForSeconds(attackWindup);
 
             //the actual attack
-            Debug.Log("Attacking");
 
             OnAttacking?.Invoke();
             damageable.HandleDamage(damage);
@@ -72,7 +70,6 @@ namespace Combat
             //cooldwon
             yield return new WaitForSeconds(attackCooldown);
             OnAttackOnCooldownEnd?.Invoke();
-            Debug.Log("Cooldown over");
 
             isAttacking = false;
         }
