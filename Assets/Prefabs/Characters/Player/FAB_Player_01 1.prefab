@@ -110,6 +110,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   lastDir: {x: 0, y: 0, z: 0}
+  dashDuration: 0.3
+  dashDistance: 0.3
+  dashCooldown: 2
 --- !u!1001 &2609231837543375649
 PrefabInstance:
   m_ObjectHideFlags: 0

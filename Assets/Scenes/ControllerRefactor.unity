@@ -181,21 +181,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3379563981730518155, guid: c39811e28c0405347846d2a102f834a8,
-        type: 3}
-      propertyPath: dashCooldown
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379563981730518155, guid: c39811e28c0405347846d2a102f834a8,
-        type: 3}
-      propertyPath: dashDistance
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379563981730518155, guid: c39811e28c0405347846d2a102f834a8,
-        type: 3}
-      propertyPath: dashDuration
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 3806776927472339550, guid: c39811e28c0405347846d2a102f834a8,
         type: 3}
       propertyPath: m_Name
@@ -617,39 +602,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
         type: 3}
-      propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
-        type: 3}
-      propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
-        type: 3}
       propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1475103160}
-    - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
-        type: 3}
-      propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
-        type: 3}
-      propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartDash
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
-        type: 3}
-      propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMovementController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718893035513503102, guid: f442079f6edbbde4eaf7fa25bc584b4f,
-        type: 3}
-      propertyPath: OnSpaceBarPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
