@@ -15,6 +15,6 @@ public class CameraFollow : MonoBehaviour
 
     private void OnValidate()
     {
-        transform.rotation = Quaternion.Euler(camRotation, -45, 0);
+        transform.rotation = Quaternion.Euler(camRotation, 45, 0);
     }
 }
