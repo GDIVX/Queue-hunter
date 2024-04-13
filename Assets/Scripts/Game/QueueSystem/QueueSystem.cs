@@ -97,7 +97,7 @@ public class QueueSystem : MonoBehaviour, ILoader
             {
                 _loadedMorbels.Add(morbel);
                 morbel.OnLoaded(_loadedMorbels.Count - 1);
-                Debug.Log($"Loaded new morble Id: {morbel.Id}");
+                //Debug.Log($"Loaded new morble Id: {morbel.Id}");
             }
         }
 

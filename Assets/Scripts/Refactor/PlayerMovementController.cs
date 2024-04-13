@@ -9,18 +9,20 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     #region MovementParams
-    [SerializeField] float speed;
+    public float speed;
+    [SerializeField] float rotationSpeed = 360;
     [SerializeField] private Vector3 lastDir;
     Vector3 movementInput;
     Vector3 relative;
     bool isRunning;
-    bool canMove = true;
+    public bool canMove = true;
+    public bool canRotate = true;
     #endregion
 
     #region DashParams
-    [SerializeField]private float dashDuration;
-    [SerializeField]private float dashDistance;
-    [SerializeField]private float dashCooldown;
+    [SerializeField] private float dashDuration;
+    [SerializeField] private float dashDistance;
+    [SerializeField] private float dashCooldown;
     private bool canDash = true;
     private bool isDashing;
     private Vector3 dashDirection;
@@ -41,10 +43,10 @@ public class PlayerMovementController : MonoBehaviour
         var skewedInput = matrix.MultiplyPoint3x4(movementInput);
 
         //rot detection
-        if (skewedInput != Vector3.zero)
+        if (skewedInput != Vector3.zero && canMove)
         {
             relative = GetRelativeRotation();
-            UpdateRotation();
+            UpdateRotation(relative, rotationSpeed);
         }
 
         //move detection
@@ -72,12 +74,12 @@ public class PlayerMovementController : MonoBehaviour
         return relative;
     }
 
-    private void UpdateRotation()
+    public void UpdateRotation(Vector3 relative, float rotSpeed)
     {
-        if (relative != Vector3.zero)
+        if (relative != Vector3.zero && canRotate)
         {
             var rot = Quaternion.LookRotation(relative, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, 360 * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotSpeed * Time.deltaTime);
         }
     }
     #endregion
