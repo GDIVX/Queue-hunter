@@ -198,7 +198,7 @@ MonoBehaviour:
   targeting: {fileID: 1786835331794283215}
   view: {fileID: 7634080022712064154}
   rotationSpeed: 8
-  speed: 1
+  speed: 3
 --- !u!114 &3109053303165181385
 MonoBehaviour:
   m_ObjectHideFlags: 0

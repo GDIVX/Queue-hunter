@@ -21,8 +21,6 @@ namespace AI
         public void SetMovementAllowed(bool value)
         {
             isMoveing = value;
-            if (value) anim.SetBool("isRunning", true);
-            else anim.SetBool("isRunning", false);
         }
 
         private void Start()
@@ -32,7 +30,12 @@ namespace AI
 
         private void Update()
         {
-            if (!isMoveing) return;
+            if (!isMoveing)
+            {
+                anim.SetBool("isRunning", false);
+                return;
+            }
+            anim.SetBool("isRunning", true);
             //Get a target 
             ITargetable target = targeting.GetTarget();
             Vector3 direction;

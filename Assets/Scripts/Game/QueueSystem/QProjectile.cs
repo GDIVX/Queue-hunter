@@ -30,7 +30,8 @@ public class QProjectile : MonoBehaviour
 
     private void Start()
     {
-        _dir = GetMousePosition() - ShotPostionHelper.Player.transform.position;
+        var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+        _dir = pos - ShotPostionHelper.Player.transform.position;
     }
 
     private void Update()
@@ -61,7 +62,7 @@ public class QProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && !other.CompareTag("Vision"))
         {
             Instantiate(_expolotion, transform.position, Quaternion.identity);
             Destroy(gameObject);
