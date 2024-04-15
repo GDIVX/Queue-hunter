@@ -14,10 +14,21 @@ namespace AI
         [SerializeField, TabGroup("View")] private float rotationSpeed;
 
         [SerializeField, TabGroup("Setting")] private float speed;
+        Animator anim;
 
         private bool isMoveing = true;
 
-        public void SetMovementAllowed(bool value) => isMoveing = value;
+        public void SetMovementAllowed(bool value)
+        {
+            isMoveing = value;
+            if (value) anim.SetBool("isRunning", true);
+            else anim.SetBool("isRunning", false);
+        }
+
+        private void Start()
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
 
         private void Update()
         {

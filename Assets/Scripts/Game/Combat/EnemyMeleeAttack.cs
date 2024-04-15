@@ -27,6 +27,7 @@ namespace Combat
         private ITargetable target;
         private bool isAttacking = false;
 
+        Animator anim;
 
         public void Init(int inDamage, float inAttackWindup, float inAttackCooldown, float inRange)
         {
@@ -34,6 +35,11 @@ namespace Combat
             attackCooldown = inAttackCooldown;
             attackWindup = inAttackWindup;
             range = inRange;
+        }
+
+        private void Start()
+        {
+            anim = GetComponentInChildren<Animator>();   
         }
 
         private void Update()
@@ -58,6 +64,7 @@ namespace Combat
         IEnumerator Attack(IDamageable damageable)
         {
             isAttacking = true;
+            anim.SetTrigger("AttackTrigger");
             //windup
             OnAttackWindup?.Invoke();
             yield return new WaitForSeconds(attackWindup);
