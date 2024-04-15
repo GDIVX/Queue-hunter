@@ -50,6 +50,7 @@ namespace Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
+                canBeDamaged = false;
                 OnDestroyed?.Invoke(this);
                 OnDeathUnityEvent?.Invoke();
                 return;

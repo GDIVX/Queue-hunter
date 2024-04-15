@@ -47,7 +47,7 @@ public class QueueUI : MonoBehaviour
         {
             RectTransform rect = (RectTransform)_marbelUis[i].transform;
 
-            float dis = (_marbelUis[i].DisPro * _imageHeight) / 100;
+            float dis = (_marbelUis[i].DisPro * _imageHeight) / 300;
             
             rect.anchoredPosition = new Vector3(0, -dis);
         }

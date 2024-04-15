@@ -1,8 +1,6 @@
 using Combat;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -115,5 +113,18 @@ public class PlayerAttackController : MonoBehaviour
         {
             EntityInRange.Remove(target);
         }
+    }
+    
+    //temp
+    public void PlayerDead()
+    {
+        anim.SetTrigger("PlayerDeathTrigger");
+        StartCoroutine(KillPlayer());
+    }
+
+    IEnumerator KillPlayer()
+    {
+        yield return new WaitForSeconds(3.7f);
+        gameObject.SetActive(false);
     }
 }

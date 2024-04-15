@@ -35,20 +35,15 @@ namespace AI
                 return utilityA.CompareTo(utilityB);
             });
 
-        }
-
-        private void Update()
-        {
-            if(priorityQueue.Count != 0) return;
             var player = GameObject.FindWithTag("Player");
+            if(priorityQueue.Count != 0) return;
             ITargetable castleTarget = player.GetComponent<ITargetable>();
             priorityQueue.Enqueue(castleTarget);
-            
         }
-        
 
         private float GetUtilityScore(ITargetable target)
         {
+            if (target == null) return 0.0f;
             //get the tag of target
             var pair = weightPerTags.FirstOrDefault(x => target.CompareTag(x.tag));
             if (pair.tag.IsNullOrWhitespace()) return -1; //invalid, return minimum value

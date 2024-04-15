@@ -14,14 +14,28 @@ namespace AI
         [SerializeField, TabGroup("View")] private float rotationSpeed;
 
         [SerializeField, TabGroup("Setting")] private float speed;
+        Animator anim;
 
         private bool isMoveing = true;
 
-        public void SetMovementAllowed(bool value) => isMoveing = value;
+        public void SetMovementAllowed(bool value)
+        {
+            isMoveing = value;
+        }
+
+        private void Start()
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
 
         private void Update()
         {
-            if (!isMoveing) return;
+            if (!isMoveing)
+            {
+                anim.SetBool("isRunning", false);
+                return;
+            }
+            anim.SetBool("isRunning", true);
             //Get a target 
             ITargetable target = targeting.GetTarget();
             Vector3 direction;
