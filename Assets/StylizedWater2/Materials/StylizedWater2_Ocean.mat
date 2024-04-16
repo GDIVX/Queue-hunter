@@ -281,7 +281,7 @@ Material:
     - _WaveDistance: 0.97
     - _WaveHeight: 1.5
     - _WaveNormalStr: 9.4
-    - _WaveSpeed: 1.5
+    - _WaveSpeed: 1
     - _WaveSteepness: 1.76
     - _WaveTint: 0.057
     - _WavesOn: 1
