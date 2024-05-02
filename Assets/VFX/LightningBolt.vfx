@@ -95,9 +95,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: -1297
-    y: -313
-    width: 5091
-    height: 2406
+    y: -314
+    width: 5092
+    height: 2408
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6594,7 +6594,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"51aaee979f208cd40a219d1b21add8fb","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"e7132ef07e053d341aedc3cddb567039","type":3}}'
     m_Space: 2147483647
   m_Property:
     name: _MainTex
