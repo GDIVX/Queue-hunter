@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class PlayerAttackController : MonoBehaviour
 {
     Animator anim;
-    [SerializeField] QueueSystem queueSystem;
     [SerializeField] GameObject projectile;
     [SerializeField] PlayerMovementController playerMovementController;
     Camera MainCamera;
@@ -39,10 +38,11 @@ public class PlayerAttackController : MonoBehaviour
 
     void ShootProjectile()
     {
-        if (queueSystem.GetMorbole(out var morbel))
-        {
-            var proj = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
-        }
+        //TODO : Refactor
+        // if (queueSystem.GetMorbole(out var morbel))
+        // {
+        //     var proj = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
+        // }
     }
 
     public void InitShootCoroutine()
