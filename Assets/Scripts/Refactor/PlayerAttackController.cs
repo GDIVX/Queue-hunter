@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class PlayerAttackController : MonoBehaviour
 {
     Animator anim;
-    [SerializeField] GameObject projectile;
+    // [SerializeField] GameObject projectile;
     [SerializeField] PlayerMovementController playerMovementController;
     Camera MainCamera;
     bool isShooting;
@@ -36,34 +36,34 @@ public class PlayerAttackController : MonoBehaviour
         MainCamera = Camera.main;
     }
 
-    void ShootProjectile()
-    {
-        //TODO : Refactor
-        // if (queueSystem.GetMorbole(out var morbel))
-        // {
-        //     var proj = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
-        // }
-    }
+    // void ShootProjectile()
+    // {
+    //     //TODO : Refactor
+    //     // if (queueSystem.GetMorbole(out var morbel))
+    //     // {
+    //     //     var proj = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
+    //     // }
+    // }
 
-    public void InitShootCoroutine()
-    {
-        if (isShooting) return;
-        var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
-        transform.LookAt(new Vector3(pos.x, 0, pos.z));
-        StartCoroutine(ShootMarble());
-    }
+    // public void InitShootCoroutine()
+    // {
+    //     if (isShooting) return;
+    //     var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+    //     transform.LookAt(new Vector3(pos.x, 0, pos.z));
+    //     StartCoroutine(ShootMarble());
+    // }
 
-    public IEnumerator ShootMarble()
-    {
-        isShooting = true;
-        anim.SetTrigger("1HSpellTrigger");
-        playerMovementController.canMove = false;
-        yield return new WaitForSeconds(1);
-        ShootProjectile();
-        yield return new WaitForSeconds(1.3f);
-        playerMovementController.canMove = true;
-        isShooting = false;
-    }
+    // public IEnumerator ShootMarble()
+    // {
+    //     isShooting = true;
+    //     anim.SetTrigger("1HSpellTrigger");
+    //     playerMovementController.canMove = false;
+    //     yield return new WaitForSeconds(1);
+    //     ShootProjectile();
+    //     yield return new WaitForSeconds(1.3f);
+    //     playerMovementController.canMove = true;
+    //     isShooting = false;
+    // }
 
     public void InitMeleeAttack()
     {
