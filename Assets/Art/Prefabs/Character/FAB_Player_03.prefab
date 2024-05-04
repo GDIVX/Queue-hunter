@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6222942314121909788}
   - component: {fileID: 6926521998198871326}
-  - component: {fileID: 3157787675984781177}
   - component: {fileID: 15146975456698213}
   - component: {fileID: 3877892587926244631}
   - component: {fileID: 7704920714557367582}
   - component: {fileID: 8684972494629325834}
   - component: {fileID: 829590588285160709}
+  - component: {fileID: 3483987418559588412}
   m_Layer: 3
   m_Name: FAB_Player_03
   m_TagString: Player
@@ -60,19 +60,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.57, y: 1, z: 2.54}
   m_Center: {x: 0, y: 1, z: 1}
---- !u!114 &3157787675984781177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6798912110303037578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d61a0b6ca147b14ab27a3ab33fc78ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
 --- !u!54 &15146975456698213
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -96,10 +83,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &3877892587926244631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,13 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2155f719c2aca5f40af56ae5cd5af63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   rotationSpeed: 360
   lastDir: {x: 0, y: 0, z: 0}
   canMove: 1
   canRotate: 1
   dashDuration: 0.3
-  dashDistance: 0.3
+  dashDistance: 1
   dashCooldown: 2
 --- !u!114 &7704920714557367582
 MonoBehaviour:
@@ -137,6 +124,18 @@ MonoBehaviour:
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8684972494629325834}
+        m_TargetAssemblyTypeName: PlayerAttackController, Assembly-CSharp
+        m_MethodName: PlayerDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -148,18 +147,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 6798912110303037578}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &8684972494629325834
 MonoBehaviour:
@@ -190,6 +177,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4df1aa39dd1b043a58eab7fda5dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3483987418559588412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798912110303037578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285bcc49d3ff44446bbae04a05270762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayPerJump: 0.3
+  baseMaxJumps: 5
+  baseDamage: 1
+  p4: {fileID: 0}
+  p1: {fileID: 0}
+  bolt: {fileID: 0}
+  debugMode: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  maxDistancePerJump: 5
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3483987418559588412}
+        m_TargetAssemblyTypeName: Combat.Weapons.ChainLightning, Assembly-CSharp
+        m_MethodName: OnHitDebug
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &3985215847576457053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -782,6 +807,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408105165961636644, guid: 877f547e481274a47b6c809d4a49ee37,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8502954640851091200, guid: 877f547e481274a47b6c809d4a49ee37,
         type: 3}
