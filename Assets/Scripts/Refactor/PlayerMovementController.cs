@@ -1,14 +1,10 @@
-using Assets.Scripts.Core.ECS.Common;
-using Assets.Scripts.Engine.ECS.Common;
-using Assets.Scripts.Game.Movement;
-using Queue.Helpers;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
     #region MovementParams
+
     public float speed;
     [SerializeField] float rotationSpeed = 360;
     [SerializeField] private Vector3 lastDir;
@@ -17,9 +13,11 @@ public class PlayerMovementController : MonoBehaviour
     bool isRunning;
     public bool canMove = true;
     public bool canRotate = true;
+
     #endregion
 
     #region DashParams
+
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashCooldown;
@@ -27,6 +25,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool isDashing;
     private Vector3 dashDirection;
     private float dashStartTime;
+
     #endregion
 
     Animator anim;
@@ -38,7 +37,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        movementInput = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), 0, UnityEngine.Input.GetAxisRaw("Vertical"));
+        movementInput = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), 0,
+            UnityEngine.Input.GetAxisRaw("Vertical"));
         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         var skewedInput = matrix.MultiplyPoint3x4(movementInput);
 
@@ -58,10 +58,10 @@ public class PlayerMovementController : MonoBehaviour
         else anim.SetBool("isRunning", false);
 
         if (isDashing) DuringDash();
-
     }
 
     #region MoveFunctions
+
     void Move()
     {
         transform.position += lastDir * Time.deltaTime * speed;
@@ -82,9 +82,11 @@ public class PlayerMovementController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotSpeed * Time.deltaTime);
         }
     }
+
     #endregion
 
     #region DashFunctions
+
     public void StartDash()
     {
         if (!canDash) return;
@@ -130,5 +132,6 @@ public class PlayerMovementController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
     #endregion
 }
