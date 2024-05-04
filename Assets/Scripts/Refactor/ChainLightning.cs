@@ -12,9 +12,11 @@ namespace Combat.Weapons
     {
         [SerializeField, BoxGroup("Jump")] private float delayPerJump;
         [SerializeField, BoxGroup("Jump")] private uint baseMaxJumps;
+
         [SerializeField, BoxGroup("Damage")] private int baseDamage;
+
         [SerializeField, BoxGroup("Targeting")] private LayerMask targetMask;
-        [SerializeField] float maxDistancePerJump = 5;
+        [SerializeField, BoxGroup("Targeting")] float maxDistancePerJump = 5;
 
         [SerializeField, BoxGroup("Effect")] Transform p4;
         [SerializeField, BoxGroup("Effect")] Transform p1;
@@ -44,10 +46,8 @@ namespace Combat.Weapons
             IsAttacking = true;
             int jumps = 0;
             Vector3 currPosition = transform.position;
-            Debug.Log("Triggered");
             while (jumps < MaxJumps)
             {
-                Debug.Log("jump loop");
                 float currJumpDistance = maxDistancePerJump;
                 Collider[] hits = Physics.OverlapSphere(currPosition, currJumpDistance, targetMask);
 
@@ -56,7 +56,6 @@ namespace Combat.Weapons
                     Collider closestTarget = FindClosestTarget(hits, currPosition);
                     if (closestTarget != null/* && closestTarget.transform.TryGetComponent(out IDamageable damageable)*/)
                     {
-                        Debug.Log("found target");
                         lastHitTarget = closestTarget;
                         DebugDraw(currPosition, closestTarget.transform.position);
                         bolt.transform.position = currPosition;
@@ -94,10 +93,8 @@ namespace Combat.Weapons
         {
             Collider closest = null;
             float minDistance = float.MaxValue;
-            //Debug.Log(targets.Length);
             foreach (Collider target in targets)
             {
-                //if (lastHitTarget != null && target == lastHitTarget) continue;
                 float distance = Vector3.Distance(currentPos, target.transform.position);
                 if (distance == 0) continue;
                 if (distance < minDistance)
