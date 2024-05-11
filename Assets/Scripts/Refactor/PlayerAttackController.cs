@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    Animator anim;
+    [SerializeField] Animator anim;
     // [SerializeField] GameObject projectile;
     [SerializeField] PlayerMovementController playerMovementController;
     Camera MainCamera;
@@ -31,8 +31,8 @@ public class PlayerAttackController : MonoBehaviour
 
     private void Start()
     {
-        anim = GetComponentInChildren<Animator>();
-        playerMovementController = GetComponent<PlayerMovementController>();
+        //anim = GetComponentInChildren<Animator>();
+        //playerMovementController = GetComponent<PlayerMovementController>();
         MainCamera = Camera.main;
     }
 

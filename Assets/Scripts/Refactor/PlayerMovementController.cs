@@ -19,7 +19,6 @@ public class PlayerMovementController : MonoBehaviour
     #region DashParams
 
     [SerializeField] private float dashDuration;
-    [SerializeField] private float dashDistance;
     [SerializeField] private float dashCooldown;
     private bool canDash = true;
     private bool isDashing;
@@ -30,12 +29,16 @@ public class PlayerMovementController : MonoBehaviour
 
     Animator anim;
 
+    Rigidbody rb;
+
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+
+    private void FixedUpdate()
     {
         movementInput = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), 0,
             UnityEngine.Input.GetAxisRaw("Vertical"));
@@ -55,16 +58,21 @@ public class PlayerMovementController : MonoBehaviour
             lastDir = skewedInput;
             Move();
         }
-        else anim.SetBool("isRunning", false);
+        else
+        {
+            rb.velocity = Vector3.zero;
+            anim.SetBool("isRunning", false);
+        }
 
         if (isDashing) DuringDash();
+        
     }
 
     #region MoveFunctions
 
     void Move()
     {
-        transform.position += lastDir * Time.deltaTime * speed;
+        rb.velocity = lastDir * Time.deltaTime * (speed*100);
         anim.SetBool("isRunning", true);
     }
 
@@ -100,18 +108,21 @@ public class PlayerMovementController : MonoBehaviour
         dashDirection = lastDir;
 
         // Record start time of dash
-        dashStartTime = Time.time;
+        dashStartTime = Time.fixedTime;
     }
 
     void DuringDash()
     {
-        float dashTimeElapsed = Time.time - dashStartTime;
+        float dashTimeElapsed = Time.fixedTime - dashStartTime;
         if (dashTimeElapsed < dashDuration)
         {
             // Calculate progress of dash
             float t = dashTimeElapsed / dashDuration;
-            // Apply the lerp to move the player
-            transform.position = Vector3.Lerp(transform.position, transform.position + dashDirection * dashDistance, t);
+            //Rotate player towards dash direction
+            relative = GetRelativeRotation();
+            UpdateRotation(relative, rotationSpeed);
+            //Actual dash logic
+            rb.velocity = dashDirection * Time.fixedDeltaTime * (speed * 400);
         }
         else
         {
