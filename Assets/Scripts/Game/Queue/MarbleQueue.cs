@@ -11,6 +11,7 @@ namespace Game.Queue
     {
         [SerializeField] private uint capacity;
         [SerializeField] private float padding;
+        [SerializeField] private MarbleModel defaultMarble;
 
         private readonly List<Marble> _pendingMarbles = new();
         private readonly Queue<Marble> _queue = new();
@@ -19,12 +20,16 @@ namespace Game.Queue
         public UnityEvent<Marble> onMarbleMoving;
         public UnityEvent<Marble> onMarbleStop;
 
-        //TODO
-        public void Init()
+        private void Start()
         {
-            
+            //populare with 8 defualt marlbles
+            for (int i = 0; i < capacity; i++)
+            {
+                Marble marble = defaultMarble.CreateMarble();
+                AddMarble(marble);
+            }
         }
-        
+
         private void Update()
         {
             if (_pendingMarbles.Count == 0) return;
@@ -34,7 +39,7 @@ namespace Game.Queue
                 var pendingMarble = _pendingMarbles[i];
                 //TODO in future feature:
                 //Check for thedering
-                
+
                 //Update the timer
                 pendingMarble.CurrentWaitingTime -= Time.deltaTime;
 
@@ -72,13 +77,12 @@ namespace Game.Queue
             _pendingMarbles.Add(marble);
         }
 
-        
+
         //TODO
         public void RemoveMarble()
         {
-            
         }
-        
+
         public Marble EjectMarble()
         {
             Marble res = _queue.Dequeue();
