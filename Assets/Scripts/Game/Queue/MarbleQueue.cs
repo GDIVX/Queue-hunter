@@ -19,6 +19,12 @@ namespace Game.Queue
         public UnityEvent<Marble> onMarbleMoving;
         public UnityEvent<Marble> onMarbleStop;
 
+        //TODO
+        public void Init()
+        {
+            
+        }
+        
         private void Update()
         {
             if (_pendingMarbles.Count == 0) return;
@@ -26,6 +32,9 @@ namespace Game.Queue
             for (var i = 0; i < _pendingMarbles.Count; i++)
             {
                 var pendingMarble = _pendingMarbles[i];
+                //TODO in future feature:
+                //Check for thedering
+                
                 //Update the timer
                 pendingMarble.CurrentWaitingTime -= Time.deltaTime;
 
@@ -63,6 +72,13 @@ namespace Game.Queue
             _pendingMarbles.Add(marble);
         }
 
+        
+        //TODO
+        public void RemoveMarble()
+        {
+            
+        }
+        
         public Marble EjectMarble()
         {
             Marble res = _queue.Dequeue();
