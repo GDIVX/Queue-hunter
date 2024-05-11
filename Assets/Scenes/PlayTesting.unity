@@ -1757,18 +1757,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ba6b4dd6cc4d9c4a9d17c833502a227, type: 3}
---- !u!114 &2047824186 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1710465877396333225, guid: 62ba9cf4b118d465ebef1c05309e9451,
-    type: 3}
-  m_PrefabInstance: {fileID: 1176213447}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac57d9161dd9457bb6ac54da1bf1c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2132613547 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 632006522929008216, guid: 152fb57f8eb707746b1ba304f9d038d6,
@@ -1922,7 +1910,7 @@ PrefabInstance:
     - target: {fileID: 6222942314121909788, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 6222942314121909788, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
@@ -1974,11 +1962,6 @@ PrefabInstance:
       propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1303833614}
-    - target: {fileID: 8684972494629325834, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
-        type: 3}
-      propertyPath: queueSystem
-      value: 
-      objectReference: {fileID: 2047824186}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

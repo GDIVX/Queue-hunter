@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6222942314121909788}
   - component: {fileID: 6926521998198871326}
-  - component: {fileID: 15146975456698213}
   - component: {fileID: 3877892587926244631}
   - component: {fileID: 7704920714557367582}
   - component: {fileID: 8684972494629325834}
@@ -60,33 +59,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.57, y: 1, z: 2.54}
   m_Center: {x: 0, y: 1, z: 1}
---- !u!54 &15146975456698213
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6798912110303037578}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!114 &3877892587926244631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,9 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b29c9c02a40b64c8622dc8f7e57084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  queueSystem: {fileID: 0}
-  projectile: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
-    type: 3}
   playerMovementController: {fileID: 0}
   meleeDamage: 1
 --- !u!114 &829590588285160709
@@ -192,14 +161,14 @@ MonoBehaviour:
   delayPerJump: 0.3
   baseMaxJumps: 5
   baseDamage: 1
-  p4: {fileID: 0}
-  p1: {fileID: 0}
-  bolt: {fileID: 0}
-  debugMode: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   maxDistancePerJump: 5
+  p4: {fileID: 0}
+  p1: {fileID: 0}
+  bolt: {fileID: 0}
+  debugMode: 0
   OnHit:
     m_PersistentCalls:
       m_Calls:
@@ -920,6 +889,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9101856850879664578}
+    - targetCorrespondingSourceObject: {fileID: 8408105165961636644, guid: 877f547e481274a47b6c809d4a49ee37,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8415016091914043496}
   m_SourcePrefab: {fileID: 100100000, guid: 877f547e481274a47b6c809d4a49ee37, type: 3}
 --- !u!1 &4891405810972255353 stripped
 GameObject:
@@ -968,7 +941,34 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.0478983, y: 6.269435, z: 1}
-  m_Center: {x: -0.015522003, y: 3.1546378, z: 0}
+  m_Center: {x: 0, y: 3.1546378, z: 0}
+--- !u!54 &8415016091914043496
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891405810972255353}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!4 &5236018441012920003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9215569580925481374, guid: 877f547e481274a47b6c809d4a49ee37,
