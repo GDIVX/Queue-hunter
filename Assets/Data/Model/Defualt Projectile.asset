@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbf370e9f32402dae4d52fc365cd140, type: 3}
   m_Name: Defualt Projectile
   m_EditorClassIdentifier: 
-  speed: 0
-  viewPrefab: {fileID: 0}
-  damage: 0
-  lookupTagForTarget: 
-  lifetime: 0
+  speed: 1
+  viewPrefab: {fileID: 8551125371771216531, guid: 5fc33ca830678e3468e93e4aed6ec9e5,
+    type: 3}
+  damage: 1
+  lookupTagForTarget: 1
+  lifetime: 1
