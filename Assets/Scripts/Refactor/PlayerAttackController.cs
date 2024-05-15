@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    [SerializeField] Animator anim;
+    //[SerializeField] Animator anim;
     // [SerializeField] GameObject projectile;
     [SerializeField] PlayerMovementController playerMovementController;
     Camera MainCamera;
@@ -23,6 +23,9 @@ public class PlayerAttackController : MonoBehaviour
         private set => meleeDamage = value;
     }
     #endregion
+
+    public UnityEvent OnMeleeAttack;
+    public UnityEvent OnPlayerDeath;
 
     private void Awake()
     {
@@ -78,7 +81,8 @@ public class PlayerAttackController : MonoBehaviour
         canUseMelee = false;
         playerMovementController.canMove = false;
         playerMovementController.Speed *= .5f;
-        anim.SetTrigger("MeleeAttackTrigger");
+        OnMeleeAttack?.Invoke();
+        //anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
         yield return new WaitForSeconds(.3f);
         playerMovementController.Speed *= 2;
@@ -118,7 +122,8 @@ public class PlayerAttackController : MonoBehaviour
     //temp
     public void PlayerDead()
     {
-        anim.SetTrigger("PlayerDeathTrigger");
+        OnPlayerDeath?.Invoke();
+        //anim.SetTrigger("PlayerDeathTrigger");
         StartCoroutine(KillPlayer());
     }
 
