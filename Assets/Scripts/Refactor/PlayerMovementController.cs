@@ -1,18 +1,38 @@
 using System.Collections;
+using Game.Queue;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovementController : MonoBehaviour
 {
     #region MovementParams
 
-    public float speed;
     [SerializeField] float rotationSpeed = 360;
     [SerializeField] private Vector3 lastDir;
+    [SerializeField] private MarbleShooter _shooter;
+
+    [SerializeField, BoxGroup("Speed change after shooting")]
+    private float newSpeed;
+
+    [SerializeField, BoxGroup("Speed change after shooting")]
+    private float speedChangeDurationInSeconds;
+
     Vector3 movementInput;
     Vector3 relative;
     bool isRunning;
     public bool canMove = true;
     public bool canRotate = true;
+
+    public float Speed
+    {
+        get => _speed;
+        set => _speed = value;
+    }
+
+    public UnityEvent onMovementSpeedChangeStart;
+    public UnityEvent onMovementSpeedChangeEnd;
 
     #endregion
 
@@ -30,11 +50,21 @@ public class PlayerMovementController : MonoBehaviour
     Animator anim;
 
     Rigidbody rb;
+    [SerializeField] private float _speed;
 
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
+        _shooter = GetComponentInChildren<MarbleShooter>();
+
+        _shooter.onShootingMarbleAttempted?.AddListener((result) =>
+        {
+            if (result)
+            {
+                SetSpeedForDuration(newSpeed, speedChangeDurationInSeconds);
+            }
+        });
     }
 
 
@@ -65,14 +95,28 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         if (isDashing) DuringDash();
-        
     }
 
     #region MoveFunctions
 
+    public void SetSpeedForDuration(float newSpeed, float durationInSeconds)
+    {
+        float currSpeed = Speed;
+        StartCoroutine(SetSpeedForDurationEnum(newSpeed, durationInSeconds));
+        Speed = currSpeed;
+    }
+
+    IEnumerator SetSpeedForDurationEnum(float newSpeed, float durationInSeconds)
+    {
+        onMovementSpeedChangeStart?.Invoke();
+        Speed = newSpeed;
+        yield return new WaitForSeconds(durationInSeconds);
+        onMovementSpeedChangeEnd?.Invoke();
+    }
+
     void Move()
     {
-        rb.velocity = lastDir * Time.deltaTime * (speed*100);
+        rb.velocity = lastDir * Time.deltaTime * (Speed * 100);
         anim.SetBool("isRunning", true);
     }
 
@@ -122,7 +166,7 @@ public class PlayerMovementController : MonoBehaviour
             relative = GetRelativeRotation();
             UpdateRotation(relative, rotationSpeed);
             //Actual dash logic
-            rb.velocity = dashDirection * Time.fixedDeltaTime * (speed * 400);
+            rb.velocity = dashDirection * Time.fixedDeltaTime * (Speed * 400);
         }
         else
         {

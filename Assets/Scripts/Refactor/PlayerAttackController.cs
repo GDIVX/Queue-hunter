@@ -77,11 +77,11 @@ public class PlayerAttackController : MonoBehaviour
     {
         canUseMelee = false;
         playerMovementController.canMove = false;
-        playerMovementController.speed *= .5f;
+        playerMovementController.Speed *= .5f;
         anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
         yield return new WaitForSeconds(.3f);
-        playerMovementController.speed *= 2;
+        playerMovementController.Speed *= 2;
         playerMovementController.canMove = true;
         canUseMelee = true;
     }
