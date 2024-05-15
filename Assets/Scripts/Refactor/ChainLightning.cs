@@ -12,6 +12,7 @@ namespace Combat.Weapons
     {
         [SerializeField, BoxGroup("Jump")] private float delayPerJump;
         [SerializeField, BoxGroup("Jump")] private uint baseMaxJumps;
+        [SerializeField, BoxGroup("Jump")] private float windUpTime;
 
         [SerializeField, BoxGroup("Damage")] private int baseDamage;
 
@@ -25,6 +26,8 @@ namespace Combat.Weapons
         [SerializeField, TabGroup("Debug")] bool debugMode;
 
         public UnityEvent<Collider> OnHit;
+        public UnityEvent<string, bool> OnMarbleAttack;
+
         bool IsAttacking = false;
         float cooldown = .3f;
 
@@ -37,8 +40,15 @@ namespace Combat.Weapons
         {
             if (!IsAttacking)
             {
-                StartCoroutine(WeaponTrigger());
+                StartCoroutine(WeaponWindUp());
+                OnMarbleAttack?.Invoke("isRunning", false);
             }
+        }
+
+        protected IEnumerator WeaponWindUp()
+        {
+            yield return new WaitForSeconds(windUpTime);
+            StartCoroutine(WeaponTrigger());
         }
 
         protected IEnumerator WeaponTrigger()
@@ -54,10 +64,10 @@ namespace Combat.Weapons
                 if (hits.Length > 0)
                 {
                     Collider closestTarget = FindClosestTarget(hits, currPosition);
-                    if (closestTarget != null/* && closestTarget.transform.TryGetComponent(out IDamageable damageable)*/)
+                    if (closestTarget != null /*&& closestTarget.transform.TryGetComponent(out IDamageable damageable)*/)
                     {
                         lastHitTarget = closestTarget;
-                        DebugDraw(currPosition, closestTarget.transform.position);
+                        //DebugDraw(currPosition, closestTarget.transform.position);
                         bolt.transform.position = currPosition;
                         p1.position = currPosition;
                         p4.position = closestTarget.transform.position;

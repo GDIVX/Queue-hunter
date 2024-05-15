@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3a09b28e1abcd3245bf77a7b6ef1de88
+guid: c2c7e5c84a4a3ec4d9df5579bc773d34
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -36,8 +36,8 @@ ModelImporter:
       name: Player_1HSpellCast
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 37
+      firstFrame: 37
+      lastFrame: 69
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

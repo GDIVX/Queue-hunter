@@ -33,6 +33,9 @@ public class PlayerMovementController : MonoBehaviour
 
     public UnityEvent onMovementSpeedChangeStart;
     public UnityEvent onMovementSpeedChangeEnd;
+    public UnityEvent<string, bool> onMove;
+    public UnityEvent<string, bool> onMoveEnd;
+    public UnityEvent<string> onDash;
 
     #endregion
 
@@ -47,14 +50,14 @@ public class PlayerMovementController : MonoBehaviour
 
     #endregion
 
-    Animator anim;
+    //Animator anim;
 
     Rigidbody rb;
     [SerializeField] private float _speed;
 
     private void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        //anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         _shooter = GetComponentInChildren<MarbleShooter>();
 
@@ -91,7 +94,8 @@ public class PlayerMovementController : MonoBehaviour
         else
         {
             rb.velocity = Vector3.zero;
-            anim.SetBool("isRunning", false);
+            onMoveEnd?.Invoke("isRunning", false);
+            //anim.SetBool("isRunning", false);
         }
 
         if (isDashing) DuringDash();
@@ -117,7 +121,8 @@ public class PlayerMovementController : MonoBehaviour
     void Move()
     {
         rb.velocity = lastDir * Time.deltaTime * (Speed * 100);
-        anim.SetBool("isRunning", true);
+        onMove?.Invoke("isRunning", true);
+        //anim.SetBool("isRunning", true);
     }
 
     Vector3 GetRelativeRotation()
@@ -146,7 +151,8 @@ public class PlayerMovementController : MonoBehaviour
         isDashing = true;
 
         //animation trigger
-        anim.SetTrigger("DashTrigger");
+        onDash?.Invoke("DashTrigger");
+        //anim.SetTrigger("DashTrigger");
 
         // Get the dash direction based on player input
         dashDirection = lastDir;
