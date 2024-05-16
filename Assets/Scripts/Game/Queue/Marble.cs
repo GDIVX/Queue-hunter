@@ -1,4 +1,5 @@
 using Combat;
+using UnityEngine.Events;
 
 namespace Game.Queue
 {
@@ -7,13 +8,13 @@ namespace Game.Queue
         public float InQueueSpeed { get; set; }
         public float CurrentWaitingTime { get; set; }
         public int CurrentGoalIndex { get; set; }
-        public ProjectileModel ProjectileModel { get; set; }
+        public UnityEvent<Marble> OnInstantiated { get; set; }
 
 
-        public Marble(float inQueueSpeed, ProjectileModel projectileModel)
+        public Marble(float inQueueSpeed, UnityEvent<Marble> onInstantiated)
         {
             InQueueSpeed = inQueueSpeed;
-            ProjectileModel = projectileModel;
+            OnInstantiated = onInstantiated;
         }
     }
 }

@@ -1,5 +1,6 @@
 using Combat;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Game.Queue
@@ -8,8 +9,11 @@ namespace Game.Queue
     public class MarbleModel : ScriptableObject
     {
         [SerializeField] private float _inQueueSpeed;
-        [SerializeField] private ProjectileModel _projectileModel;
+
+        //[SerializeField] private ProjectileModel _projectileModel;
         [SerializeField] private GameObject UIVIew;
+
+        public UnityEvent<Marble> onInstantiated;
 
         public float InQueueSpeed
         {
@@ -17,15 +21,15 @@ namespace Game.Queue
             set => _inQueueSpeed = value;
         }
 
-        public ProjectileModel ProjectileModel
-        {
-            get => _projectileModel;
-            set => _projectileModel = value;
-        }
+        // public ProjectileModel ProjectileModel
+        // {
+        //     get => _projectileModel;
+        //     set => _projectileModel = value;
+        // }
 
         public Marble CreateMarble()
         {
-            return new Marble(InQueueSpeed, ProjectileModel);
+            return new Marble(InQueueSpeed , onInstantiated);
         }
     }
 }
