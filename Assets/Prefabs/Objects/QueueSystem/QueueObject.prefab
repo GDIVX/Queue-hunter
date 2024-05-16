@@ -167,7 +167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cce0b2bd576b11d4f91ddcc132c79c16, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -188,7 +188,6 @@ GameObject:
   - component: {fileID: 4846084361934195905}
   - component: {fileID: 1710465877396333225}
   - component: {fileID: 7721227877791193529}
-  - component: {fileID: 7243575316823279756}
   m_Layer: 0
   m_Name: QueueSystem
   m_TagString: Untagged
@@ -225,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _queueUI: {fileID: 7721227877791193529}
   _morbelBlockConfig: {fileID: 11400000, guid: 6f22ec194f2b44cf5a03e683fbca1115, type: 2}
-  _laodDis: 10
+  _laodDis: 5
 --- !u!114 &7721227877791193529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,21 +238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 9216726636155972067}
-  _marbelUI: {fileID: 4256346174890411725, guid: f83cf298b37da443eaad5b3fff9e0946, type: 3}
+  _marbelUI: {fileID: 4256346174890411725, guid: f83cf298b37da443eaad5b3fff9e0946,
+    type: 3}
   _parent: {fileID: 4780900624074806198}
-  _queueSystem: {fileID: 1710465877396333225}
---- !u!114 &7243575316823279756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397218738698904757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6fe4643bb70434a8733e7377da9cf22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   _queueSystem: {fileID: 1710465877396333225}
 --- !u!1 &7527935796504064077
 GameObject:
@@ -356,4 +343,4 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55

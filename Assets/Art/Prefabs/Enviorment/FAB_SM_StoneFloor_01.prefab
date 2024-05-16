@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2223873553952864758}
   - component: {fileID: 494310386518536282}
   - component: {fileID: 996653079546489783}
-  - component: {fileID: 2703872619538797394}
+  - component: {fileID: 8139320050271451664}
   m_Layer: 0
   m_Name: FAB_SM_StoneFloor_01
   m_TagString: Untagged
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1796036929930916526}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.086046, z: -0.00000020862}
-  m_LocalScale: {x: 1, y: 1, z: 0.23889582}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4046193, y: 0.4046193, z: 0.43955}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2703872619538797394
+--- !u!65 &8139320050271451664
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

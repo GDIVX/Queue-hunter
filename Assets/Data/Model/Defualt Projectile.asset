@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbbf370e9f32402dae4d52fc365cd140, type: 3}
+  m_Name: Defualt Projectile
+  m_EditorClassIdentifier: 
+  speed: 1
+  viewPrefab: {fileID: 8551125371771216531, guid: 5fc33ca830678e3468e93e4aed6ec9e5,
+    type: 3}
+  damage: 1
+  lookupTagForTarget: 1
+  lifetime: 1
