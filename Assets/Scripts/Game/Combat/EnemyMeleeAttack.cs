@@ -64,7 +64,7 @@ namespace Combat
         IEnumerator Attack(IDamageable damageable)
         {
             isAttacking = true;
-            anim.SetTrigger("AttackTrigger");
+            //anim.SetTrigger("AttackTrigger");
             //windup
             OnAttackWindup?.Invoke();
             yield return new WaitForSeconds(attackWindup);
@@ -79,6 +79,11 @@ namespace Combat
             OnAttackOnCooldownEnd?.Invoke();
 
             isAttacking = false;
+        }
+
+        public void SetAttackingAllowed(bool value)
+        {
+            isAttacking = value;
         }
     }
 }

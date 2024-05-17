@@ -65,7 +65,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             if (result)
             {
-                SetSpeedForDuration(newSpeed, speedChangeDurationInSeconds);
+                SetSpeedForDuration(/*newSpeed, speedChangeDurationInSeconds*/);
             }
         });
     }
@@ -103,10 +103,10 @@ public class PlayerMovementController : MonoBehaviour
 
     #region MoveFunctions
 
-    public void SetSpeedForDuration(float newSpeed, float durationInSeconds)
+    public void SetSpeedForDuration(/*float newSpeed, float durationInSeconds*/)
     {
         float currSpeed = Speed;
-        StartCoroutine(SetSpeedForDurationEnum(newSpeed, durationInSeconds));
+        StartCoroutine(SetSpeedForDurationEnum(newSpeed, speedChangeDurationInSeconds));
         Speed = currSpeed;
     }
 
@@ -138,6 +138,22 @@ public class PlayerMovementController : MonoBehaviour
             var rot = Quaternion.LookRotation(relative, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotSpeed * Time.deltaTime);
         }
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void RotateTowardsAttack()
+    {
+        var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.LookAt(new Vector3(pos.x, 1, pos.z));
     }
 
     #endregion

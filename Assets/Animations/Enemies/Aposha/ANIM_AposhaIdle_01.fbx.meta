@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d17d0c759c9769148884819e9d7f52b8
+guid: 93afcd78256855747b5bbe9581d72ad9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Player_LeftPunch
+      name: mixamo.com
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 181
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -59,7 +59,7 @@ ModelImporter:
       events: []
       transformMask: []
       maskType: 3
-      maskSource: {fileID: 31900000, guid: 6efec46ea46d1bd45b37746fc8587ae1, type: 2}
+      maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:

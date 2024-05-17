@@ -26,7 +26,8 @@ namespace Combat.Weapons
         [SerializeField, TabGroup("Debug")] bool debugMode;
 
         public UnityEvent<Collider> OnHit;
-        public UnityEvent<string, bool> OnMarbleAttack;
+        public UnityEvent OnMarbleAttack;
+        public UnityEvent OnMarbleAttackEnd;
 
         bool IsAttacking = false;
         float cooldown = .3f;
@@ -41,18 +42,19 @@ namespace Combat.Weapons
             if (!IsAttacking)
             {
                 StartCoroutine(WeaponWindUp());
-                OnMarbleAttack?.Invoke("isRunning", false);
             }
         }
 
         protected IEnumerator WeaponWindUp()
         {
+            OnMarbleAttack?.Invoke();
             yield return new WaitForSeconds(windUpTime);
             StartCoroutine(WeaponTrigger());
         }
 
         protected IEnumerator WeaponTrigger()
         {
+            OnMarbleAttackEnd?.Invoke();
             IsAttacking = true;
             int jumps = 0;
             Vector3 currPosition = transform.position;
