@@ -17,6 +17,7 @@ namespace Game.Queue
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
         public UnityEvent<bool> onShootingMarbleAttempted;
+        public UnityEvent onShootingMarble;
 
         private void Awake()
         {
@@ -53,6 +54,7 @@ namespace Game.Queue
 
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);
+            onShootingMarble.Invoke();
         }
     }
 }

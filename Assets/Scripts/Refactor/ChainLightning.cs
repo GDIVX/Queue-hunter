@@ -36,6 +36,11 @@ namespace Combat.Weapons
         private int Damage => baseDamage;
         private uint MaxJumps => baseMaxJumps;
 
+        private void Start()
+        {
+            UpdateWeapon();
+        }
+
 
         public void UpdateWeapon()
         {

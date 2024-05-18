@@ -9,20 +9,10 @@ public class ProjectileCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Explode(other);
-    }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Instantiate(explosionObject, collision.transform.position, Quaternion.identity);
-    //    this.gameObject.SetActive(false);
-    //}
-
-    public void Explode(Collider col)
-    {
-        if (!col.CompareTag("Player") && !col.CompareTag("Vision"))
+        if (!other.CompareTag("Player") && !other.CompareTag("Vision"))
         {
-            Instantiate(explosionObject, col.transform.position, Quaternion.identity);
+            var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+            Instantiate(explosionObject, point, Quaternion.identity);
             this.gameObject.SetActive(false);
         }
     }

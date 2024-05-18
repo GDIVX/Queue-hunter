@@ -72,8 +72,8 @@ public class PlayerAttackController : MonoBehaviour
     public void InitMeleeAttack()
     {
         if (!canUseMelee) return;
-        var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
-        transform.LookAt(new Vector3(pos.x, 0, pos.z));
+        //var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
+        //transform.LookAt(new Vector3(pos.x, 0, pos.z));
         StartCoroutine(PunchCoroutine());
     }
 
