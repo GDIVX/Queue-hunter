@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Combat;
+using UnityEngine;
 using Utility;
 
 namespace Combat

@@ -1,5 +1,6 @@
 using System;
 using Combat;
+using Game.Combat;
 using ModestTree;
 using UnityEngine;
 using UnityEngine.Events;
@@ -41,24 +42,15 @@ namespace Game.Queue
                 onShootingMarbleAttempted?.Invoke((false));
                 return;
             }
-
-            // if (marble.ProjectileModel == null)
-            // {
-            //     Debug.LogError($"Marble {marble} is missing reference for projectile model ");
-            //     onShootingMarbleAttempted?.Invoke((false));
-            //     return;
-            // }
+            
 
             //Instantiate a projectile
-            marble.OnInstantiated?.Invoke(marble);
-            
+
             //TODO:
             //1. Fire Projectile
             //2. Chain Lightning 
-            //3. Normal Projectile
 
-            //TODO make projectile handler a singelton 
-            //Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
+            Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
 
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);

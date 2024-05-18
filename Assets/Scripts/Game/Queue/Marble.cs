@@ -1,20 +1,22 @@
 using Combat;
+using Game.Combat;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Game.Queue
 {
-    public class Marble
+    public class Marble : IQueueable
     {
         public float InQueueSpeed { get; set; }
         public float CurrentWaitingTime { get; set; }
         public int CurrentGoalIndex { get; set; }
-        public UnityEvent<Marble> OnInstantiated { get; set; }
 
+        public ProjectileModel ProjectileModel { get; private set; }
 
-        public Marble(float inQueueSpeed, UnityEvent<Marble> onInstantiated)
+        public Marble(float inQueueSpeed, ProjectileModel projectileModel)
         {
             InQueueSpeed = inQueueSpeed;
-            OnInstantiated = onInstantiated;
+            ProjectileModel = projectileModel;
         }
     }
 }

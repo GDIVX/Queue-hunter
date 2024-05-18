@@ -37,7 +37,7 @@ namespace AI
             }
             anim.SetBool("isRunning", true);
             //Get a target 
-            ITargetable target = targeting.GetTarget();
+            ITarget target = targeting.GetTarget();
             Vector3 direction;
 
             if (target == null)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Combat
 {
-    public interface ITargetable : IDestroyable
+    public interface ITarget : IDestroyable
     {
         Vector3 Position { get; }
         IDamageable Damageable { get; }

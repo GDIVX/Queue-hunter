@@ -1,60 +1,61 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Combat;
+using Game.Utility;
 using UnityEngine;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider))]
-public class DamageOnCollision : MonoBehaviour
+namespace Game.Combat
 {
-    [SerializeField] private float _damage;
-    [SerializeField] private string _lookupTag;
-    [SerializeField] private float cooldown;
-    public event Action<DamageOnCollision, Collider> OnCollision;
-
-    private bool canDamage = true;
-
-    public void Initialize(float damage, string lookupTag)
+    [RequireComponent(typeof(Collider))]
+    public class DamageOnCollision : MonoBehaviour, IInit<ProjectileModel>
     {
-        _damage = damage;
-        _lookupTag = lookupTag;
-    }
+        [SerializeField] private protected float _damage;
+        [SerializeField] private protected LayerMask _layerMask; // Use LayerMask instead of string tag
+        [SerializeField] private float cooldown;
+        public UnityEvent<DamageOnCollision, Collider> OnCollision;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        HandleDamage(other);
-    }
+        private bool _canDamage = true;
 
-    private void HandleDamage(Collider other)
-    {
-        if (!canDamage) return;
-
-        if (!other.gameObject.CompareTag(_lookupTag))
+        public void Init(ProjectileModel input)
         {
-            return;
+            _damage = input.Damage;
+            _layerMask = input.TargetLayerMask; // Assuming input provides a LayerMask
         }
 
-        if (other.gameObject.TryGetComponent(out IDamageable hit))
+        private void OnTriggerEnter(Collider other)
         {
-            hit.HandleDamage(_damage);
-            if (cooldown > 0)
+            HandleDamage(other);
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            HandleDamage(other);
+        }
+
+        protected virtual void HandleDamage(Collider other)
+        {
+            if (!_canDamage || (_layerMask.value & (1 << other.gameObject.layer)) == 0)
             {
-                StartCoroutine(CooldownCoroutine());
+                return;
             }
+
+            if (other.gameObject.TryGetComponent(out IDamageable hit))
+            {
+                hit.HandleDamage(_damage);
+                if (cooldown > 0)
+                {
+                    StartCoroutine(CooldownCoroutine());
+                }
+            }
+
+            OnCollision?.Invoke(this, other);
         }
 
-        OnCollision?.Invoke(this, other);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        HandleDamage(other);
-    }
-
-    IEnumerator CooldownCoroutine()
-    {
-        canDamage = false;
-        yield return new WaitForSeconds(cooldown);
-        canDamage = true;
+        IEnumerator CooldownCoroutine()
+        {
+            _canDamage = false;
+            yield return new WaitForSeconds(cooldown);
+            _canDamage = true;
+        }
     }
 }

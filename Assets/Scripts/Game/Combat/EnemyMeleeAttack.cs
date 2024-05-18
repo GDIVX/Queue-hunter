@@ -24,7 +24,7 @@ namespace Combat
         [SerializeField, TabGroup("Events")] private UnityEvent OnAttacking;
         [SerializeField, TabGroup("Events")] private UnityEvent OnAttackOnCooldownEnd;
 
-        private ITargetable target;
+        private ITarget target;
         private bool isAttacking = false;
 
         Animator anim;
