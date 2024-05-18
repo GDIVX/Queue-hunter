@@ -19,6 +19,10 @@ namespace Game.Queue
         public UnityEvent<Marble> onMarbleEjected;
         public UnityEvent<Marble> onMarbleMoving;
         public UnityEvent<Marble> onMarbleStop;
+        public UnityEvent<Marble> onMarbleCreated;
+
+        public uint Capacity => capacity;
+        public float Padding => padding;
 
         private void Start()
         {
@@ -75,6 +79,8 @@ namespace Game.Queue
 
             //Add to the pending list
             _pendingMarbles.Add(marble);
+
+            onMarbleCreated?.Invoke(marble);
         }
 
 //TODO 

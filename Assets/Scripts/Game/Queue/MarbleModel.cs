@@ -21,7 +21,7 @@ namespace Game.Queue
 
         public Marble Create()
         {
-            return new(_inQueueSpeed, _projectileModel);
+            return new(_inQueueSpeed, _projectileModel, UIVIew);
         }
     }
 }
