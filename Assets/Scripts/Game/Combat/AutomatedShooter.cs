@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Combat;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace Combat
         [SerializeField] private ProjectileModel projectileModel;
 
         [ShowInInspector, ReadOnly, TabGroup("Debug")]
-        private readonly List<ITargetable> targets = new();
+        private readonly List<ITarget> targets = new();
 
         [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private bool isShooting;
@@ -37,8 +38,8 @@ namespace Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            //Track ITargetable objects that have the look up tag on their game object
-            if (other.TryGetComponent(out ITargetable targetable) && other.CompareTag(lookupTag))
+            //Track ITarget objects that have the look up tag on their game object
+            if (other.TryGetComponent(out ITarget targetable) && other.CompareTag(lookupTag))
             {
                 targets.Add(targetable);
                 targetable.OnDestroyed += (x) => targets.Remove(targetable);
@@ -47,7 +48,7 @@ namespace Combat
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out ITargetable targetable) && other.CompareTag(lookupTag))
+            if (other.TryGetComponent(out ITarget targetable) && other.CompareTag(lookupTag))
             {
                 if (targets.Contains(targetable))
                 {
@@ -89,7 +90,7 @@ namespace Combat
             isShooting = false; // Reset the flag when done
         }
 
-        private void HandleTarget(ITargetable target)
+        private void HandleTarget(ITarget target)
         {
             // Calculate the spawn position
             var spawnPosition = transform.position + projectileSpawnOffset;

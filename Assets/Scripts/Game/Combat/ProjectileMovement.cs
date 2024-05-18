@@ -1,24 +1,36 @@
-using System;
+using Combat;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Combat
+namespace Game.Combat
 {
-    public class ProjectileMovement : MonoBehaviour
+    public sealed class ProjectileMovement : MonoBehaviour, IInit<ProjectileModel>
     {
-        [SerializeField] private float _speed;
+        [SerializeField] private float speed;
+
+        public Vector3 Direction { get; set; }
 
         public void Initialize(float speed)
         {
-            _speed = speed;
+            this.speed = speed;
         }
 
-        private void Update()
+        private void FixedUpdate()
+        {
+            HandleMovement();
+        }
+
+        public void HandleMovement()
         {
             var direction = transform.forward;
-            Vector3 translation = direction * (_speed * Time.deltaTime);
+            Vector3 translation = direction * (speed * Time.fixedDeltaTime);
             transform.position += translation;
-            
+        }
+
+        public void Init(ProjectileModel input)
+        {
+            speed = input.Speed;
         }
     }
 }

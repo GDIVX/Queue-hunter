@@ -15,9 +15,9 @@ namespace AI
 
         private float viewDistance;
 
-        private PriorityQueue<ITargetable> priorityQueue;
+        private PriorityQueue<ITarget> priorityQueue;
 
-        public ITargetable GetTarget()
+        public ITarget GetTarget()
         {
             if (priorityQueue.Count == 0) return null;
             priorityQueue.Sort();
@@ -37,11 +37,11 @@ namespace AI
 
             var player = GameObject.FindWithTag("Player");
             if(priorityQueue.Count != 0) return;
-            ITargetable castleTarget = player.GetComponent<ITargetable>();
+            ITarget castleTarget = player.GetComponent<ITarget>();
             priorityQueue.Enqueue(castleTarget);
         }
 
-        private float GetUtilityScore(ITargetable target)
+        private float GetUtilityScore(ITarget target)
         {
             if (target == null) return 0.0f;
             //get the tag of target
@@ -68,7 +68,7 @@ namespace AI
             var pair = weightPerTags.FirstOrDefault(x => other.CompareTag(x.tag));
             if (pair.tag.IsNullOrWhitespace()) return;
 
-            if (other.TryGetComponent(out ITargetable target))
+            if (other.TryGetComponent(out ITarget target))
             {
                 priorityQueue.Enqueue(target);
             }
@@ -80,7 +80,7 @@ namespace AI
             var pair = weightPerTags.FirstOrDefault(x => other.CompareTag(x.tag));
             if (pair.tag.IsNullOrWhitespace()) return;
 
-            if (other.TryGetComponent(out ITargetable target))
+            if (other.TryGetComponent(out ITarget target))
             {
                 priorityQueue.Remove(target);
             }

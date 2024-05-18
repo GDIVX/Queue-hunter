@@ -4025,6 +4025,41 @@ PrefabInstance:
       propertyPath: gravityFactor
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: startingQueue.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: startingQueue.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ca1f9f1754038e0489979460cec5764d,
+        type: 2}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: startingQueue.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ca1f9f1754038e0489979460cec5764d,
+        type: 2}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: startingQueue.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: ca1f9f1754038e0489979460cec5764d,
+        type: 2}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: startingQueue.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6dbd4ef016798aa4d9a4fe8b24b21fac,
+        type: 2}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: startingQueue.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6dbd4ef016798aa4d9a4fe8b24b21fac,
+        type: 2}
     - target: {fileID: 6222942314121909788, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
       propertyPath: m_LocalPosition.x

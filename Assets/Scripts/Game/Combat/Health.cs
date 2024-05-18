@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Combat
 {
-    public class Health : MonoBehaviour, IDamageable, IHealable, ITargetable
+    public class Health : MonoBehaviour, IDamageable, IHealable, ITarget
     {
         [SerializeField] private float maxHealth;
         [ShowInInspector, ReadOnly] private float currentHealth;

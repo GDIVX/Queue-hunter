@@ -1,5 +1,7 @@
 using Combat;
+using Game.Combat;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Game.Queue
@@ -17,15 +19,9 @@ namespace Game.Queue
             set => _inQueueSpeed = value;
         }
 
-        public ProjectileModel ProjectileModel
+        public Marble Create()
         {
-            get => _projectileModel;
-            set => _projectileModel = value;
-        }
-
-        public Marble CreateMarble()
-        {
-            return new Marble(InQueueSpeed, ProjectileModel);
+            return new(_inQueueSpeed, _projectileModel);
         }
     }
 }
