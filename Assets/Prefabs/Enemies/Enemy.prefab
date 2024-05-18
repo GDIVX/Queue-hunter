@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 6026234111414529931}
   - component: {fileID: 6154112973120562343}
   - component: {fileID: 4932567618469072802}
+  - component: {fileID: 9046465264925358716}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -199,6 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targeting: {fileID: 1786835331794283215}
+  navMeshAgent: {fileID: 9046465264925358716}
   view: {fileID: 1988615734498153274}
   rotationSpeed: 8
   speed: 3
@@ -244,8 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb31758219218704ba3cac11017cc698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 60
   canBeDamaged: 1
+  deathTime: 3
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -295,6 +298,21 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7526568981060940477}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: HitTrigger
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &6026234111414529931
@@ -348,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a649f629fb933cd47a03ce39f09f22c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 5
   attackCooldown: 1
   attackWindup: 1
   range: 2
@@ -398,6 +416,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!195 &9046465264925358716
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847894258755056903}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &2022751767845844177
 PrefabInstance:
   m_ObjectHideFlags: 0

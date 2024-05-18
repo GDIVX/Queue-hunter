@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   prefab: {fileID: 4634584431060079604, guid: 25e9e60a0ab1b204398a8714349cdf20, type: 3}
-  damage: 1
+  damage: 40
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64

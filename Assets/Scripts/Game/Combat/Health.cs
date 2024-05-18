@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Combat;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,9 +12,11 @@ namespace Game.Combat
         [SerializeField] private float maxHealth;
         [ShowInInspector, ReadOnly] private float currentHealth;
         [SerializeField] private bool canBeDamaged = true;
+        [SerializeField] private float deathTime;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
+        public UnityEvent OnTakeDamage;
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
@@ -58,6 +61,7 @@ namespace Game.Combat
 
             currentHealth = CurrentHealth - damage;
             OnUpdateValue?.Invoke(damage, this);
+            OnTakeDamage?.Invoke();
         }
 
         [Button]
@@ -76,6 +80,17 @@ namespace Game.Combat
         public GameObject TargetGO()
         {
             return this.gameObject;
+        }
+
+        public void KillEntity()
+        {
+            StartCoroutine(KillAfterSeconds());
+        }
+
+        private IEnumerator KillAfterSeconds()
+        {
+            yield return new WaitForSeconds(deathTime);
+            gameObject.SetActive(false);
         }
     }
 }

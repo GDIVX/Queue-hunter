@@ -9,6 +9,7 @@ public class PlayerAttackController : MonoBehaviour
     //[SerializeField] Animator anim;
     // [SerializeField] GameObject projectile;
     [SerializeField] PlayerMovementController playerMovementController;
+    [SerializeField] float meleeAttackCooldown;
     Camera MainCamera;
     bool isShooting;
 
@@ -33,12 +34,12 @@ public class PlayerAttackController : MonoBehaviour
         EntityInRange = new List<IDamageable>();
     }
 
-    private void Start()
-    {
+    //private void Start()
+    //{
         //anim = GetComponentInChildren<Animator>();
         //playerMovementController = GetComponent<PlayerMovementController>();
-        MainCamera = Camera.main;
-    }
+        //MainCamera = Camera.main;
+    //}
 
     // void ShootProjectile()
     // {
@@ -85,7 +86,7 @@ public class PlayerAttackController : MonoBehaviour
         OnMeleeAttack?.Invoke();
         //anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(meleeAttackCooldown);
         //playerMovementController.Speed *= 2;
         //playerMovementController.canMove = true;
         canUseMelee = true;

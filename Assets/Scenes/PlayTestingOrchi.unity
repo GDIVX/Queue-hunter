@@ -3679,6 +3679,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1282648472909540298, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
+      propertyPath: meleeDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282648472909540298, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: meleeAttackCooldown
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282648472909540298, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
       propertyPath: OnMeleeAttack.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -3781,6 +3791,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: dashDuration
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
@@ -3959,6 +3979,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704920714557367582, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704920714557367582, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
       propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1303833614}
@@ -3977,7 +4002,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2.94
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3483987418559588412, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
