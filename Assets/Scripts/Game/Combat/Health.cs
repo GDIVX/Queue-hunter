@@ -1,21 +1,21 @@
 using System;
-using System.Collections;
+using Combat;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Combat
+namespace Game.Combat
 {
     public class Health : MonoBehaviour, IDamageable, IHealable, ITarget
     {
         [SerializeField] private float maxHealth;
         [ShowInInspector, ReadOnly] private float currentHealth;
         [SerializeField] private bool canBeDamaged = true;
-        [SerializeField] private float destroyCooldown;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
 
+        public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
 
         public bool CanBeDamaged
@@ -47,18 +47,17 @@ namespace Combat
         {
             if (!CanBeDamaged) return;
 
-            OnUpdateValue?.Invoke(damage, this);
 
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
-                canBeDamaged = false;
                 OnDestroyed?.Invoke(this);
                 OnDeathUnityEvent?.Invoke();
                 return;
             }
 
             currentHealth = CurrentHealth - damage;
+            OnUpdateValue?.Invoke(damage, this);
         }
 
         [Button]
@@ -74,15 +73,9 @@ namespace Combat
             Heal(MaxHealth);
         }
 
-        public void KillEntity()
+        public GameObject TargetGO()
         {
-            StartCoroutine(DestroyAfterCountdown());
-        }
-
-        protected IEnumerator DestroyAfterCountdown()
-        {
-            yield return new WaitForSeconds(destroyCooldown);
-            gameObject.SetActive(false);
+            return this.gameObject;
         }
     }
 }

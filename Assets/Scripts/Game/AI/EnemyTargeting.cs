@@ -1,96 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Combat;
-using Sirenix.Utilities;
+using AI;
+using Game.Combat;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace AI
+namespace Game.AI
 {
     [RequireComponent(typeof(Collider))]
     public class EnemyTargeting : MonoBehaviour
     {
-        [SerializeField] private List<WeightPerTag> weightPerTags;
+        [SerializeField] private List<WeightPerLayer> weightPerLayers;
+        [SerializeField] private bool debugMode;
 
-        private float viewDistance;
-
-        private PriorityQueue<ITarget> priorityQueue;
-
-        public ITarget GetTarget()
-        {
-            if (priorityQueue.Count == 0) return null;
-            priorityQueue.Sort();
-            return priorityQueue.Peek();
-        }
+        private float _viewDistance;
+        private PriorityQueue<ITarget> _priorityQueue;
 
         private void Awake()
         {
-            viewDistance = GetComponent<Collider>().bounds.size.magnitude / 2;
-            priorityQueue = new((targetA, targetB) =>
+            _viewDistance = GetComponent<Collider>().bounds.size.magnitude / 2;
+            _priorityQueue = new PriorityQueue<ITarget>((targetA, targetB) =>
             {
                 float utilityA = GetUtilityScore(targetA);
                 float utilityB = GetUtilityScore(targetB);
 
-                return utilityA.CompareTo(utilityB);
+                return utilityB.CompareTo(utilityA);
             });
+        }
 
-            var player = GameObject.FindWithTag("Player");
-            if(priorityQueue.Count != 0) return;
-            ITarget castleTarget = player.GetComponent<ITarget>();
-            priorityQueue.Enqueue(castleTarget);
+        public ITarget GetTarget()
+        {
+            while (_priorityQueue.Count > 0)
+            {
+                var target = _priorityQueue.Peek();
+                if (IsValidTarget(target))
+                {
+                    return target;
+                }
+
+                // Remove invalid targets
+                _priorityQueue.Dequeue();
+            }
+
+            return null;
+        }
+
+        private bool IsValidTarget(ITarget target)
+        {
+            return target != null && target.GameObject.activeInHierarchy;
         }
 
         private float GetUtilityScore(ITarget target)
         {
-            if (target == null) return 0.0f;
-            //get the tag of target
-            var pair = weightPerTags.FirstOrDefault(x => target.CompareTag(x.tag));
-            if (pair.tag.IsNullOrWhitespace()) return -1; //invalid, return minimum value
+            if (!IsValidTarget(target)) return -1;
+
+            int targetLayer = target.GameObject.layer;
+            var pair = weightPerLayers.FirstOrDefault(x => (x.layerMask.value & (1 << targetLayer)) != 0);
+            if (pair.layerMask == 0) return -1;
 
             float weight = pair.weight;
-
-            //get the distance to the target
             float distance = Vector3.Distance(target.Position, transform.position);
+            // Clamped by distance
+            var score = (1 - distance / _viewDistance) * weight;
 
-            //clamp the score between 0 to 
-            var score = (distance / viewDistance) * weight;
-
-            Color color = Color.Lerp(Color.green, Color.red, score);
-            Debug.DrawLine(transform.position, target.Position, color, Time.deltaTime);
+            if (debugMode)
+            {
+                Color color = Color.Lerp(Color.green, Color.red, Mathf.Clamp01(score));
+                Debug.DrawLine(transform.position, target.Position, color, Time.deltaTime);
+            }
 
             return score;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            //dose the collision has a tag that we are interested with?
-            var pair = weightPerTags.FirstOrDefault(x => other.CompareTag(x.tag));
-            if (pair.tag.IsNullOrWhitespace()) return;
+            var pair = weightPerLayers.FirstOrDefault(x => (x.layerMask.value & (1 << other.gameObject.layer)) != 0);
+            if (pair.layerMask == 0) return;
 
-            if (other.TryGetComponent(out ITarget target))
+            if (other.TryGetComponent(out ITarget target) && IsValidTarget(target))
             {
-                priorityQueue.Enqueue(target);
+                _priorityQueue.Enqueue(target);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            //dose the collision has a tag that we are interested with?
-            var pair = weightPerTags.FirstOrDefault(x => other.CompareTag(x.tag));
-            if (pair.tag.IsNullOrWhitespace()) return;
+            var pair = weightPerLayers.FirstOrDefault(x => (x.layerMask.value & (1 << other.gameObject.layer)) != 0);
+            if (pair.layerMask == 0) return;
 
             if (other.TryGetComponent(out ITarget target))
             {
-                priorityQueue.Remove(target);
+                _priorityQueue.Remove(target);
             }
         }
     }
 
     [Serializable]
-    public struct WeightPerTag
+    public struct WeightPerLayer
     {
-        public string tag;
+        public LayerMask layerMask;
         public float weight;
     }
 }
