@@ -151,6 +151,11 @@ PrefabInstance:
       propertyPath: speed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
+        type: 3}
+      propertyPath: windUpTime
+      value: 1.15
+      objectReference: {fileID: 0}
     - target: {fileID: 5381047619062532310, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: m_IsTrigger
@@ -165,6 +170,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cooldown
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
+        type: 3}
+      propertyPath: _layerMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
