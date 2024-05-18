@@ -151,4 +151,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
+  smoothing: 3
   camRotation: 45
