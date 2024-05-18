@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inQueueSpeed: 1
   _projectileModel: {fileID: 11400000, guid: 95078b0d1808a184081c27747307efbc, type: 2}
-  UIVIew: {fileID: 9157189774366972320, guid: b108bf277c50426459a8327a824418cd, type: 3}
+  UIVIew: {fileID: 4142686165217489064, guid: b0bb5777099c32548b1e17df08efe740, type: 3}

@@ -91,10 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285bcc49d3ff44446bbae04a05270762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayPerJump: 0
-  baseMaxJumps: 0
-  windUpTime: 0
-  baseDamage: 0
+  delayPerJump: 0.3
+  baseMaxJumps: 5
+  windUpTime: 1
+  baseDamage: 1
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -107,5 +107,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnMarbleAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMarbleAttackEnd:
     m_PersistentCalls:
       m_Calls: []
