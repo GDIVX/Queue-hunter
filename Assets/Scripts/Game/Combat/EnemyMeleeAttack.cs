@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using AI;
+using Game.AI;
+using Game.Combat;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;

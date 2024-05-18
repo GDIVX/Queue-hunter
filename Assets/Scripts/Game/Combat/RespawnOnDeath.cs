@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Game.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;

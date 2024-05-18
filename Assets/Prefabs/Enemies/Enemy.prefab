@@ -66,9 +66,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daddcc8b8fe04f90a45921ae963e134b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weightPerTags:
-  - tag: Player
-    weight: 2
+  weightPerLayers:
+  - layerMask:
+      serializedVersion: 2
+      m_Bits: 8
+    weight: 1
+  debugMode: 0
 --- !u!1 &4847894258755056903
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   canBeDamaged: 1
-  destroyCooldown: 3
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
