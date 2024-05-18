@@ -65,6 +65,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 487545910289467457, guid: d015e60e4e32d2c45a502b0ac7b5c9e0, type: 3}
+    - {fileID: 8401239311354584777, guid: d015e60e4e32d2c45a502b0ac7b5c9e0, type: 3}
+    - {fileID: 7836612736072927436, guid: d015e60e4e32d2c45a502b0ac7b5c9e0, type: 3}
+    - {fileID: 5864189544722974423, guid: d015e60e4e32d2c45a502b0ac7b5c9e0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -138,6 +141,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fireball Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4017090399391495685, guid: 3fd92c2e04e16d04dae93e6c788b536f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: speed
@@ -146,7 +154,12 @@ PrefabInstance:
     - target: {fileID: 5381047619062532310, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5381047619062532310, guid: 3fd92c2e04e16d04dae93e6c788b536f,
+        type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
