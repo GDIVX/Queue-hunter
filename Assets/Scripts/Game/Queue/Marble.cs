@@ -8,17 +8,17 @@ namespace Game.Queue
     public class Marble : IQueueable
     {
         public float InQueueSpeed { get; set; }
-        public float CurrentWaitingTime { get; set; }
+        public float CurrentTravelTime { get; set; }
         public int CurrentGoalIndex { get; set; }
-        public GameObject UIView { get; private set; }
+        public Sprite Sprite { get; set; }
 
         public ProjectileModel ProjectileModel { get; private set; }
 
-        public Marble(float inQueueSpeed, ProjectileModel projectileModel, GameObject UIView)
+        public Marble(float inQueueSpeed, ProjectileModel projectileModel, Sprite sprite)
         {
             InQueueSpeed = inQueueSpeed;
             ProjectileModel = projectileModel;
-            this.UIView = UIView;
+            Sprite = sprite;
         }
     }
 }

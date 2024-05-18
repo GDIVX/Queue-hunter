@@ -17,9 +17,8 @@ namespace Game.Queue
         private readonly Queue<Marble> _queue = new();
 
         public UnityEvent<Marble> onMarbleEjected;
-        public UnityEvent<Marble> onMarbleMoving;
         public UnityEvent<Marble> onMarbleStop;
-        public UnityEvent<Marble> onMarbleCreated;
+        public UnityEvent<Marble, float> onMarbleCreated;
 
         public uint Capacity => capacity;
         public float Padding => padding;
@@ -45,11 +44,10 @@ namespace Game.Queue
                 //Check for thedering
 
                 //Update the timer
-                pendingMarble.CurrentWaitingTime -= Time.deltaTime;
+                pendingMarble.CurrentTravelTime -= Time.deltaTime;
 
-                if (pendingMarble.CurrentWaitingTime > 0)
+                if (pendingMarble.CurrentTravelTime > 0)
                 {
-                    onMarbleMoving?.Invoke(pendingMarble);
                     continue;
                 }
 
@@ -75,12 +73,13 @@ namespace Game.Queue
             //Calculate travel time
             float distanceToTravel = padding * index;
             float timeToTravel = distanceToTravel / marble.InQueueSpeed;
-            marble.CurrentWaitingTime = timeToTravel;
+            marble.CurrentTravelTime = timeToTravel;
 
             //Add to the pending list
             _pendingMarbles.Add(marble);
+            float ratio = distanceToTravel / (capacity * padding);
 
-            onMarbleCreated?.Invoke(marble);
+            onMarbleCreated?.Invoke(marble, ratio);
         }
 
 //TODO 
