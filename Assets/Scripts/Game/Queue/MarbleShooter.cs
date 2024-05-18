@@ -46,10 +46,6 @@ namespace Game.Queue
 
             //Instantiate a projectile
 
-            //TODO:
-            //1. Fire Projectile
-            //2. Chain Lightning 
-
             Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
 
             //rotate the projectile
