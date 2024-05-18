@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +11,7 @@ namespace Combat
         [SerializeField] private float maxHealth;
         [ShowInInspector, ReadOnly] private float currentHealth;
         [SerializeField] private bool canBeDamaged = true;
+        [SerializeField] private float destroyCooldown;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
@@ -70,6 +72,17 @@ namespace Combat
         public void MaxHeal()
         {
             Heal(MaxHealth);
+        }
+
+        public void KillEntity()
+        {
+            StartCoroutine(DestroyAfterCountdown());
+        }
+
+        protected IEnumerator DestroyAfterCountdown()
+        {
+            yield return new WaitForSeconds(destroyCooldown);
+            gameObject.SetActive(false);
         }
     }
 }

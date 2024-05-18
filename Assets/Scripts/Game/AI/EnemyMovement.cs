@@ -3,6 +3,7 @@ using Combat;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 namespace AI
 {
@@ -18,6 +19,10 @@ namespace AI
 
         private bool isMoveing = true;
 
+        [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> OnEnemyMove;
+        [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> OnEnemyMoveEnd;
+
+
         public void SetMovementAllowed(bool value)
         {
             isMoveing = value;
@@ -32,10 +37,12 @@ namespace AI
         {
             if (!isMoveing)
             {
-                anim.SetBool("isRunning", false);
+                OnEnemyMoveEnd?.Invoke("isRunning", false);
+                //anim.SetBool("isRunning", false);
                 return;
             }
-            anim.SetBool("isRunning", true);
+            OnEnemyMove?.Invoke("isRunning", true);
+            //anim.SetBool("isRunning", true);
             //Get a target 
             ITarget target = targeting.GetTarget();
             Vector3 direction;

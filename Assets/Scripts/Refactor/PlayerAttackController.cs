@@ -25,6 +25,7 @@ public class PlayerAttackController : MonoBehaviour
     #endregion
 
     public UnityEvent OnMeleeAttack;
+    public UnityEvent OnMeleeAttackEnd;
     public UnityEvent OnPlayerDeath;
 
     private void Awake()
@@ -79,15 +80,16 @@ public class PlayerAttackController : MonoBehaviour
     IEnumerator PunchCoroutine()
     {
         canUseMelee = false;
-        playerMovementController.canMove = false;
-        playerMovementController.Speed *= .5f;
+        //playerMovementController.canMove = false;
+        //playerMovementController.Speed *= .5f;
         OnMeleeAttack?.Invoke();
         //anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
         yield return new WaitForSeconds(.3f);
-        playerMovementController.Speed *= 2;
-        playerMovementController.canMove = true;
+        //playerMovementController.Speed *= 2;
+        //playerMovementController.canMove = true;
         canUseMelee = true;
+        OnMeleeAttackEnd?.Invoke();
     }
 
     public void DoDamage()

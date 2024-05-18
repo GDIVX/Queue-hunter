@@ -66,9 +66,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b29c9c02a40b64c8622dc8f7e57084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 95444498964846217}
   playerMovementController: {fileID: 3877892587926244631}
   meleeDamage: 1
+  OnMeleeAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MeleeAttackTrigger
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3877892587926244631}
+        m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
+        m_MethodName: DisableMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMeleeAttackEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3877892587926244631}
+        m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
+        m_MethodName: EnableMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PlayerDeathTrigger
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6798912110303037578
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +162,7 @@ Transform:
   m_Children:
   - {fileID: 5236018441012920003}
   - {fileID: 5551640750540326466}
+  - {fileID: 4439670640753429523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3877892587926244631
@@ -120,13 +177,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2155f719c2aca5f40af56ae5cd5af63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  rotationSpeed: 360
+  rotationSpeed: 720
   lastDir: {x: 0, y: 0, z: 0}
+  _shooter: {fileID: 4669290695049250055}
+  newSpeed: 4
+  speedChangeDurationInSeconds: 1.2
   canMove: 1
   canRotate: 1
+  onMovementSpeedChangeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onMovementSpeedChangeEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetBool
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMoveEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetBool
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDash:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DashTrigger
+          m_BoolArgument: 0
+        m_CallState: 2
   dashDuration: 0.3
   dashCooldown: 2
+  _speed: 8
 --- !u!114 &7704920714557367582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,12 +252,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   canBeDamaged: 1
+  destroyCooldown: 3.5
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerAttackController, Assembly-CSharp
-        m_MethodName: PlayerDead
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PlayerDeathTrigger
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7704920714557367582}
+        m_TargetAssemblyTypeName: Combat.Health, Assembly-CSharp
+        m_MethodName: KillEntity
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -154,7 +278,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -194,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayPerJump: 0.3
   baseMaxJumps: 5
+  windUpTime: 1
   baseDamage: 1
   targetMask:
     serializedVersion: 2
@@ -209,6 +334,60 @@ MonoBehaviour:
       - m_Target: {fileID: 3483987418559588412}
         m_TargetAssemblyTypeName: Combat.Weapons.ChainLightning, Assembly-CSharp
         m_MethodName: OnHitDebug
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMarbleAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3877892587926244631}
+        m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
+        m_MethodName: DisableMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 1HSpellTrigger
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3877892587926244631}
+        m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
+        m_MethodName: RotateTowardsAttack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMarbleAttackEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3877892587926244631}
+        m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
+        m_MethodName: EnableMovement
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -266,6 +445,92 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!1001 &2715463016247216169
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6222942314121909788}
+    m_Modifications:
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140185320993207840, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: m_Name
+      value: Queue
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: def08ed2a9fab594d9b260f88ce76890, type: 3}
+--- !u!4 &4439670640753429523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1743917615978808378, guid: def08ed2a9fab594d9b260f88ce76890,
+    type: 3}
+  m_PrefabInstance: {fileID: 2715463016247216169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4669290695049250055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+    type: 3}
+  m_PrefabInstance: {fileID: 2715463016247216169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 944bd179bf64be14094fb0a56c9a791f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3985215847576457053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -852,7 +1117,7 @@ PrefabInstance:
     - target: {fileID: 8408105165961636644, guid: 877f547e481274a47b6c809d4a49ee37,
         type: 3}
       propertyPath: m_Name
-      value: SK_PlayerModel_02
+      value: View
       objectReference: {fileID: 0}
     - target: {fileID: 8408105165961636644, guid: 877f547e481274a47b6c809d4a49ee37,
         type: 3}
@@ -967,6 +1232,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 95444498964846217}
+    - targetCorrespondingSourceObject: {fileID: 8408105165961636644, guid: 877f547e481274a47b6c809d4a49ee37,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7383767849049362318}
   m_SourcePrefab: {fileID: 100100000, guid: 877f547e481274a47b6c809d4a49ee37, type: 3}
 --- !u!1 &4891405810972255353 stripped
 GameObject:
@@ -995,6 +1264,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7383767849049362318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4891405810972255353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17cb4faa6a297054ba200e8df5171fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5236018441012920003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9215569580925481374, guid: 877f547e481274a47b6c809d4a49ee37,

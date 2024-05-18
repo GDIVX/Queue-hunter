@@ -54,6 +54,7 @@ public class PlayerMovementController : MonoBehaviour
 
     Rigidbody rb;
     [SerializeField] private float _speed;
+    [SerializeField] private float gravityFactor;
 
     private void Start()
     {
@@ -65,7 +66,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             if (result)
             {
-                SetSpeedForDuration(newSpeed, speedChangeDurationInSeconds);
+                SetSpeedForDuration(/*newSpeed, speedChangeDurationInSeconds*/);
             }
         });
     }
@@ -103,10 +104,10 @@ public class PlayerMovementController : MonoBehaviour
 
     #region MoveFunctions
 
-    public void SetSpeedForDuration(float newSpeed, float durationInSeconds)
+    public void SetSpeedForDuration(/*float newSpeed, float durationInSeconds*/)
     {
         float currSpeed = Speed;
-        StartCoroutine(SetSpeedForDurationEnum(newSpeed, durationInSeconds));
+        StartCoroutine(SetSpeedForDurationEnum(newSpeed, speedChangeDurationInSeconds));
         Speed = currSpeed;
     }
 
@@ -120,7 +121,8 @@ public class PlayerMovementController : MonoBehaviour
 
     void Move()
     {
-        rb.velocity = lastDir * Time.deltaTime * (Speed * 100);
+        rb.velocity =new Vector3(lastDir.x * Time.fixedDeltaTime * (Speed * 100), rb.velocity.y, lastDir.z * Time.fixedDeltaTime * (Speed * 100));
+        rb.AddForce(new Vector3(0, -1, 0) * gravityFactor, ForceMode.Acceleration);
         onMove?.Invoke("isRunning", true);
         //anim.SetBool("isRunning", true);
     }
@@ -138,6 +140,22 @@ public class PlayerMovementController : MonoBehaviour
             var rot = Quaternion.LookRotation(relative, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotSpeed * Time.deltaTime);
         }
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void RotateTowardsAttack()
+    {
+        var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.LookAt(new Vector3(pos.x, 1, pos.z));
     }
 
     #endregion
