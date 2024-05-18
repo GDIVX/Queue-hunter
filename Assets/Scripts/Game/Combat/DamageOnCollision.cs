@@ -7,10 +7,10 @@ using UnityEngine.Events;
 namespace Game.Combat
 {
     [RequireComponent(typeof(Collider))]
-    public class DamageOnCollision : MonoBehaviour, IInit<ProjectileModel>
+    public sealed class DamageOnCollision : MonoBehaviour, IInit<ProjectileModel>
     {
-        [SerializeField] private protected float _damage;
-        [SerializeField] private protected LayerMask _layerMask; // Use LayerMask instead of string tag
+        [SerializeField] private float _damage;
+        [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float cooldown;
         public UnityEvent<DamageOnCollision, Collider> OnCollision;
 
@@ -32,7 +32,7 @@ namespace Game.Combat
             HandleDamage(other);
         }
 
-        protected virtual void HandleDamage(Collider other)
+        private void HandleDamage(Collider other)
         {
             if (!_canDamage || (_layerMask.value & (1 << other.gameObject.layer)) == 0)
             {

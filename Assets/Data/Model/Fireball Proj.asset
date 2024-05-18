@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbbf370e9f32402dae4d52fc365cd140, type: 3}
-  m_Name: Defualt Projectile
+  m_Name: Fireball Proj
   m_EditorClassIdentifier: 
   speed: 1
-  viewPrefab: {fileID: 8551125371771216531, guid: 5fc33ca830678e3468e93e4aed6ec9e5,
-    type: 3}
+  prefab: {fileID: 4634584431060079604, guid: 25e9e60a0ab1b204398a8714349cdf20, type: 3}
   damage: 1
-  lookupTagForTarget: 1
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   lifetime: 1

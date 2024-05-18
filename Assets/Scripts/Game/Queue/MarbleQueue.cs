@@ -11,6 +11,7 @@ namespace Game.Queue
     {
         [SerializeField] private uint capacity;
         [SerializeField] private float padding;
+        [SerializeField] private List<MarbleModel> startingQueue;
 
         private readonly List<Marble> _pendingMarbles = new();
         private readonly Queue<Marble> _queue = new();
@@ -21,12 +22,12 @@ namespace Game.Queue
 
         private void Start()
         {
-            // //populare with 8 defualt marlbles
-            // for (int i = 0; i < capacity; i++)
-            // {
-            //     Marble marble = defaultMarble.CreateMarble();
-            //     AddMarble(marble);
-            // }
+            //populare with 8 defualt marlbles
+            foreach (MarbleModel model in startingQueue)
+            {
+                Marble marble = model.Create();
+                AddMarble(marble);
+            }
         }
 
         private void Update()

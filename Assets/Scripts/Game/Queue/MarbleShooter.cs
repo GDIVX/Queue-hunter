@@ -42,7 +42,7 @@ namespace Game.Queue
                 onShootingMarbleAttempted?.Invoke((false));
                 return;
             }
-            
+
 
             //Instantiate a projectile
 
@@ -51,6 +51,9 @@ namespace Game.Queue
             //2. Chain Lightning 
 
             Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
+
+            //rotate the projectile
+            projectile.transform.rotation = Quaternion.LookRotation(transform.forward);
 
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);
