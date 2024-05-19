@@ -25,17 +25,15 @@ namespace Game.UI
         {
             marbleQueue.onMarbleCreated.AddListener(OnMarbleCreated);
             marbleQueue.onMarbleEjected.AddListener(OnMarbleEjected);
-            marbleQueue.onMarbleStop.AddListener(OnMarbleStop);
         }
 
         private void OnDisable()
         {
             marbleQueue.onMarbleCreated.RemoveListener(OnMarbleCreated);
             marbleQueue.onMarbleEjected.RemoveListener(OnMarbleEjected);
-            marbleQueue.onMarbleStop.RemoveListener(OnMarbleStop);
         }
 
-        private void OnMarbleCreated(Marble marble, float ratio)
+        private void OnMarbleCreated(Marble marble, float distanceToTravel, float timeToTravel)
         {
             MarbleUI marbleUI = marbleUIPool.Get();
             marbleUI.Initialize(marble.Sprite);
@@ -45,7 +43,7 @@ namespace Game.UI
             activeMarbles[marble] = marbleUI;
 
             // Set initial position based on ratio and start the tween animation
-            UpdateMarblePosition(marble, ratio);
+            UpdateMarblePosition(marble, distanceToTravel, timeToTravel);
         }
 
         private void OnMarbleEjected(Marble marble)
@@ -58,22 +56,14 @@ namespace Game.UI
             }
         }
 
-        private void OnMarbleStop(Marble marble)
-        {
-            // Marble has stopped, its position will be updated as needed
-        }
 
-        private void UpdateMarblePosition(Marble marble, float ratio)
+        private void UpdateMarblePosition(Marble marble, float distanceToTravel, float timeToTravel)
         {
             if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
             {
-                float startY = start.transform.position.y;
-                float endY = end.transform.position.y;
-                float targetYPosition = Mathf.Lerp(startY, endY, ratio);
+                float endY = end.transform.position.y + (distanceToTravel * marbleUI.transform.localScale.y);
 
-                // Use DoTween to animate the position change
-                float remainingTime = marble.CurrentTravelTime;
-                marbleUI.transform.DOMoveY(targetYPosition, remainingTime).SetEase(Ease.Linear);
+                marbleUI.transform.DOMoveY(endY, timeToTravel).SetEase(Ease.Linear);
             }
         }
     }

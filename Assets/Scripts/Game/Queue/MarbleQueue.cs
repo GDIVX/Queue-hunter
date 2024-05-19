@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,7 +11,6 @@ namespace Game.Queue
     public class MarbleQueue : MonoBehaviour
     {
         [SerializeField] private uint capacity;
-        [SerializeField] private float padding;
         [SerializeField] private List<MarbleModel> startingQueue;
 
         private readonly List<Marble> _pendingMarbles = new();
@@ -18,10 +18,8 @@ namespace Game.Queue
 
         public UnityEvent<Marble> onMarbleEjected;
         public UnityEvent<Marble> onMarbleStop;
-        public UnityEvent<Marble, float> onMarbleCreated;
+        public UnityEvent<Marble, float, float> onMarbleCreated;
 
-        public uint Capacity => capacity;
-        public float Padding => padding;
 
         private void Start()
         {
@@ -29,7 +27,7 @@ namespace Game.Queue
             foreach (MarbleModel model in startingQueue)
             {
                 Marble marble = model.Create();
-                AddMarble(marble);
+                StartCoroutine(AddMarbleEnum(marble));
             }
         }
 
@@ -37,13 +35,12 @@ namespace Game.Queue
         {
             if (_pendingMarbles.Count == 0) return;
 
-            for (var i = 0; i < _pendingMarbles.Count; i++)
+            // Use a backward loop to safely remove items from the list
+            for (int i = _pendingMarbles.Count - 1; i >= 0; i--)
             {
                 var pendingMarble = _pendingMarbles[i];
-                //TODO in future feature:
-                //Check for thedering
 
-                //Update the timer
+                // Update the timer
                 pendingMarble.CurrentTravelTime -= Time.deltaTime;
 
                 if (pendingMarble.CurrentTravelTime > 0)
@@ -51,18 +48,28 @@ namespace Game.Queue
                     continue;
                 }
 
-                //remove the marble from the pending list and eqnque it
-                _pendingMarbles.Remove(pendingMarble);
+                // Marble has reached its destination
+                pendingMarble.CurrentTravelTime = 0;
+
+                // Remove the marble from the pending list and enqueue it
+                _pendingMarbles.RemoveAt(i);
                 _queue.Enqueue(pendingMarble);
                 onMarbleStop?.Invoke(pendingMarble);
             }
         }
 
-        public void AddMarble(Marble marble)
+        private IEnumerator AddMarbleEnum(Marble marble)
+        {
+            _pendingMarbles.Add(marble);
+            yield return new WaitForEndOfFrame();
+            AddMarble(marble);
+        }
+
+
+        private void AddMarble(Marble marble)
         {
             //Calculate target index
             int index = _queue.Count;
-
             if (index > capacity)
             {
                 //we are overflowing
@@ -71,16 +78,17 @@ namespace Game.Queue
             }
 
             //Calculate travel time
-            float distanceToTravel = padding * index;
+            float queueLength = capacity;
+            float distanceToTravel = queueLength - index;
             float timeToTravel = distanceToTravel / marble.InQueueSpeed;
             marble.CurrentTravelTime = timeToTravel;
+            marble.TotalTravelTime = timeToTravel;
 
             //Add to the pending list
-            _pendingMarbles.Add(marble);
-            float ratio = distanceToTravel / (capacity * padding);
 
-            onMarbleCreated?.Invoke(marble, ratio);
+            onMarbleCreated?.Invoke(marble, distanceToTravel, timeToTravel);
         }
+
 
 //TODO 
         public void RemoveMarble()
@@ -89,14 +97,15 @@ namespace Game.Queue
 
         public Marble EjectMarble()
         {
-            Marble res = _queue.Dequeue();
+            Marble marble = _queue.Dequeue();
 
-            onMarbleEjected?.Invoke(res);
+            onMarbleEjected?.Invoke(marble);
 
             //return the marble to the top of the queue
-            AddMarble(res);
+            StartCoroutine(AddMarbleEnum(marble));
 
-            return res;
+
+            return marble;
         }
 
         public List<Marble> GetQueue()

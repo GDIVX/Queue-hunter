@@ -13,6 +13,7 @@ namespace Game.Queue
         public Sprite Sprite { get; set; }
 
         public ProjectileModel ProjectileModel { get; private set; }
+        public float TotalTravelTime { get; set; }
 
         public Marble(float inQueueSpeed, ProjectileModel projectileModel, Sprite sprite)
         {
