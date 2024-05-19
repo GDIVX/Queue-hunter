@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 597702430410918718}
-  - component: {fileID: 487545910289467457}
   - component: {fileID: 5864189544722974423}
   - component: {fileID: 7836612736072927436}
   m_Layer: 0
@@ -29,28 +28,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.57, y: 2.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1479507986278654776}
   - {fileID: 1068665831507627756}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &487545910289467457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6184605095648420550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da4862514aaa124db3d144afd052e7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _expolotion: {fileID: 7957083765476993412, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-    type: 3}
-  projectileSpeed: 20
 --- !u!135 &5864189544722974423
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -89,7 +89,7 @@ public class PlayerMovementController : MonoBehaviour
         //move detection
         if (skewedInput != Vector3.zero && canMove)
         {
-            lastDir = skewedInput;
+            lastDir = skewedInput.normalized;
             Move();
         }
         else
@@ -121,7 +121,9 @@ public class PlayerMovementController : MonoBehaviour
 
     void Move()
     {
-        rb.velocity =new Vector3(lastDir.x * Time.fixedDeltaTime * (Speed * 100), rb.velocity.y, lastDir.z * Time.fixedDeltaTime * (Speed * 100));
+        rb.velocity = new Vector3(lastDir.x * Time.fixedDeltaTime * (Speed * 100),
+            rb.velocity.y,
+            lastDir.z * Time.fixedDeltaTime * (Speed * 100));
         rb.AddForce(new Vector3(0, -1, 0) * gravityFactor, ForceMode.Acceleration);
         onMove?.Invoke("isRunning", true);
         //anim.SetBool("isRunning", true);
