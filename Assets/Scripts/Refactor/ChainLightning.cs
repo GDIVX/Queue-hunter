@@ -71,7 +71,7 @@ namespace Combat.Weapons
                 if (hits.Length > 0)
                 {
                     Collider closestTarget = FindClosestTarget(hits, currPosition);
-                    if (closestTarget != null /*&& closestTarget.transform.TryGetComponent(out IDamageable damageable)*/)
+                    if (closestTarget != null && closestTarget.transform.TryGetComponent(out IDamageable damageable)) 
                     {
                         lastHitTarget = closestTarget;
                         //DebugDraw(currPosition, closestTarget.transform.position);
@@ -80,7 +80,7 @@ namespace Combat.Weapons
                         p4.position = closestTarget.transform.position;
                         bolt.gameObject.SetActive(true);
                         yield return new WaitForSeconds(delayPerJump);
-                        //damageable.HandleDamage(Damage);
+                        damageable.HandleDamage(Damage);
                         currPosition = closestTarget.transform.position;
 
                         OnHit?.Invoke(closestTarget);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6032307725223429082}
   - component: {fileID: 8451734793388063986}
   - component: {fileID: 331004338399703722}
-  - component: {fileID: 1487301268319652016}
+  - component: {fileID: 4355414975466595956}
   m_Layer: 0
   m_Name: FAB_SM_MiniHousePole_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1487301268319652016
+--- !u!65 &4355414975466595956
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
