@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2042377041466427459}
   - component: {fileID: 7974540119842470192}
   - component: {fileID: 5900589983834199612}
-  - component: {fileID: 3607265465696559608}
   m_Layer: 0
   m_Name: FAB_SM_JapneseHut_01
   m_TagString: Untagged
@@ -84,24 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3607265465696559608
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3187575831800069380}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 22.962341, y: 19.209713, z: 25.497017}
-  m_Center: {x: 0.00006580353, y: 9.6048565, z: -0.000017166138}

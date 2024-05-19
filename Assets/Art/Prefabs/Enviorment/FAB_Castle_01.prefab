@@ -242,7 +242,10 @@ PrefabInstance:
       value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6384453026024424179, guid: 634b7678ce550564d8afc1a8513c630a, type: 3}
+    - {fileID: 7252031401036175936, guid: 634b7678ce550564d8afc1a8513c630a, type: 3}
+    - {fileID: 5079889315326153424, guid: 634b7678ce550564d8afc1a8513c630a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 634b7678ce550564d8afc1a8513c630a, type: 3}
@@ -687,7 +690,10 @@ PrefabInstance:
       value: FAB_SM_JapaneseLargePagoda_02 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3601910420867352417, guid: 639cb1f008db4264296898300d49f5fe, type: 3}
+    - {fileID: 7873054249956688266, guid: 639cb1f008db4264296898300d49f5fe, type: 3}
+    - {fileID: 494287905206119377, guid: 639cb1f008db4264296898300d49f5fe, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 639cb1f008db4264296898300d49f5fe, type: 3}
@@ -775,7 +781,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: FAB_SM_JapneseHut_01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3607265465696559608, guid: 13c0edd3a1aadf547ad9d03e482eda10, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
