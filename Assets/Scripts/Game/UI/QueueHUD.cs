@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Game.Queue;
@@ -12,9 +13,11 @@ namespace Game.UI
         [SerializeField] private MarbleUI marbleUIPrefab;
         [SerializeField] private Transform marbleUIParent;
         [SerializeField] private GameObject start, end;
+        [SerializeField] private float spacing;
 
         private ObjectPool<MarbleUI> marbleUIPool;
         private Dictionary<Marble, MarbleUI> activeMarbles = new Dictionary<Marble, MarbleUI>();
+        private List<Marble> marblesToProcess = new List<Marble>();
 
         private void Awake()
         {
@@ -33,7 +36,7 @@ namespace Game.UI
             marbleQueue.onMarbleEjected.RemoveListener(OnMarbleEjected);
         }
 
-        private void OnMarbleCreated(Marble marble, float distanceToTravel, float timeToTravel)
+        private void OnMarbleCreated(Marble marble)
         {
             MarbleUI marbleUI = marbleUIPool.Get();
             marbleUI.Initialize(marble.Sprite);
@@ -41,9 +44,7 @@ namespace Game.UI
             marbleUI.transform.SetParent(marbleUIParent);
             marbleUI.transform.position = start.transform.position;
             activeMarbles[marble] = marbleUI;
-
-            // Set initial position based on ratio and start the tween animation
-            UpdateMarblePosition(marble, distanceToTravel, timeToTravel);
+            marblesToProcess.Add(marble);
         }
 
         private void OnMarbleEjected(Marble marble)
@@ -56,15 +57,34 @@ namespace Game.UI
             }
         }
 
-
-        private void UpdateMarblePosition(Marble marble, float distanceToTravel, float timeToTravel)
+        private void Update()
         {
-            if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
+            foreach (Marble marble in marblesToProcess)
             {
-                float endY = end.transform.position.y + (distanceToTravel * marbleUI.transform.localScale.y);
+                if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
+                {
+                    //Calculate the y position
+                    float endY = end.transform.position.y +
+                                 (marble.EndY * (marbleUI.transform.localScale.y + spacing));
+                    
+                    marbleUI.targetY = endY;
 
-                marbleUI.transform.DOMoveY(endY, timeToTravel).SetEase(Ease.Linear);
+                    //Translate the ui element
+                    Vector3 targetPos = new(marbleUI.transform.position.x, endY, marbleUI.transform.position.z);
+                    marbleUI.transform.position = Vector3.Lerp(marbleUI.transform.position, targetPos, Time.deltaTime);
+                }
             }
         }
+
+        // private void UpdateMarblePosition(Marble marble)
+        // {
+        //     if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
+        //     {
+        //         float endY = end.transform.position.y +
+        //                      (distanceToTravel * (marbleUI.transform.localScale.y + spacing));
+        //
+        //         marbleUI.transform.DOMoveY(endY, timeToTravel).SetEase(Ease.Linear);
+        //     }
+        // }
     }
 }

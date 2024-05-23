@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Game.Queue
 {
@@ -12,22 +11,28 @@ namespace Game.Queue
     {
         [SerializeField] private uint capacity;
         [SerializeField] private List<MarbleModel> startingQueue;
+        [SerializeField] private float delayOnCreation;
 
         private readonly List<Marble> _pendingMarbles = new();
         private readonly Queue<Marble> _queue = new();
 
         public UnityEvent<Marble> onMarbleEjected;
-        public UnityEvent<Marble> onMarbleStop;
-        public UnityEvent<Marble, float, float> onMarbleCreated;
+        public UnityEvent<Marble> onMarbleCreated;
 
 
         private void Start()
+        {
+            StartCoroutine(Init());
+        }
+
+        private IEnumerator Init()
         {
             //populare with 8 defualt marlbles
             foreach (MarbleModel model in startingQueue)
             {
                 Marble marble = model.Create();
                 StartCoroutine(AddMarbleEnum(marble));
+                yield return new WaitForSeconds(delayOnCreation);
             }
         }
 
@@ -35,11 +40,8 @@ namespace Game.Queue
         {
             if (_pendingMarbles.Count == 0) return;
 
-            // Use a backward loop to safely remove items from the list
-            for (int i = _pendingMarbles.Count - 1; i >= 0; i--)
+            foreach (Marble pendingMarble in _pendingMarbles.ToList())
             {
-                var pendingMarble = _pendingMarbles[i];
-
                 // Update the timer
                 pendingMarble.CurrentTravelTime -= Time.deltaTime;
 
@@ -52,24 +54,31 @@ namespace Game.Queue
                 pendingMarble.CurrentTravelTime = 0;
 
                 // Remove the marble from the pending list and enqueue it
-                _pendingMarbles.RemoveAt(i);
+                _pendingMarbles.Remove(pendingMarble);
                 _queue.Enqueue(pendingMarble);
-                onMarbleStop?.Invoke(pendingMarble);
+
+                foreach (Marble marble in _pendingMarbles)
+                {
+                    CalculateTravel(marble);
+                }
             }
         }
 
         private IEnumerator AddMarbleEnum(Marble marble)
         {
+            CalculateTravel(marble);
+            yield return new WaitForSeconds(delayOnCreation);
             _pendingMarbles.Add(marble);
-            yield return new WaitForEndOfFrame();
-            AddMarble(marble);
+            onMarbleCreated?.Invoke(marble);
         }
 
 
-        private void AddMarble(Marble marble)
+        private void CalculateTravel(Marble marble)
         {
             //Calculate target index
-            int index = _queue.Count;
+            int index = _queue.Count + _pendingMarbles.Count;
+            marble.EndY = index;
+
             if (index > capacity)
             {
                 //we are overflowing
@@ -83,10 +92,6 @@ namespace Game.Queue
             float timeToTravel = distanceToTravel / marble.InQueueSpeed;
             marble.CurrentTravelTime = timeToTravel;
             marble.TotalTravelTime = timeToTravel;
-
-            //Add to the pending list
-
-            onMarbleCreated?.Invoke(marble, distanceToTravel, timeToTravel);
         }
 
 
