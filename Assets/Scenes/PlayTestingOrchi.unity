@@ -3683,6 +3683,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6814070491085994730, guid: 6a7f662ec83546c4586f53685c6ec050,
         type: 3}
+      propertyPath: spacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814070491085994730, guid: 6a7f662ec83546c4586f53685c6ec050,
+        type: 3}
       propertyPath: marbleQueue
       value: 
       objectReference: {fileID: 1887962723}
@@ -3927,6 +3932,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gravityFactor
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: delayOnCreation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
