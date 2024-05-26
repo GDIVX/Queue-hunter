@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -50,7 +51,6 @@ public class PlayerMovementController : MonoBehaviour
 
     #endregion
 
-    //Animator anim;
 
     Rigidbody rb;
     [SerializeField] private float _speed;
@@ -58,7 +58,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Start()
     {
-        //anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         _shooter = GetComponentInChildren<MarbleShooter>();
 
@@ -79,16 +78,11 @@ public class PlayerMovementController : MonoBehaviour
         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         var skewedInput = matrix.MultiplyPoint3x4(movementInput);
 
-        //rot detection
+        //move detection
         if (skewedInput != Vector3.zero && canMove)
         {
             relative = GetRelativeRotation();
             UpdateRotation(relative, rotationSpeed);
-        }
-
-        //move detection
-        if (skewedInput != Vector3.zero && canMove)
-        {
             lastDir = skewedInput.normalized;
             Move();
         }
@@ -96,7 +90,6 @@ public class PlayerMovementController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             onMoveEnd?.Invoke("isRunning", false);
-            //anim.SetBool("isRunning", false);
         }
 
         if (isDashing) DuringDash();
@@ -126,7 +119,6 @@ public class PlayerMovementController : MonoBehaviour
             lastDir.z * Time.fixedDeltaTime * (Speed * 100));
         rb.AddForce(new Vector3(0, -1, 0) * gravityFactor, ForceMode.Acceleration);
         onMove?.Invoke("isRunning", true);
-        //anim.SetBool("isRunning", true);
     }
 
     Vector3 GetRelativeRotation()
@@ -156,8 +148,16 @@ public class PlayerMovementController : MonoBehaviour
 
     public void RotateTowardsAttack()
     {
-        var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.LookAt(new Vector3(pos.x, 1, pos.z));
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 pos;
+        if(Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            pos = hitInfo.point;
+            pos.y = 0;
+            var rot = Quaternion.LookRotation(pos);
+            transform.rotation = rot;
+            //transform.LookAt(pos);
+        }
     }
 
     #endregion

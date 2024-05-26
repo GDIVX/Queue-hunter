@@ -2,6 +2,7 @@ using Combat;
 using Game.Utility;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Game.Combat
@@ -10,6 +11,9 @@ namespace Game.Combat
     {
         [SerializeField] private float speed;
         [SerializeField] private float windUpTime;
+
+        public UnityEvent onMarbleShot;
+        public UnityEvent onMarbleShotEnd;
 
         public Vector3 Direction { get; set; }
 
@@ -31,6 +35,7 @@ namespace Game.Combat
 
         public void HandleMovement()
         {
+            onMarbleShotEnd?.Invoke();
             var direction = transform.forward;
             Vector3 translation = direction * (speed * Time.fixedDeltaTime);
             transform.position += translation;
@@ -43,6 +48,7 @@ namespace Game.Combat
 
         private IEnumerator ProjectileWindUp()
         {
+            onMarbleShot?.Invoke();
             yield return new WaitForSeconds(windUpTime);
             windUpTime = 0;
         }

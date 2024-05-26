@@ -6,9 +6,6 @@ using UnityEngine.Events;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    //[SerializeField] Animator anim;
-    // [SerializeField] GameObject projectile;
-    [SerializeField] PlayerMovementController playerMovementController;
     [SerializeField] float meleeAttackCooldown;
     Camera MainCamera;
     bool isShooting;
@@ -34,61 +31,19 @@ public class PlayerAttackController : MonoBehaviour
         EntityInRange = new List<IDamageable>();
     }
 
-    //private void Start()
-    //{
-        //anim = GetComponentInChildren<Animator>();
-        //playerMovementController = GetComponent<PlayerMovementController>();
-        //MainCamera = Camera.main;
-    //}
-
-    // void ShootProjectile()
-    // {
-    //     //TODO : Refactor
-    //     // if (queueSystem.GetMorbole(out var morbel))
-    //     // {
-    //     //     var proj = Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
-    //     // }
-    // }
-
-    // public void InitShootCoroutine()
-    // {
-    //     if (isShooting) return;
-    //     var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
-    //     transform.LookAt(new Vector3(pos.x, 0, pos.z));
-    //     StartCoroutine(ShootMarble());
-    // }
-
-    // public IEnumerator ShootMarble()
-    // {
-    //     isShooting = true;
-    //     anim.SetTrigger("1HSpellTrigger");
-    //     playerMovementController.canMove = false;
-    //     yield return new WaitForSeconds(1);
-    //     ShootProjectile();
-    //     yield return new WaitForSeconds(1.3f);
-    //     playerMovementController.canMove = true;
-    //     isShooting = false;
-    // }
 
     public void InitMeleeAttack()
     {
         if (!canUseMelee) return;
-        //var pos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
-        //transform.LookAt(new Vector3(pos.x, 0, pos.z));
         StartCoroutine(PunchCoroutine());
     }
 
     IEnumerator PunchCoroutine()
     {
         canUseMelee = false;
-        //playerMovementController.canMove = false;
-        //playerMovementController.Speed *= .5f;
         OnMeleeAttack?.Invoke();
-        //anim.SetTrigger("MeleeAttackTrigger");
         DoDamage();
         yield return new WaitForSeconds(meleeAttackCooldown);
-        //playerMovementController.Speed *= 2;
-        //playerMovementController.canMove = true;
         canUseMelee = true;
         OnMeleeAttackEnd?.Invoke();
     }
@@ -126,7 +81,6 @@ public class PlayerAttackController : MonoBehaviour
     public void PlayerDead()
     {
         OnPlayerDeath?.Invoke();
-        //anim.SetTrigger("PlayerDeathTrigger");
         StartCoroutine(KillPlayer());
     }
 
