@@ -10,6 +10,8 @@ Material:
   m_Name: StylizedWater2_ToxicGoop
   m_Shader: {fileID: -6465566751694194690, guid: d7b0192b9bf19c949900035fa781fdc4,
     type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ENVIRONMENTREFLECTIONS_OFF
   - _FOAM
@@ -29,6 +31,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -136,6 +139,7 @@ Material:
     - _BumpScale: 1
     - _CROSSPAN_INTERSECTIONOn: 1
     - _CausticsBrightness: 2
+    - _CausticsChromance: 1
     - _CausticsDistortion: 0.047
     - _CausticsOn: 0
     - _CausticsSpeed: 0.1
@@ -181,6 +185,7 @@ Material:
     - _GlossyReflections: 0
     - _HorizonDistance: 7.1
     - _IntersectionClipping: 0.605
+    - _IntersectionDistortion: 0.2
     - _IntersectionFalloff: 0.816
     - _IntersectionLength: 0.75
     - _IntersectionRippleDist: 32

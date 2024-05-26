@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5957435485216546989}
   - component: {fileID: 7398292695847363437}
   - component: {fileID: 7660135216710231880}
-  - component: {fileID: 5438638017653550944}
+  - component: {fileID: 7207550014261500173}
   m_Layer: 0
   m_Name: FAB_SM_JapanesePole_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5438638017653550944
+--- !u!65 &7207550014261500173
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

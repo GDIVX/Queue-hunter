@@ -71,7 +71,7 @@ namespace Combat.Weapons
                 if (hits.Length > 0)
                 {
                     Collider closestTarget = FindClosestTarget(hits, currPosition);
-                    if (closestTarget != null /*&& closestTarget.transform.TryGetComponent(out IDamageable damageable)*/)
+                    if (closestTarget != null /*&& closestTarget.transform.TryGetComponent(out IDamageable damageable)*/) 
                     {
                         lastHitTarget = closestTarget;
                         //DebugDraw(currPosition, closestTarget.transform.position);

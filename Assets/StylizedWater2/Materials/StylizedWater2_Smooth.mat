@@ -10,6 +10,8 @@ Material:
   m_Name: StylizedWater2_Smooth
   m_Shader: {fileID: -6465566751694194690, guid: d7b0192b9bf19c949900035fa781fdc4,
     type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADVANCED_SHADING
   - _CAUSTICS
@@ -32,6 +34,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -139,6 +142,7 @@ Material:
     - _BumpScale: 1
     - _CROSSPAN_INTERSECTIONOn: 1
     - _CausticsBrightness: 2
+    - _CausticsChromance: 1
     - _CausticsDistortion: 0.118
     - _CausticsOn: 1
     - _CausticsSpeed: 0.1
@@ -184,6 +188,7 @@ Material:
     - _GlossyReflections: 0
     - _HorizonDistance: 32
     - _IntersectionClipping: 0.175
+    - _IntersectionDistortion: 0.2
     - _IntersectionFalloff: 0.5
     - _IntersectionLength: 2
     - _IntersectionRippleDist: 64
