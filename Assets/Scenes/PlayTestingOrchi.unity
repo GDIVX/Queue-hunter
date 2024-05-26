@@ -4049,6 +4049,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 781.91876
       objectReference: {fileID: 0}
+    - target: {fileID: 8999014973777435034, guid: 85f46dba4b50ac74f9bb8af53ef505f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fbb04271505a76f40b984e38071e86f3, type: 2}
     - target: {fileID: 9103114315753411921, guid: 85f46dba4b50ac74f9bb8af53ef505f2,
         type: 3}
       propertyPath: m_LocalPosition.x
