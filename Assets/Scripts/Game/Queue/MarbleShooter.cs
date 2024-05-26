@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Combat;
 using Game.Combat;
 using ModestTree;
@@ -14,10 +15,14 @@ namespace Game.Queue
         [SerializeField] private MarbleQueue _queue;
         [SerializeField] private Transform spawnPoint;
 
+        [SerializeField] private float marbleShotTime;
+        [SerializeField] private bool isShooting;
+
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
         public UnityEvent<bool> onShootingMarbleAttempted;
         public UnityEvent onShootingMarble;
+        public UnityEvent onShootingMarbleEnd;
 
         private void Awake()
         {
@@ -27,6 +32,8 @@ namespace Game.Queue
 
         public void ShootNextMarble()
         {
+            if (isShooting) return;
+
             //If the queue is empty, throw an event for the UI/UX and return
             if (_queue.GetQueue().IsEmpty())
             {
@@ -55,6 +62,16 @@ namespace Game.Queue
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);
             onShootingMarble.Invoke();
+            isShooting = true;
+            StartCoroutine(MarbleShotCoroutine());
+
+        }
+
+        protected IEnumerator MarbleShotCoroutine()
+        {
+            yield return new WaitForSeconds(marbleShotTime);
+            isShooting = false;
+            onShootingMarbleEnd?.Invoke();
         }
     }
 }
