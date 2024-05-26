@@ -10,14 +10,14 @@ Material:
   m_Name: StylizedWater2_Desktop
   m_Shader: {fileID: -6465566751694194690, guid: d7b0192b9bf19c949900035fa781fdc4,
     type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ADVANCED_SHADING
   - _CAUSTICS
   - _DISTANCE_NORMALS
-  - _FOAM
-  - _NORMALMAP
   - _REFRACTION
   - _SHARP_INERSECTION
+  - _SPECULARHIGHLIGHTS_OFF
   - _TRANSLUCENCY
   - _WAVES
   m_InvalidKeywords:
@@ -34,6 +34,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: _WaveFadeDistance
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -152,7 +153,7 @@ Material:
     - _Cutoff: 0.5
     - _Depth: 0.94
     - _DepthExp: 1
-    - _DepthHorizontal: 1
+    - _DepthHorizontal: 5.16
     - _DepthMode: 0
     - _DepthTexture: 1
     - _DepthVertical: 8
@@ -168,7 +169,7 @@ Material:
     - _FoamBaseAmount: 0.297
     - _FoamClipping: 0
     - _FoamDistortion: 0
-    - _FoamOn: 1
+    - _FoamOn: 0
     - _FoamOpacity: 0
     - _FoamSize: 0.606
     - _FoamSpeed: 0.06000001
@@ -185,7 +186,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _HorizonDistance: 8
+    - _HorizonDistance: 32
     - _IntersectionClipping: 0.395
     - _IntersectionDistortion: 0.2
     - _IntersectionFalloff: 1
@@ -204,7 +205,7 @@ Material:
     - _Metallicness: 0.1
     - _NORMALMAPOn: 1
     - _NormalMap: 1
-    - _NormalMapOn: 1
+    - _NormalMapOn: 0
     - _NormalSpeed: 0.2
     - _NormalStrength: 0.202
     - _NormalSubSpeed: -0.5
@@ -233,7 +234,7 @@ Material:
     - _RimTiling: 0.025
     - _RiverModeOn: 0
     - _SHARP_INERSECTIONOn: 1
-    - _ShadingMode: 1
+    - _ShadingMode: 0
     - _ShadowStrength: 1
     - _ShoreLineLength: 0
     - _ShoreLineWaveDistance: 23
@@ -250,7 +251,7 @@ Material:
     - _SparkleIntensity: 0
     - _SparkleSize: 0.302
     - _SpecularHighlights: 1
-    - _SpecularReflectionsOn: 1
+    - _SpecularReflectionsOn: 0
     - _Speed: 1
     - _SrcBlend: 1
     - _SunReflectionDistortion: 0.762
@@ -273,11 +274,11 @@ Material:
     - _VertexColorDepth: 0
     - _VertexColorFoam: 0
     - _VertexColorWaveFlattening: 1
-    - _WaveCount: 2
+    - _WaveCount: 4
     - _WaveDistance: 0.775
-    - _WaveHeight: 0.1
+    - _WaveHeight: 6.44
     - _WaveNormalStr: 0.1
-    - _WaveSpeed: 2.3999996
+    - _WaveSpeed: 1
     - _WaveSteepness: 0
     - _WaveTint: 0
     - _WavesOn: 1
@@ -286,7 +287,7 @@ Material:
     - _ZClip: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.16451614, b: 0.34, a: 0.9647059}
+    - _BaseColor: {r: 0.031327877, g: 0.10370603, b: 0.6037736, a: 0.9647059}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}

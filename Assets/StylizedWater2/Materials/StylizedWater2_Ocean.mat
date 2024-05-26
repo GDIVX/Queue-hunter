@@ -189,8 +189,8 @@ Material:
     - _HorizonDistance: 32
     - _IntersectionClipping: 0.583
     - _IntersectionDistortion: 0.2
-    - _IntersectionFalloff: 1
-    - _IntersectionLength: 1
+    - _IntersectionFalloff: 0.663
+    - _IntersectionLength: 0.01
     - _IntersectionRippleDist: 20
     - _IntersectionRippleStrength: 0.53
     - _IntersectionSize: 0.944
@@ -254,10 +254,10 @@ Material:
     - _SpecularReflectionsOn: 1
     - _Speed: 1
     - _SrcBlend: 1
-    - _SunReflectionDistortion: 0.634
+    - _SunReflectionDistortion: 0
     - _SunReflectionPerturbance: 1
-    - _SunReflectionSize: 0.837
-    - _SunReflectionStrength: 10
+    - _SunReflectionSize: 0
+    - _SunReflectionStrength: 1
     - _Surface: 0
     - _TEXTURE_INTERSECTIONOn: 0
     - _TessMax: 50
@@ -279,7 +279,7 @@ Material:
     - _VertexColorWaveFlattening: 0
     - _WaveCount: 5
     - _WaveDistance: 0.97
-    - _WaveHeight: 1.5
+    - _WaveHeight: 0.14
     - _WaveNormalStr: 9.4
     - _WaveSpeed: 1
     - _WaveSteepness: 1.76
