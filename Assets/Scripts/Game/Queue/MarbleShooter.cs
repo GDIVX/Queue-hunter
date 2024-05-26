@@ -28,7 +28,7 @@ namespace Game.Queue
         public void ShootNextMarble()
         {
             //If the queue is empty, throw an event for the UI/UX and return
-            if (_queue.GetQueue().IsEmpty())
+            if (_queue.IsEmpty())
             {
                 onShootingMarbleAttempted?.Invoke((false));
                 return;

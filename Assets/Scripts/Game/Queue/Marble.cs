@@ -5,23 +5,28 @@ using UnityEngine;
 namespace Game.Queue
 {
     [Serializable]
-    public class Marble : IQueueable
+    public class Marble
     {
-        public float InQueueSpeed { get; set; }
-        public float CurrentTravelTime { get; set; }
-        public int CurrentGoalIndex { get; set; }
+        public float Speed { get; set; }
         public Sprite Sprite { get; set; }
-        public float EndY { get; set; }
-        public float CurrY { get; set; }
-
         public ProjectileModel ProjectileModel { get; private set; }
-        public float TotalTravelTime { get; set; }
 
-        public Marble(float inQueueSpeed, ProjectileModel projectileModel, Sprite sprite)
+        public Vector3 Position { get; set; }
+
+        public Marble(float speed, ProjectileModel projectileModel, Sprite sprite)
         {
-            InQueueSpeed = inQueueSpeed;
+            Speed = speed;
             ProjectileModel = projectileModel;
             Sprite = sprite;
+        }
+
+        public void UpdatePosition(Vector3 goal, float minDistanceToGoal = 0f)
+        {
+            //Determine if we already reached our goal within the desired distance
+            if (Vector3.Distance(goal, Position) <= minDistanceToGoal) return;
+
+            //lerp one frame towards the goal
+            Position = Vector3.Lerp(Position, goal, Time.deltaTime * Speed);
         }
     }
 }

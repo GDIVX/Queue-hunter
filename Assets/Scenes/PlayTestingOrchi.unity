@@ -3935,6 +3935,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
+      propertyPath: capacity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
       propertyPath: delayOnCreation
       value: 1
       objectReference: {fileID: 0}

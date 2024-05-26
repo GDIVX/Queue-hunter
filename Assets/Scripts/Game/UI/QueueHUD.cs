@@ -63,15 +63,7 @@ namespace Game.UI
             {
                 if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
                 {
-                    //Calculate the y position
-                    float endY = end.transform.position.y +
-                                 (marble.EndY * (marbleUI.transform.localScale.y + spacing));
-                    
-                    marbleUI.targetY = endY;
-
-                    //Translate the ui element
-                    Vector3 targetPos = new(marbleUI.transform.position.x, endY, marbleUI.transform.position.z);
-                    marbleUI.transform.position = Vector3.Lerp(marbleUI.transform.position, targetPos, Time.deltaTime);
+                    marbleUI.transform.position = marble.Position;
                 }
             }
         }
