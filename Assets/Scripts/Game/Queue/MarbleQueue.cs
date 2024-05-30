@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ModestTree;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,12 +13,13 @@ namespace Game.Queue
         [SerializeField] private List<MarbleModel> startingQueue;
         [SerializeField] private int maxCapacity;
 
-        private readonly List<Marble> _marbles = new List<Marble>();
+        [ShowInInspector, ReadOnly] private readonly List<Marble> _marbles = new List<Marble>();
 
         public UnityEvent<Marble> onMarbleEjected;
         public UnityEvent<Marble> onMarbleCreated;
 
         public int MaxCapacity => maxCapacity;
+        public int Count => _marbles.Count;
 
         private void Start()
         {
@@ -26,6 +28,10 @@ namespace Game.Queue
             {
                 CreateMarble(model);
             }
+
+            //Free up memeory by deleting the list
+            startingQueue.Clear();
+            startingQueue = null;
         }
 
         private void Update()

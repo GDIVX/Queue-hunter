@@ -89,3 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marbleImage: {fileID: 840890570421030781}
+  targetY: 0

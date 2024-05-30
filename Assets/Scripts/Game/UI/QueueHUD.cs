@@ -12,7 +12,7 @@ namespace Game.UI
         [SerializeField] private MarbleQueue marbleQueue;
         [SerializeField] private MarbleUI marbleUIPrefab;
         [SerializeField] private Transform marbleUIParent;
-        [SerializeField] private GameObject start, end;
+        [SerializeField] private Transform start, end;
         [SerializeField] private float spacing;
 
         private ObjectPool<MarbleUI> marbleUIPool;
@@ -40,11 +40,11 @@ namespace Game.UI
         {
             MarbleUI marbleUI = marbleUIPool.Get();
             marbleUI.Initialize(marble.Sprite);
-            marbleUI.gameObject.SetActive(true);
-            marbleUI.transform.SetParent(marbleUIParent);
             marbleUI.transform.position = start.transform.position;
+            marbleUI.transform.SetParent(marbleUIParent);
             activeMarbles[marble] = marbleUI;
             marblesToProcess.Add(marble);
+            marbleUI.gameObject.SetActive(true);
         }
 
         private void OnMarbleEjected(Marble marble)
@@ -59,12 +59,15 @@ namespace Game.UI
 
         private void Update()
         {
+            int queueLength = marbleQueue.Count;
+            float uiDistance = Vector3.Distance(start.position, end.position);
             foreach (Marble marble in marblesToProcess)
             {
-                if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
-                {
-                    marbleUI.transform.position = marble.Position;
-                }
+                if (!activeMarbles.TryGetValue(marble, out MarbleUI marbleUI)) continue;
+                float relativeDistance = marble.Position.magnitude / queueLength;
+                float uiRelativeDistance = relativeDistance * uiDistance;
+                marbleUI.transform.position =
+                    (end.position - start.position).normalized * uiRelativeDistance + start.position;
             }
         }
 
