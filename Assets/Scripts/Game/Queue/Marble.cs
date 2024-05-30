@@ -1,55 +1,24 @@
-using System;
+using Combat;
 using Game.Combat;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Queue
 {
-    [Serializable]
-    public class Marble
+    public class Marble : IQueueable
     {
-        [SerializeField] private float speed;
-        [SerializeField] private Sprite sprite;
-        [SerializeField] private ProjectileModel projectileModel;
-        [SerializeField] private Vector3 position;
+        public float InQueueSpeed { get; set; }
+        public float CurrentWaitingTime { get; set; }
+        public int CurrentGoalIndex { get; set; }
+        public GameObject UIView { get; private set; }
 
-        public float Speed
-        {
-            get => speed;
-            set => speed = value;
-        }
+        public ProjectileModel ProjectileModel { get; private set; }
 
-        public Sprite Sprite
+        public Marble(float inQueueSpeed, ProjectileModel projectileModel, GameObject UIView)
         {
-            get => sprite;
-            set => sprite = value;
-        }
-
-        public ProjectileModel ProjectileModel
-        {
-            get => projectileModel;
-            private set => projectileModel = value;
-        }
-
-        public Vector3 Position
-        {
-            get => position;
-            set => position = value;
-        }
-
-        public Marble(float speed, ProjectileModel projectileModel, Sprite sprite)
-        {
-            Speed = speed;
+            InQueueSpeed = inQueueSpeed;
             ProjectileModel = projectileModel;
-            Sprite = sprite;
-        }
-
-        public void UpdatePosition(Vector3 goal, float minDistanceToGoal = 0f)
-        {
-            //Determine if we already reached our goal within the desired distance
-            if (Vector3.Distance(goal, Position) <= minDistanceToGoal) return;
-
-            //lerp one frame towards the goal
-            Position = Vector3.Lerp(Position, goal, Time.deltaTime * Speed);
+            this.UIView = UIView;
         }
     }
 }

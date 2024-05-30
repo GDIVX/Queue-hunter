@@ -11,7 +11,7 @@ namespace Game.Queue
     {
         [SerializeField] private float _inQueueSpeed;
         [SerializeField] private ProjectileModel _projectileModel;
-        [SerializeField] private Sprite sprite;
+        [SerializeField] private GameObject UIVIew;
 
         public float InQueueSpeed
         {
@@ -21,7 +21,7 @@ namespace Game.Queue
 
         public Marble Create()
         {
-            return new(_inQueueSpeed, _projectileModel, sprite);
+            return new(_inQueueSpeed, _projectileModel, UIVIew);
         }
     }
 }

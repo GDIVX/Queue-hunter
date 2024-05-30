@@ -1,89 +1,108 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Game.Queue
 {
     public class MarbleQueue : MonoBehaviour
     {
+        [SerializeField] private uint capacity;
+        [SerializeField] private float padding;
         [SerializeField] private List<MarbleModel> startingQueue;
-        [SerializeField] private int maxCapacity;
 
-        [ShowInInspector, ReadOnly] private readonly List<Marble> _marbles = new List<Marble>();
+        private readonly List<Marble> _pendingMarbles = new();
+        private readonly Queue<Marble> _queue = new();
 
         public UnityEvent<Marble> onMarbleEjected;
+        public UnityEvent<Marble> onMarbleMoving;
+        public UnityEvent<Marble> onMarbleStop;
         public UnityEvent<Marble> onMarbleCreated;
 
-        public int MaxCapacity => maxCapacity;
-        public int Count => _marbles.Count;
+        public uint Capacity => capacity;
+        public float Padding => padding;
 
         private void Start()
         {
-            //Initialize the queue
+            //populare with 8 defualt marlbles
             foreach (MarbleModel model in startingQueue)
             {
-                CreateMarble(model);
+                Marble marble = model.Create();
+                AddMarble(marble);
             }
-
-            //Free up memeory by deleting the list
-            startingQueue.Clear();
-            startingQueue = null;
         }
 
         private void Update()
         {
-            if (_marbles.Count == 0) return;
+            if (_pendingMarbles.Count == 0) return;
 
-            for (int i = 0; i < _marbles.Count; i++)
+            for (var i = 0; i < _pendingMarbles.Count; i++)
             {
-                Marble marble = _marbles[i];
-                marble.UpdatePosition(new(0, i, 0));
+                var pendingMarble = _pendingMarbles[i];
+                //TODO in future feature:
+                //Check for thedering
+
+                //Update the timer
+                pendingMarble.CurrentWaitingTime -= Time.deltaTime;
+
+                if (pendingMarble.CurrentWaitingTime > 0)
+                {
+                    onMarbleMoving?.Invoke(pendingMarble);
+                    continue;
+                }
+
+                //remove the marble from the pending list and eqnque it
+                _pendingMarbles.Remove(pendingMarble);
+                _queue.Enqueue(pendingMarble);
+                onMarbleStop?.Invoke(pendingMarble);
             }
         }
 
-        private Marble CreateMarble(MarbleModel model)
+        public void AddMarble(Marble marble)
         {
-            //Can we add another marble?
-            if (_marbles.Count >= maxCapacity)
+            //Calculate target index
+            int index = _queue.Count;
+
+            if (index > capacity)
             {
-                Debug.LogError($"Trying to add {model} to the queue at max capacity");
-                return null;
+                //we are overflowing
+                //TODO: Edge case
+                return;
             }
 
-            //Create a new marble
-            Marble marble = model.Create();
-            AddToTop(marble);
+            //Calculate travel time
+            float distanceToTravel = padding * index;
+            float timeToTravel = distanceToTravel / marble.InQueueSpeed;
+            marble.CurrentWaitingTime = timeToTravel;
 
+            //Add to the pending list
+            _pendingMarbles.Add(marble);
 
-            return marble;
-        }
-
-        private void AddToTop(Marble marble)
-        {
-            //Add it to the list
-            _marbles.Add(marble);
-            //Set its position to the top of the container
-            marble.Position = new(0, maxCapacity, 0);
             onMarbleCreated?.Invoke(marble);
         }
 
+//TODO 
+        public void RemoveMarble()
+        {
+        }
 
         public Marble EjectMarble()
         {
-            Marble marble = _marbles.First();
-            _marbles.Remove(marble);
-            onMarbleEjected?.Invoke(marble);
-            AddToTop(marble);
-            return marble;
+            Marble res = _queue.Dequeue();
+
+            onMarbleEjected?.Invoke(res);
+
+            //return the marble to the top of the queue
+            AddMarble(res);
+
+            return res;
         }
 
-        public bool IsEmpty()
+        public List<Marble> GetQueue()
         {
-            return _marbles.IsEmpty();
+            return _queue.ToList();
         }
     }
 }
