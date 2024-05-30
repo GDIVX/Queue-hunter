@@ -17,6 +17,7 @@ namespace Game.Combat
 
         public UnityEvent OnDeathUnityEvent;
         public UnityEvent OnTakeDamage;
+        public UnityEvent<float, Vector3> OnTakeDamageUI;
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
@@ -31,6 +32,11 @@ namespace Game.Combat
         {
             maxHealth = modelHealth;
             currentHealth = maxHealth;
+        }
+
+        private void Health_OnTakeDamageUITest(float arg1, Vector3 arg2)
+        {
+            throw new NotImplementedException();
         }
 
         public event Action<IDestroyable> OnDestroyed;
@@ -62,6 +68,7 @@ namespace Game.Combat
             currentHealth = CurrentHealth - damage;
             OnUpdateValue?.Invoke(damage, this);
             OnTakeDamage?.Invoke();
+            OnTakeDamageUI?.Invoke(damage, transform.position);
         }
 
         [Button]
