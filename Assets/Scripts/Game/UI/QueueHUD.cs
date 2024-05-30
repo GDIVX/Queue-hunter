@@ -66,8 +66,11 @@ namespace Game.UI
                 if (!activeMarbles.TryGetValue(marble, out MarbleUI marbleUI)) continue;
                 float relativeDistance = marble.Position.magnitude / queueLength;
                 float uiRelativeDistance = relativeDistance * uiDistance;
-                marbleUI.transform.position =
-                    (end.position - start.position).normalized * uiRelativeDistance + start.position;
+
+
+                Vector3 direction = (start.position - end.position).normalized;
+                float distance = spacing * uiRelativeDistance;
+                marbleUI.transform.position = direction * distance + end.position;
             }
         }
 

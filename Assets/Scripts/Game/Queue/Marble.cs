@@ -7,11 +7,34 @@ namespace Game.Queue
     [Serializable]
     public class Marble
     {
-        public float Speed { get; set; }
-        public Sprite Sprite { get; set; }
-        public ProjectileModel ProjectileModel { get; private set; }
+        [SerializeField] private float speed;
+        [SerializeField] private Sprite sprite;
+        [SerializeField] private ProjectileModel projectileModel;
+        [SerializeField] private Vector3 position;
 
-        public Vector3 Position { get; set; }
+        public float Speed
+        {
+            get => speed;
+            set => speed = value;
+        }
+
+        public Sprite Sprite
+        {
+            get => sprite;
+            set => sprite = value;
+        }
+
+        public ProjectileModel ProjectileModel
+        {
+            get => projectileModel;
+            private set => projectileModel = value;
+        }
+
+        public Vector3 Position
+        {
+            get => position;
+            set => position = value;
+        }
 
         public Marble(float speed, ProjectileModel projectileModel, Sprite sprite)
         {
