@@ -41,7 +41,7 @@ namespace Game.Queue
             for (int i = 0; i < _marbles.Count; i++)
             {
                 Marble marble = _marbles[i];
-                marble.UpdatePosition(new(0, i, 0));
+                marble.UpdatePosition(new(0, i, 0), 0.1f);
             }
         }
 
@@ -75,6 +75,10 @@ namespace Game.Queue
         public Marble EjectMarble()
         {
             Marble marble = _marbles.First();
+
+            //The marlbe isn't ready to fire
+            if (!marble.IsReady) return null;
+
             _marbles.Remove(marble);
             onMarbleEjected?.Invoke(marble);
             AddToTop(marble);

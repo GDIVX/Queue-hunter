@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa7117c5eed44b384e136a28a177a33, type: 3}
   m_Name: Fire Marble
   m_EditorClassIdentifier: 
-  _inQueueSpeed: 10
+  _inQueueSpeed: 3
   _projectileModel: {fileID: 11400000, guid: 36d631e81b3b0904fa65e6bda01046f4, type: 2}
   sprite: {fileID: 21300000, guid: 7cb3a9d8c71f4b84dac020993598304d, type: 3}
