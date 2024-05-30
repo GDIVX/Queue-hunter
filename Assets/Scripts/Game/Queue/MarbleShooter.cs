@@ -21,7 +21,6 @@ namespace Game.Queue
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
         public UnityEvent<bool> onShootingMarbleAttempted;
-
         public UnityEvent onShootingMarble;
         public UnityEvent onShootingMarbleEnd;
 
@@ -47,7 +46,7 @@ namespace Game.Queue
 
             if (marble == null)
             {
-                //The marble isn't ready yet
+                Debug.LogError("Failed to fetch marble from a non empty queue");
                 onShootingMarbleAttempted?.Invoke((false));
                 return;
             }
@@ -65,6 +64,7 @@ namespace Game.Queue
             onShootingMarble.Invoke();
             isShooting = true;
             StartCoroutine(MarbleShotCoroutine());
+
         }
 
         protected IEnumerator MarbleShotCoroutine()
