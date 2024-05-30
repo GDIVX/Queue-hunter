@@ -49,12 +49,10 @@ namespace Game.UI
 
         private void OnMarbleEjected(Marble marble)
         {
-            if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
-            {
-                marbleUI.gameObject.SetActive(false);
-                marbleUIPool.ReturnToPool(marbleUI);
-                activeMarbles.Remove(marble);
-            }
+            if (!activeMarbles.TryGetValue(marble, out MarbleUI marbleUI)) return;
+            marbleUI.gameObject.SetActive(false);
+            marbleUIPool.ReturnToPool(marbleUI);
+            activeMarbles.Remove(marble);
         }
 
         private void Update()

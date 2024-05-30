@@ -59,7 +59,6 @@ namespace Game.Queue
             AddToTop(marble);
 
 
-            onMarbleCreated?.Invoke(marble);
             return marble;
         }
 
@@ -69,6 +68,7 @@ namespace Game.Queue
             _marbles.Add(marble);
             //Set its position to the top of the container
             marble.Position = new(0, maxCapacity, 0);
+            onMarbleCreated?.Invoke(marble);
         }
 
 
