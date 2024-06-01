@@ -4,9 +4,10 @@ using System.Collections;
 using TMPro;
 using Queue.Systems.UISystem;
 
+
 public class DamageNumber : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI damageNumber;
+    [SerializeField] TextMeshPro damageNumber;
     [SerializeField] RectTransform rectTransform;
     [SerializeField] RectTransform canvasRectTransform;
     [SerializeField] float apearanceTime;
@@ -14,29 +15,21 @@ public class DamageNumber : MonoBehaviour
 
     void Start()
     {
-        //damageNumber = GetComponent<TextMeshProUGUI>();
         isAvailable = true;
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void ActivateDamageNumber(float num, Vector3 pos)
     {
         Debug.Log($"Displaying damage number {num}");
         isAvailable = false;
-        // get the screen position
-
-        //Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
-
-        //// convert the screen position to the local anchored position
-
-        //Vector2 anchoredPosition = transform.InverseTransformPoint(screenPoint);
-
-        Vector2 viewportPosition = Camera.main.WorldToViewportPoint(pos);
-        Vector2 worldObjectScreenPosition = new Vector2(
-           ((viewportPosition.x * canvasRectTransform.sizeDelta.x) - (canvasRectTransform.sizeDelta.x * 0.5f)),
-           ((viewportPosition.y * canvasRectTransform.sizeDelta.y) - (canvasRectTransform.sizeDelta.y * 0.5f)));
-
-        rectTransform.anchoredPosition = worldObjectScreenPosition;
         damageNumber.text = num.ToString();
+        pos = new Vector3(pos.x, pos.y + 5, pos.z);
+        rectTransform.position = pos;
         StartCoroutine(DisplayDamageNumbers());
 
     }

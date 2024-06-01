@@ -17,7 +17,7 @@ public class DamageFeedbackUI : MonoBehaviour
     {
         for (int i = 0; i < amountToPool; i++)
         {
-            var go = Instantiate(damageNumberPrefab);
+            var go = Instantiate(damageNumberPrefab, transform);
             damageNumbers.Add(go);
         }
 
