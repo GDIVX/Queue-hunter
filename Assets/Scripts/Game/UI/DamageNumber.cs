@@ -12,6 +12,7 @@ public class DamageNumber : MonoBehaviour
     [SerializeField] RectTransform rectTransform;
     [SerializeField] RectTransform canvasRectTransform;
     [SerializeField] float apearanceTime;
+    [SerializeField] float yOffset;
     public bool isAvailable = true;
 
     void Start()
@@ -21,10 +22,9 @@ public class DamageNumber : MonoBehaviour
 
     public void ActivateDamageNumber(float num, Vector3 pos)
     {
-        Debug.Log($"Displaying damage number {num}");
         isAvailable = false;
         damageNumber.text = num.ToString();
-        pos = new Vector3(pos.x, pos.y + 5, pos.z);
+        pos = new Vector3(pos.x, pos.y + yOffset, pos.z);
         rectTransform.position = pos;
         StartCoroutine(DisplayDamageNumbers());
 

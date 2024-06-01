@@ -34,11 +34,6 @@ namespace Game.Combat
             currentHealth = maxHealth;
         }
 
-        private void Health_OnTakeDamageUITest(float arg1, Vector3 arg2)
-        {
-            throw new NotImplementedException();
-        }
-
         public event Action<IDestroyable> OnDestroyed;
         public Vector3 Position => transform.localPosition;
 

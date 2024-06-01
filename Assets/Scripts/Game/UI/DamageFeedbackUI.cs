@@ -19,11 +19,7 @@ public class DamageFeedbackUI : MonoBehaviour
         {
             var go = Instantiate(damageNumberPrefab, transform);
             damageNumbers.Add(go);
-        }
-
-        foreach (var go in damageNumbers)
-        {
-            if(go.TryGetComponent(out DamageNumber damageNumber) && !damageNumber.isAvailable) damageNumber.isAvailable = true;
+            if (go.TryGetComponent(out DamageNumber damageNumber) && !damageNumber.isAvailable) damageNumber.isAvailable = true;
             go.gameObject.SetActive(false);
         }
     }
