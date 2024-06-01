@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 using Queue.Systems.UISystem;
+using DG.Tweening;
 
 
 public class DamageNumber : MonoBehaviour
@@ -18,11 +19,6 @@ public class DamageNumber : MonoBehaviour
         isAvailable = true;
     }
 
-    private void Update()
-    {
-        
-    }
-
     public void ActivateDamageNumber(float num, Vector3 pos)
     {
         Debug.Log($"Displaying damage number {num}");
@@ -36,6 +32,10 @@ public class DamageNumber : MonoBehaviour
 
     private IEnumerator DisplayDamageNumbers()
     {
+        transform.DOMoveY(10, apearanceTime);
+        transform.DOScale(.7f, apearanceTime / 2);
+        yield return new WaitForSeconds(apearanceTime / 2);
+        transform.DOScale(.3f, apearanceTime / 2);
         yield return new WaitForSeconds(apearanceTime);
         isAvailable = true;
         gameObject.SetActive(false);
