@@ -71,16 +71,5 @@ namespace Game.UI
                 marbleUI.transform.position = direction * distance + end.position;
             }
         }
-
-        // private void UpdateMarblePosition(Marble marble)
-        // {
-        //     if (activeMarbles.TryGetValue(marble, out MarbleUI marbleUI))
-        //     {
-        //         float endY = end.transform.position.y +
-        //                      (distanceToTravel * (marbleUI.transform.localScale.y + spacing));
-        //
-        //         marbleUI.transform.DOMoveY(endY, timeToTravel).SetEase(Ease.Linear);
-        //     }
-        // }
     }
 }

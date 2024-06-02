@@ -11,14 +11,12 @@ namespace Game.Queue
     public class MarbleQueue : MonoBehaviour
     {
         [SerializeField] private List<MarbleModel> startingQueue;
-        [SerializeField] private int maxCapacity;
 
         [ShowInInspector, ReadOnly] private readonly List<Marble> _marbles = new List<Marble>();
 
         public UnityEvent<Marble> onMarbleEjected;
         public UnityEvent<Marble> onMarbleCreated;
 
-        public int MaxCapacity => maxCapacity;
         public int Count => _marbles.Count;
 
         private void Start()
@@ -47,13 +45,6 @@ namespace Game.Queue
 
         private Marble CreateMarble(MarbleModel model)
         {
-            //Can we add another marble?
-            if (_marbles.Count >= maxCapacity)
-            {
-                Debug.LogError($"Trying to add {model} to the queue at max capacity");
-                return null;
-            }
-
             //Create a new marble
             Marble marble = model.Create();
             AddToTop(marble);
@@ -67,7 +58,7 @@ namespace Game.Queue
             //Add it to the list
             _marbles.Add(marble);
             //Set its position to the top of the container
-            marble.Position = new(0, maxCapacity, 0);
+            marble.Position = new(0, Count + 1, 0);
             onMarbleCreated?.Invoke(marble);
         }
 
