@@ -78,10 +78,10 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.60648113, y: 0, z: 2.0003226, w: 0}
+      - m_Value: {x: 1.816772, y: 0, z: 5.992157, w: 0}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 0.60648113, y: 0, z: 2.0003226, w: 0}
+      - m_Value: {x: 1.816772, y: 0, z: 5.992157, w: 0}
         m_Name: EffectColor
         m_Overridden: 1
     m_Uint:

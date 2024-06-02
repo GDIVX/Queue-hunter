@@ -123,11 +123,11 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 64
-  maxDistancePerJump: 5
+  maxDistancePerJump: 10
   p4: {fileID: 488890737070263354}
   p1: {fileID: 2723078962655852210}
   bolt: {fileID: 4653081004978256853}
-  debugMode: 0
+  debugMode: 1
   OnHit:
     m_PersistentCalls:
       m_Calls: []

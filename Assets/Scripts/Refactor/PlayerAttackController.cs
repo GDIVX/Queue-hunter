@@ -50,11 +50,11 @@ public class PlayerAttackController : MonoBehaviour
 
     public void DoDamage()
     {
-        Debug.Log("Attacking");
+        //Debug.Log("Attacking");
         foreach (IDamageable target in EntityInRange)
         {
             target.HandleDamage(MeleeDamage);
-            Debug.Log("!");
+            //Debug.Log("!");
         }
     }
 
