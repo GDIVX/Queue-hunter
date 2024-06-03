@@ -147,6 +147,16 @@ public class PlayerMovementController : MonoBehaviour
         canMove = true;
     }
 
+    public void SetSlowSpeed()
+    {
+        Speed = Speed / 2;
+    }
+
+    public void SetRegularSpeed()
+    {
+        Speed *= 2;
+    }
+
     public void RotateTowardsAttack()
     {
         Ray cameraRay;              
@@ -162,7 +172,7 @@ public class PlayerMovementController : MonoBehaviour
                 Vector3 targetPosition = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
                 Vector3 dir = targetPosition - transform.position;
                 dir.y = 0;
-                transform.forward = dir;
+                //transform.forward = dir;
                 var relative = (transform.position + dir) - transform.position;
                 UpdateRotation(relative, rotationSpeed);
             }
