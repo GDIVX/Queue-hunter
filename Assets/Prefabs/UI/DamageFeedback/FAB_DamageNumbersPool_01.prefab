@@ -49,5 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountToPool: 10
-  damageNumberPrefab: {fileID: 3207734113147739530, guid: 009cc32b673d2d14587c705acdd997c2,
+  damageNumberPrefab: {fileID: 1798226085974528768, guid: 74972e21c1a9ab547bf32a94b0e4fa25,
     type: 3}
+  damageNumbers: []

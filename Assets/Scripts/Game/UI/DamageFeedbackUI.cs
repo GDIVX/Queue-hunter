@@ -39,6 +39,10 @@ public class DamageFeedbackUI : MonoBehaviour
             }
             else Debug.Log("cant get component damagenumber");
         }
-        Debug.Log("no available damage number found, try increasing the pool amount.");
+
+        if (damageNumbers.Count == 0)
+        {
+            Debug.Log("no available damage number found, try increasing the pool amount.");
+        }
     }
 }

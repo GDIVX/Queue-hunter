@@ -13,6 +13,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] float rotationSpeed = 360;
     [SerializeField] private Vector3 lastDir;
     [SerializeField] private MarbleShooter _shooter;
+    [SerializeField] LayerMask groundLayer;
 
     [SerializeField, BoxGroup("Speed change after shooting")]
     private float newSpeed;
@@ -146,17 +147,35 @@ public class PlayerMovementController : MonoBehaviour
         canMove = true;
     }
 
+    public void SetSlowSpeed()
+    {
+        Speed = Speed / 2;
+    }
+
+    public void SetRegularSpeed()
+    {
+        Speed *= 2;
+    }
+
     public void RotateTowardsAttack()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3 pos;
-        if(Physics.Raycast(ray, out RaycastHit hitInfo))
+        Ray cameraRay;              
+
+        // Cast a ray from the camera to the mouse cursor
+        cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if(Physics.Raycast(cameraRay, out var hitInfo, Mathf.Infinity, groundLayer))
         {
-            pos = hitInfo.point;
-            pos.y = 0;
-            var rot = Quaternion.LookRotation(pos);
-            transform.rotation = rot;
-            //transform.LookAt(pos);
+            if (hitInfo.transform.tag == "Ground")
+            {
+                //Debug.Log("hit ground");
+                Vector3 targetPosition = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
+                Vector3 dir = targetPosition - transform.position;
+                dir.y = 0;
+                //transform.forward = dir;
+                var relative = (transform.position + dir) - transform.position;
+                UpdateRotation(relative, rotationSpeed);
+            }
         }
     }
 
