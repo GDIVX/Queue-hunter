@@ -14,12 +14,10 @@ Material:
   m_ValidKeywords:
   - _ADVANCED_SHADING
   - _DISTANCE_NORMALS
-  - _FOAM
-  - _NORMALMAP
   - _REFRACTION
   - _SHARP_INERSECTION
+  - _SPECULARHIGHLIGHTS_OFF
   - _TRANSLUCENCY
-  - _WAVES
   m_InvalidKeywords:
   - ADVANCED_LIGHTING
   - _DEPTHEXP_ON
@@ -156,7 +154,7 @@ Material:
     - _DepthHorizontal: 0.01
     - _DepthMode: 0
     - _DepthTexture: 1
-    - _DepthVertical: 8
+    - _DepthVertical: 16
     - _DisableDepthTexture: 0
     - _DistanceNormalsOn: 1
     - _DistanceNormalsTiling: 0.079999976
@@ -169,7 +167,7 @@ Material:
     - _FoamBaseAmount: 0.309
     - _FoamClipping: 0
     - _FoamDistortion: 0.13
-    - _FoamOn: 1
+    - _FoamOn: 0
     - _FoamOpacity: 1
     - _FoamSize: 0.314
     - _FoamSpeed: -0.5
@@ -205,7 +203,7 @@ Material:
     - _Metallicness: 0.1
     - _NORMALMAPOn: 1
     - _NormalMap: 1
-    - _NormalMapOn: 1
+    - _NormalMapOn: 0
     - _NormalSpeed: 0.5
     - _NormalStrength: 0.274
     - _NormalSubSpeed: 0.01
@@ -251,7 +249,7 @@ Material:
     - _SparkleIntensity: 0
     - _SparkleSize: 0.155
     - _SpecularHighlights: 1
-    - _SpecularReflectionsOn: 1
+    - _SpecularReflectionsOn: 0
     - _Speed: 1
     - _SrcBlend: 1
     - _SunReflectionDistortion: 0
@@ -284,7 +282,7 @@ Material:
     - _WaveSpeed: 1
     - _WaveSteepness: 1.76
     - _WaveTint: 0.057
-    - _WavesOn: 1
+    - _WavesOn: 0
     - _WorkflowMode: 1
     - _WorldSpaceUV: 1
     - _ZClip: 1
