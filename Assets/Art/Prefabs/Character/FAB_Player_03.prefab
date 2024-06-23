@@ -263,7 +263,7 @@ MonoBehaviour:
           m_StringArgument: DashTrigger
           m_BoolArgument: 0
         m_CallState: 2
-  dashDuration: 0.15
+  dashDuration: 0.25
   dashCooldown: 1
   _speed: 8
   gravityFactor: 100
