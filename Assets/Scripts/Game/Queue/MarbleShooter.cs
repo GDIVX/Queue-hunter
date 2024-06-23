@@ -51,17 +51,12 @@ namespace Game.Queue
                 return;
             }
 
-
-            //Instantiate a projectile
-
-            Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
-
-            //rotate the projectile
-            projectile.transform.rotation = Quaternion.LookRotation(transform.forward);
+            onShootingMarble.Invoke();
+            StartCoroutine(PreFireCoroutine(marble));
+            
 
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);
-            onShootingMarble.Invoke();
             isShooting = true;
             StartCoroutine(MarbleShotCoroutine());
 
@@ -72,6 +67,19 @@ namespace Game.Queue
             yield return new WaitForSeconds(marbleShotTime);
             isShooting = false;
             onShootingMarbleEnd?.Invoke();
+        }
+
+        protected IEnumerator PreFireCoroutine(Marble marble)
+        {
+
+            yield return new WaitForSeconds(.2f);
+
+            //Instantiate a projectile
+
+            Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
+
+            //rotate the projectile
+            projectile.transform.rotation = Quaternion.LookRotation(transform.forward);
         }
     }
 }
