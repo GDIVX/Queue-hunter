@@ -136,6 +136,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1461244036650023375, guid: afa40fb0c4564704aab41689d7daab2c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3412123092797081789, guid: afa40fb0c4564704aab41689d7daab2c,
         type: 3}
       propertyPath: m_Asset
@@ -215,7 +220,7 @@ PrefabInstance:
     - target: {fileID: 3412123092797081789, guid: afa40fb0c4564704aab41689d7daab2c,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.y
-      value: 0
+      value: 37.23
       objectReference: {fileID: 0}
     - target: {fileID: 3412123092797081789, guid: afa40fb0c4564704aab41689d7daab2c,
         type: 3}
@@ -230,7 +235,7 @@ PrefabInstance:
     - target: {fileID: 3412123092797081789, guid: afa40fb0c4564704aab41689d7daab2c,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.y
-      value: 0
+      value: 37.23
       objectReference: {fileID: 0}
     - target: {fileID: 3412123092797081789, guid: afa40fb0c4564704aab41689d7daab2c,
         type: 3}

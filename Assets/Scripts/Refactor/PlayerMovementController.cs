@@ -1,4 +1,5 @@
 using System.Collections;
+using Combat;
 using Game.Queue;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
@@ -8,12 +9,18 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovementController : MonoBehaviour
 {
+
+    #region RotationParams
+    [SerializeField] float rotSmoothTime = 0.5f;
+    [SerializeField] float rotationSpeed = 360;
+
+    #endregion
     #region MovementParams
 
-    [SerializeField] float rotationSpeed = 360;
     [SerializeField] private Vector3 lastDir;
     [SerializeField] private MarbleShooter _shooter;
     [SerializeField] LayerMask groundLayer;
+    private Vector3 skewedInput;
 
     [SerializeField, BoxGroup("Speed change after shooting")]
     private float newSpeed;
@@ -22,10 +29,8 @@ public class PlayerMovementController : MonoBehaviour
     private float speedChangeDurationInSeconds;
 
     Vector3 movementInput;
-    Vector3 relative;
     bool isRunning;
     public bool canMove = true;
-    public bool canRotate = true;
 
     public float Speed
     {
@@ -77,13 +82,20 @@ public class PlayerMovementController : MonoBehaviour
         movementInput = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), 0,
             UnityEngine.Input.GetAxisRaw("Vertical"));
         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-        var skewedInput = matrix.MultiplyPoint3x4(movementInput);
+        skewedInput = matrix.MultiplyPoint3x4(movementInput);
+        
 
         //move detection
         if (skewedInput != Vector3.zero && canMove)
         {
-            relative = GetRelativeRotation();
-            UpdateRotation(relative, rotationSpeed);
+            Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
+
+
+            targetRotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.fixedDeltaTime);
+            rb.MoveRotation(targetRotation);
             lastDir = skewedInput.normalized;
             Move();
         }
@@ -122,21 +134,6 @@ public class PlayerMovementController : MonoBehaviour
         onMove?.Invoke("isRunning", true);
     }
 
-    Vector3 GetRelativeRotation()
-    {
-        var relative = (transform.position + lastDir) - transform.position;
-        return relative;
-    }
-
-    public void UpdateRotation(Vector3 relative, float rotSpeed)
-    {
-        if (relative != Vector3.zero && canRotate)
-        {
-            var rot = Quaternion.LookRotation(relative, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotSpeed * Time.deltaTime);
-        }
-    }
-
     public void DisableMovement()
     {
         canMove = false;
@@ -159,23 +156,25 @@ public class PlayerMovementController : MonoBehaviour
 
     public void RotateTowardsAttack()
     {
-        Ray cameraRay;              
+        Ray cameraRay;
 
         // Cast a ray from the camera to the mouse cursor
         cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(cameraRay, out var hitInfo, Mathf.Infinity, groundLayer))
+        if (Physics.Raycast(cameraRay, out var hitInfo, Mathf.Infinity, groundLayer))
         {
-            if (hitInfo.transform.tag == "Ground")
-            {
-                //Debug.Log("hit ground");
-                Vector3 targetPosition = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 dir = targetPosition - transform.position;
-                dir.y = 0;
-                //transform.forward = dir;
-                var relative = (transform.position + dir) - transform.position;
-                UpdateRotation(relative, rotationSpeed);
-            }
+            Vector3 targetPosition = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
+            Vector3 dir = (targetPosition - transform.position).normalized;
+            dir.y = 0;
+
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+
+
+            targetRotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                (rotationSpeed));
+            rb.MoveRotation(targetRotation);
         }
     }
 
@@ -208,8 +207,14 @@ public class PlayerMovementController : MonoBehaviour
             // Calculate progress of dash
             float t = dashTimeElapsed / dashDuration;
             //Rotate player towards dash direction
-            relative = GetRelativeRotation();
-            UpdateRotation(relative, rotationSpeed);
+            Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
+
+
+            targetRotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                (rotationSpeed) * Time.fixedDeltaTime);
+            rb.MoveRotation(targetRotation);
             //Actual dash logic
             rb.velocity = dashDirection * Time.fixedDeltaTime * (Speed * 400);
         }
