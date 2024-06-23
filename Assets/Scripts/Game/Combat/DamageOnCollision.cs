@@ -24,12 +24,17 @@ namespace Game.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            HandleDamage(other);
+            Collider[] cols = Physics.OverlapSphere(transform.position, 4f, _layerMask);
+            foreach (Collider col in cols)
+            {
+                HandleDamage(col);
+            }
+            //HandleDamage(other);
         }
 
         private void OnTriggerStay(Collider other)
         {
-            HandleDamage(other);
+            //HandleDamage(other);
         }
 
         private void HandleDamage(Collider other)
