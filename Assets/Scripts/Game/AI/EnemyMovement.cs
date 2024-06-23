@@ -26,6 +26,17 @@ namespace AI
 
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> OnEnemyMove;
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> OnEnemyMoveEnd;
+        [SerializeField] private bool canMove;
+
+        public bool CanMove
+        {
+            get => canMove;
+            set
+            {
+                canMove = value;
+                InvokeOnEnemyMoveEvent(value);
+            }
+        }
 
 
         private void Awake()
@@ -51,21 +62,27 @@ namespace AI
             }
         }
 
+        private void InvokeOnEnemyMoveEvent(bool isRunning)
+        {
+            OnEnemyMoveEnd?.Invoke("isRunning", isRunning);
+        }
+
         private void Update()
         {
             if (!isMoving)
             {
-                OnEnemyMoveEnd?.Invoke("isRunning", false);
+                InvokeOnEnemyMoveEvent(false);
                 return;
             }
 
-            OnEnemyMove?.Invoke("isRunning", true);
+            InvokeOnEnemyMoveEvent(true);
 
             ITarget target = targeting.GetTarget();
             Vector3 destination;
 
             if (target == null)
             {
+                //TODO: Refactor
                 var circle = Random.insideUnitCircle * 5f; // Move within a radius of 5 units
                 destination = transform.position + new Vector3(circle.x, 0, circle.y);
             }
@@ -79,12 +96,15 @@ namespace AI
                 navMeshAgent.SetDestination(destination);
             }
 
-            // Handle rotation
-            if (navMeshAgent != null && navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)
-            {
-                Quaternion rotation = Quaternion.LookRotation(navMeshAgent.velocity.normalized);
-                view.rotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
-            }
+            HandleRotation();
+        }
+
+        private void HandleRotation()
+        {
+            if (navMeshAgent == null || !(navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)) return;
+
+            Quaternion rotation = Quaternion.LookRotation(navMeshAgent.velocity.normalized);
+            view.rotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
         }
 
         public void Init(float modelSpeed)
