@@ -13,7 +13,8 @@ public class ProjectileCollision : MonoBehaviour
         {
             var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
             Instantiate(explosionObject, point, Quaternion.identity);
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }
