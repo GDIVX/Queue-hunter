@@ -11,12 +11,13 @@ public class PlayerMovementController : MonoBehaviour
 {
 
     #region RotationParams
-    [SerializeField] float rotSmoothTime = 0.5f;
     [SerializeField] float rotationSpeed = 360;
 
     #endregion
-    #region MovementParams
 
+    #region MovementParams
+    [SerializeField] float regularSpeed;
+    [SerializeField] float halfSpeed;
     [SerializeField] private Vector3 lastDir;
     [SerializeField] private MarbleShooter _shooter;
     [SerializeField] LayerMask groundLayer;
@@ -118,12 +119,12 @@ public class PlayerMovementController : MonoBehaviour
 
     public void SetSlowSpeed()
     {
-        Speed = Speed / 2;
+        Speed = halfSpeed;
     }
 
     public void SetRegularSpeed()
     {
-        Speed *= 2;
+        Speed = regularSpeed;
     }
 
     public void RotateTowardsAttack()
