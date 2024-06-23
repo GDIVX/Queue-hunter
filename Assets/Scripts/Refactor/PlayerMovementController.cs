@@ -22,11 +22,6 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     private Vector3 skewedInput;
 
-    [SerializeField, BoxGroup("Speed change after shooting")]
-    private float newSpeed;
-
-    [SerializeField, BoxGroup("Speed change after shooting")]
-    private float speedChangeDurationInSeconds;
 
     Vector3 movementInput;
     bool isRunning;
@@ -38,8 +33,6 @@ public class PlayerMovementController : MonoBehaviour
         set => _speed = value;
     }
 
-    public UnityEvent onMovementSpeedChangeStart;
-    public UnityEvent onMovementSpeedChangeEnd;
     public UnityEvent<string, bool> onMove;
     public UnityEvent<string, bool> onMoveEnd;
     public UnityEvent<string> onDash;
@@ -67,13 +60,7 @@ public class PlayerMovementController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         _shooter = GetComponentInChildren<MarbleShooter>();
 
-        _shooter.onShootingMarbleAttempted?.AddListener((result) =>
-        {
-            if (result)
-            {
-                SetSpeedForDuration(/*newSpeed, speedChangeDurationInSeconds*/);
-            }
-        });
+        
     }
 
 
@@ -109,21 +96,6 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     #region MoveFunctions
-
-    public void SetSpeedForDuration(/*float newSpeed, float durationInSeconds*/)
-    {
-        float currSpeed = Speed;
-        StartCoroutine(SetSpeedForDurationEnum(newSpeed, speedChangeDurationInSeconds));
-        Speed = currSpeed;
-    }
-
-    IEnumerator SetSpeedForDurationEnum(float newSpeed, float durationInSeconds)
-    {
-        onMovementSpeedChangeStart?.Invoke();
-        Speed = newSpeed;
-        yield return new WaitForSeconds(durationInSeconds);
-        onMovementSpeedChangeEnd?.Invoke();
-    }
 
     void Move()
     {
@@ -190,7 +162,6 @@ public class PlayerMovementController : MonoBehaviour
 
         //animation trigger
         onDash?.Invoke("DashTrigger");
-        //anim.SetTrigger("DashTrigger");
 
         // Get the dash direction based on player input
         dashDirection = lastDir;
