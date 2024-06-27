@@ -10,7 +10,7 @@ namespace Game.Queue
 {
     public class MarbleQueue : MonoBehaviour
     {
-        [SerializeField] private List<MarbleModel> startingQueue;
+        [SerializeField] public List<MarbleModel> startingQueue;
 
         [ShowInInspector, ReadOnly] private readonly List<Marble> _marbles = new List<Marble>();
 

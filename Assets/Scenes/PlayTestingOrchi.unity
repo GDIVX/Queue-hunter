@@ -1120,6 +1120,12 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 46.055275, y: 9.3359165, z: 2.29}
   m_Center: {x: 4.1626625, y: 4.1679583, z: 0}
+--- !u!4 &288231091 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8436784764815211679, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7475721795045014229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &293046344
 GameObject:
   m_ObjectHideFlags: 0
@@ -6699,7 +6705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1734714714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6712,6 +6718,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6867e5e298b28954e9f2028c2148f7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amountToPool: 0
+  effects: []
+  queue: {fileID: 0}
+  projectileFactory: {fileID: 0}
+  spawnPoint: {fileID: 0}
 --- !u!4 &1734714715
 Transform:
   m_ObjectHideFlags: 0
@@ -7131,7 +7142,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7475721795045014229}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2127815054}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 944bd179bf64be14094fb0a56c9a791f, type: 3}
@@ -7143,7 +7154,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7475721795045014229}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2127815054}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dfe16b239be7984184af2fb2f830c9c, type: 3}
@@ -8215,6 +8226,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 46.055275, y: 9.3359165, z: 2.29}
   m_Center: {x: 4.1626625, y: 4.1679583, z: 0}
+--- !u!1 &2127815054 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2079439979103550985, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7475721795045014229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2127815055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127815054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6867e5e298b28954e9f2028c2148f7ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountToPool: 0
+  effects: []
+  queue: {fileID: 0}
+  projectileFactory: {fileID: 0}
+  spawnPoint: {fileID: 288231091}
 --- !u!1 &2137344088
 GameObject:
   m_ObjectHideFlags: 0
@@ -8616,7 +8650,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2079439979103550985, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2127815055}
   m_SourcePrefab: {fileID: 100100000, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
