@@ -20,34 +20,24 @@ namespace AI
         [SerializeField, TabGroup("View")] private float rotationSpeed;
 
         [SerializeField, TabGroup("Setting")] private float speed;
-        private Animator anim;
+        private Animator _animator;
 
-        private bool isMoving = true;
+        private bool _isMoving = true;
 
-        [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> OnEnemyMove;
-        [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> OnEnemyMoveEnd;
+        [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMove;
+        [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMoveEnd;
         [SerializeField] private bool canMove;
-
-        public bool CanMove
-        {
-            get => canMove;
-            set
-            {
-                canMove = value;
-                InvokeOnEnemyMoveEvent(value);
-            }
-        }
 
 
         private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            anim = GetComponentInChildren<Animator>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         public void SetMovementAllowed(bool value)
         {
-            isMoving = value;
+            _isMoving = value;
             if (navMeshAgent != null)
             {
                 navMeshAgent.isStopped = !value;
@@ -62,68 +52,79 @@ namespace AI
             }
         }
 
-        private void InvokeOnEnemyMoveEvent(bool isRunning)
-        {
-            OnEnemyMoveEnd?.Invoke("isRunning", isRunning);
-        }
-
-        private void Update()
-        {
-            if (!isMoving)
-            {
-                InvokeOnEnemyMoveEvent(false);
-                return;
-            }
-
-            InvokeOnEnemyMoveEvent(true);
-
-            ITarget target = targeting.GetTarget();
-            Vector3 destination;
-
-            if (target == null)
-            {
-                //TODO: Refactor
-                var circle = Random.insideUnitCircle * 5f; // Move within a radius of 5 units
-                destination = transform.position + new Vector3(circle.x, 0, circle.y);
-            }
-            else
-            {
-                destination = target.Position;
-            }
-
-            if (navMeshAgent != null)
-            {
-                navMeshAgent.SetDestination(destination);
-            }
-
-            HandleRotation();
-        }
-
-        private void HandleRotation()
-        {
-            if (navMeshAgent == null || !(navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)) return;
-
-            Quaternion rotation = Quaternion.LookRotation(navMeshAgent.velocity.normalized);
-            view.rotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
-        }
-
         public void Init(float modelSpeed)
         {
             speed = modelSpeed;
-            if (navMeshAgent != null)
+            if (navMeshAgent)
             {
                 navMeshAgent.speed = speed;
                 navMeshAgent.isStopped = false;
             }
 
-            isMoving = true;
+            _isMoving = true;
         }
+
+
+        private void Update()
+        {
+            if (!_isMoving)
+            {
+                InvokeOnEnemyMoveEvent(false);
+                return;
+            }
+
+
+            if (TryGetTargetPosition(out var position))
+            {
+                MoveTo(position);
+            }
+        }
+
+        public void MoveTo(Vector3 destination)
+        {
+            if (navMeshAgent)
+            {
+                navMeshAgent.SetDestination(destination);
+            }
+
+            HandleRotation();
+            InvokeOnEnemyMoveEvent(true);
+        }
+
+        private void InvokeOnEnemyMoveEvent(bool isRunning)
+        {
+            onEnemyMoveEnd?.Invoke("isRunning", isRunning);
+        }
+
+        private bool TryGetTargetPosition(out Vector3 targetPosition)
+        {
+            var target = targeting.GetTarget();
+
+            if (target == null)
+            {
+                targetPosition = default;
+                return false;
+            }
+
+            targetPosition = target.Position;
+            return true;
+        }
+
+
+        private void HandleRotation()
+        {
+            if (!navMeshAgent || !(navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)) return;
+
+            Quaternion rotation = Quaternion.LookRotation(navMeshAgent.velocity.normalized);
+            view.rotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
+        }
+
 
         private void OnValidate()
         {
             // Ensure necessary components are present
             navMeshAgent = GetComponent<NavMeshAgent>();
-            anim = GetComponentInChildren<Animator>();
+            _animator = GetComponentInChildren<Animator>();
 
             // Validate serialized fields to avoid null reference issues
             if (targeting == null)
@@ -141,7 +142,7 @@ namespace AI
                 Debug.LogError("NavMeshAgent component is missing.", this);
             }
 
-            if (anim == null)
+            if (_animator == null)
             {
                 Debug.LogError("Animator component is missing in children.", this);
             }

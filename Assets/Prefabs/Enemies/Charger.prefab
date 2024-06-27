@@ -88,10 +88,10 @@ GameObject:
   - component: {fileID: 3109053303165181385}
   - component: {fileID: 6026234111414529931}
   - component: {fileID: 6154112973120562343}
-  - component: {fileID: 4932567618469072802}
   - component: {fileID: 9046465264925358716}
+  - component: {fileID: 5609641074565785686}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Charger
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4932567618469072802}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Combat.EnemyMeleeAttack, Assembly-CSharp
         m_MethodName: SetAttackingAllowed
         m_Mode: 6
@@ -347,68 +347,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4932567618469072802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4847894258755056903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a649f629fb933cd47a03ce39f09f22c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
-  attackCooldown: 1.4
-  attackWindup: 1
-  range: 2
-  targeting: {fileID: 1786835331794283215}
-  OnAttackWindup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3621960942769985064}
-        m_TargetAssemblyTypeName: AI.EnemyMovement, Assembly-CSharp
-        m_MethodName: SetMovementAllowed
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7526568981060940477}
-        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MeleeAttackTrigger
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnAttacking:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAttackOnCooldownEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3621960942769985064}
-        m_TargetAssemblyTypeName: AI.EnemyMovement, Assembly-CSharp
-        m_MethodName: SetMovementAllowed
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!195 &9046465264925358716
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -431,6 +369,37 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5609641074565785686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847894258755056903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dae04f7a6548e2a4c57cf012a91e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementController: {fileID: 3621960942769985064}
+  rigidbody: {fileID: 6154112973120562343}
+  targeting: {fileID: 1786835331794283215}
+  distanceToTargetRange:
+    min: 2
+    max: 5
+  maxChargeDistance: 5
+  coolDown: 3
+  attackDamage: 2
+  speed: 6
+  onPreparingToCharge:
+    m_PersistentCalls:
+      m_Calls: []
+  onChargeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onChargeEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2022751767845844177
 PrefabInstance:
   m_ObjectHideFlags: 0

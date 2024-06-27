@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using AI;
 using Combat;
@@ -17,27 +16,56 @@ namespace Game.AI.Behaviours
         private EnemyMovement movementController;
 
         [SerializeField, BoxGroup("Dependencies")]
+        private new Rigidbody rigidbody;
+
+        [SerializeField, BoxGroup("Dependencies")]
         private EnemyTargeting targeting;
 
-        [SerializeField, BoxGroup("Settings")] private MinMaxFloat distanceToTargetRange;
+        [SerializeField, BoxGroup("Settings"),
+         Tooltip("The range to look for target. Targets would only be visible within this range")]
+        private MinMaxFloat distanceToTargetRange;
+
+        [SerializeField, BoxGroup("Settings")] private float maxChargeDistance;
         [SerializeField, BoxGroup("Settings")] private float coolDown;
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
+        [SerializeField, BoxGroup("Settings")] private float speed;
 
         private ITarget _target;
 
-        public UnityEvent OnPreperingToCharge, OnChargeStart, OnChargeEnd;
+        public UnityEvent onPreparingToCharge, onChargeStart, onChargeEnd;
 
         private bool _isCharging = false;
+        private Vector3 _destination;
 
         private void OnValidate()
         {
             movementController ??= GetComponent<EnemyMovement>();
             targeting ??= GetComponent<EnemyTargeting>();
+            rigidbody ??= GetComponent<Rigidbody>();
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             targeting.OnTargetFound += OnTargetFound;
+        }
+
+        private void Update()
+        {
+            if (!_isCharging) return;
+            HandleChargeMovement();
+        }
+
+        private void HandleChargeMovement()
+        {
+            // If we reached the destination - we can no longer charge
+            if (Vector3.Distance(transform.position, _destination) <= 0.1f) // Added a small tolerance
+            {
+                EndCharge();
+                return;
+            }
+
+            var direction = (_destination - transform.position).normalized;
+            rigidbody.velocity = direction * speed;
         }
 
         private void OnTargetFound(ITarget target)
@@ -45,66 +73,71 @@ namespace Game.AI.Behaviours
             if (!CanCharge(target)) return;
 
             _target = target;
-            ChargeAt(target);
+            StartCoroutine(HandleCooldown(target));
         }
 
         private void ChargeAt(ITarget target)
         {
-            StartCoroutine(HandleCooldown(target));
-
-            Vector3 destination = GetChargeDestination();
-
-            StartMovementTo(destination);
-
-            EndCharge();
+            _destination = GetChargeDestination(target);
+            StartCharge(target);
         }
 
-        private void StartMovementTo(Vector3 destination)
+        private Vector3 GetChargeDestination(ITarget target)
         {
-            throw new NotImplementedException();
+            var direction = (target.Position - transform.position).normalized;
+            var destination = transform.position + direction *
+                Mathf.Min(maxChargeDistance, Vector3.Distance(transform.position, target.Position));
+            return destination;
         }
 
-        private Vector3 GetChargeDestination()
+        private void OnCollisionEnter(Collision other)
         {
-            throw new NotImplementedException();
+            HandleCollision(other.collider);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void HandleCollision(Collider other)
         {
             if (!_isCharging) return;
 
             if (_target == null) return;
 
-            if (!other.gameObject == _target.GameObject) return;
+            if (other.gameObject != _target.GameObject)
+            {
+                EndCharge();
+                return;
+            }
 
-            HandleDamange(_target.Damageable);
+            HandleDamage(_target.Damageable);
+            EndCharge();
         }
 
-        private void HandleDamange(IDamageable targetDamageable)
+        private void HandleDamage(IDamageable targetDamageable)
         {
             targetDamageable.HandleDamage(attackDamage);
         }
 
-
         private IEnumerator HandleCooldown(ITarget target)
         {
-            OnPreperingToCharge?.Invoke();
+            onPreparingToCharge?.Invoke();
             yield return new WaitForSeconds(coolDown);
-            StartCharge(target);
+            ChargeAt(target);
         }
 
         private void StartCharge(ITarget target)
         {
             _isCharging = true;
             _target = target;
-            OnChargeStart?.Invoke();
+            onChargeStart?.Invoke();
+            movementController.SetMovementAllowed(false);
         }
 
         private void EndCharge()
         {
             _isCharging = false;
             _target = null;
-            OnChargeEnd?.Invoke();
+            onChargeEnd?.Invoke();
+            rigidbody.velocity = Vector3.zero;
+            movementController.SetMovementAllowed(true);
         }
 
         private bool CanCharge(ITarget target)
