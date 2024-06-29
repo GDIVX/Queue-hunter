@@ -158,8 +158,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: destroyTime
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
+        type: 3}
+      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -212,7 +217,7 @@ PrefabInstance:
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RotateTowardsAttack
+      value: SetSlowSpeed
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}

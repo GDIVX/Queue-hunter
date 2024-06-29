@@ -11,6 +11,7 @@ namespace Game.Combat
     {
         [SerializeField] private float speed;
         [SerializeField] private float windUpTime;
+        [SerializeField] private float destroyTime;
 
         public UnityEvent onMarbleShot;
         public UnityEvent onMarbleShotEnd;
@@ -20,6 +21,7 @@ namespace Game.Combat
         private void Start()
         {
             StartCoroutine(ProjectileWindUp());
+            StartCoroutine(KillProjectile());
         }
 
         public void Initialize(float speed)
@@ -51,6 +53,12 @@ namespace Game.Combat
             onMarbleShot?.Invoke();
             yield return new WaitForSeconds(windUpTime);
             windUpTime = 0;
+        }
+
+        private IEnumerator KillProjectile()
+        {
+            yield return new WaitForSeconds(destroyTime);
+            Destroy(gameObject);
         }
     }
 }

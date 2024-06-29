@@ -7,10 +7,12 @@ using UnityEngine.Events;
 public class PlayerAttackController : MonoBehaviour
 {
     [SerializeField] float meleeAttackCooldown;
-    Camera MainCamera;
-    bool isShooting;
+
 
     #region MeleeParams
+    [SerializeField] float firstAttackCD;
+    [SerializeField] float secondAttackCD;
+    [SerializeField] float thirdAttackCD;
     [SerializeField] private int meleeDamage;
     private List<IDamageable> EntityInRange;
     bool canUseMelee = true;
@@ -22,13 +24,19 @@ public class PlayerAttackController : MonoBehaviour
     }
     #endregion
 
+    public UnityEvent<string> OnMeleeAttackAnimEvent;
     public UnityEvent OnMeleeAttack;
     public UnityEvent OnMeleeAttackEnd;
     public UnityEvent OnPlayerDeath;
 
+    [SerializeField]private bool hasAttackedOnce;
+    [SerializeField]private bool hasAttackedTwice;
+    [SerializeField]private bool hasAttackedThree;
+
     private void Awake()
     {
         EntityInRange = new List<IDamageable>();
+        hasAttackedThree = true;
     }
 
 
@@ -41,20 +49,62 @@ public class PlayerAttackController : MonoBehaviour
     IEnumerator PunchCoroutine()
     {
         canUseMelee = false;
-        OnMeleeAttack?.Invoke();
-        DoDamage();
-        yield return new WaitForSeconds(meleeAttackCooldown);
-        canUseMelee = true;
-        OnMeleeAttackEnd?.Invoke();
+        if(hasAttackedOnce)
+        {
+            hasAttackedOnce = false;
+            hasAttackedTwice = false;
+            hasAttackedThree = false;
+            OnMeleeAttack?.Invoke();
+            OnMeleeAttackAnimEvent?.Invoke("MeleeAttackTrigger2");
+            DoDamage();
+            //trigger first punch anim
+            yield return new WaitForSeconds(secondAttackCD);
+            canUseMelee = true;
+            hasAttackedTwice = true;
+            OnMeleeAttackEnd?.Invoke();
+        }
+
+        else if (hasAttackedTwice)
+        {
+            hasAttackedOnce = false;
+            hasAttackedTwice = false;
+            hasAttackedThree = false;
+            OnMeleeAttack?.Invoke();
+            OnMeleeAttackAnimEvent?.Invoke("MeleeAttackTrigger3");
+            DoDamage();
+            //trigger first punch anim
+            yield return new WaitForSeconds(thirdAttackCD);
+            canUseMelee = true;
+            hasAttackedThree = true;
+            OnMeleeAttackEnd?.Invoke();
+        }
+
+        else
+        {
+            hasAttackedOnce = false;
+            hasAttackedTwice = false;
+            hasAttackedThree = false;
+            OnMeleeAttack?.Invoke();
+            OnMeleeAttackAnimEvent?.Invoke("MeleeAttackTrigger1");
+            DoDamage();
+            //trigger first punch anim
+            yield return new WaitForSeconds(firstAttackCD);
+            canUseMelee = true;
+            hasAttackedOnce = true;
+            OnMeleeAttackEnd?.Invoke();
+        }
+        //OnMeleeAttack?.Invoke();
+        //DoDamage();
+        //yield return new WaitForSeconds(meleeAttackCooldown);
+        //canUseMelee = true;
+        //OnMeleeAttackEnd?.Invoke();
     }
 
     public void DoDamage()
     {
-        //Debug.Log("Attacking");
         foreach (IDamageable target in EntityInRange)
         {
             target.HandleDamage(MeleeDamage);
-            //Debug.Log("!");
         }
     }
 

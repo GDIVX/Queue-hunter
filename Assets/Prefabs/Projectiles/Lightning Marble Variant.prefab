@@ -123,7 +123,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 64
-  maxDistancePerJump: 10
+  maxDistancePerJump: 15
   p4: {fileID: 488890737070263354}
   p1: {fileID: 2723078962655852210}
   bolt: {fileID: 4653081004978256853}
@@ -134,19 +134,6 @@ MonoBehaviour:
   OnMarbleAttack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
-          type: 3}
-        m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
-        m_MethodName: RotateTowardsAttack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
           type: 3}
         m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
@@ -192,6 +179,11 @@ PrefabInstance:
     - target: {fileID: 746900345072486842, guid: 152fb57f8eb707746b1ba304f9d038d6,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943602186955113759, guid: 152fb57f8eb707746b1ba304f9d038d6,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5282539963240057187, guid: 152fb57f8eb707746b1ba304f9d038d6,
@@ -242,6 +234,21 @@ PrefabInstance:
     - target: {fileID: 5282539963240057187, guid: 152fb57f8eb707746b1ba304f9d038d6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665147454190533047, guid: 152fb57f8eb707746b1ba304f9d038d6,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665147454190533047, guid: 152fb57f8eb707746b1ba304f9d038d6,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467769995500275909, guid: 152fb57f8eb707746b1ba304f9d038d6,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
