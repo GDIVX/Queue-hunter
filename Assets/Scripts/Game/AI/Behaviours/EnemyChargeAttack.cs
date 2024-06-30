@@ -26,7 +26,7 @@ namespace Game.AI.Behaviours
         private MinMaxFloat distanceToTargetRange;
 
         [SerializeField, BoxGroup("Settings")] private float maxChargeDistance;
-        [SerializeField, BoxGroup("Settings")] private float coolDown;
+        [SerializeField, BoxGroup("Settings")] private float coolDown, windUp;
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
         [SerializeField, BoxGroup("Settings")] private float speed;
 
@@ -153,10 +153,19 @@ namespace Game.AI.Behaviours
 
         private void EndCharge()
         {
-            _isCharging = false;
             _target = null;
             onChargeEnd?.Invoke();
             rigidbody.velocity = Vector3.zero;
+
+            StartCoroutine(HandleWindup());
+        }
+
+
+        IEnumerator HandleWindup()
+        {
+            yield return new WaitForSeconds(windUp);
+
+            _isCharging = false;
             movementController.SetMovementAllowed(true);
         }
 

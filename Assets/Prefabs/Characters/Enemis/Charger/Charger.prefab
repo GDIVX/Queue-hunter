@@ -388,6 +388,7 @@ MonoBehaviour:
     max: 38.02
   maxChargeDistance: 54.23
   coolDown: 1
+  windUp: 2
   attackDamage: 2
   speed: 8
   onPreparingToCharge:
