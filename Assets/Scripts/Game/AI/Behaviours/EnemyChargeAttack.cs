@@ -30,14 +30,13 @@ namespace Game.AI.Behaviours
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
         [SerializeField, BoxGroup("Settings")] private float speed;
 
-        [SerializeField, BoxGroup("Debug")] private bool debugMode = false;
-
         private ITarget _target;
 
         public UnityEvent onPreparingToCharge, onChargeStart, onChargeEnd;
 
         private bool _isCharging = false;
         private Vector3 _destination;
+        private Vector3 _velocity;
 
         private void OnValidate()
         {
@@ -59,15 +58,20 @@ namespace Game.AI.Behaviours
 
         private void HandleChargeMovement()
         {
-            if (Vector3.Distance(transform.position, _destination) <= 0.1f)
+            // If we reached the destination - we can no longer charge
+            var distance = Vector3.Distance(transform.position, _destination);
+            if (distance <= 0.2f)
             {
+                HandleCollision(_target);
                 EndCharge();
                 return;
             }
 
             var direction = (_destination - transform.position).normalized;
-            rigidbody.velocity = direction * speed;
+            _velocity = direction * (speed * Time.deltaTime);
+            transform.position += _velocity;
         }
+
 
         private void OnTargetFound(ITarget target)
         {
@@ -102,6 +106,22 @@ namespace Game.AI.Behaviours
             if (_target == null) return;
 
             if (other.gameObject != _target.GameObject)
+            {
+                EndCharge();
+                return;
+            }
+
+            HandleDamage(_target.Damageable);
+            EndCharge();
+        }
+
+        private void HandleCollision(ITarget target)
+        {
+            if (!_isCharging) return;
+
+            if (_target == null) return;
+
+            if (target != _target)
             {
                 EndCharge();
                 return;
@@ -150,7 +170,9 @@ namespace Game.AI.Behaviours
 
         private void OnDrawGizmos()
         {
-            if (!debugMode) return;
+            // Draw the charge max range
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, maxChargeDistance);
 
             // Draw the detection range
             Gizmos.color = Color.yellow;
@@ -162,7 +184,10 @@ namespace Game.AI.Behaviours
             {
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, _destination);
-                Gizmos.DrawWireSphere(_destination, 0.5f);
+
+
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, _velocity);
             }
         }
     }

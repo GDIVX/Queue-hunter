@@ -386,11 +386,10 @@ MonoBehaviour:
   distanceToTargetRange:
     min: 10
     max: 38.02
-  maxChargeDistance: 10
+  maxChargeDistance: 54.23
   coolDown: 1
   attackDamage: 2
   speed: 8
-  debugMode: 1
   onPreparingToCharge:
     m_PersistentCalls:
       m_Calls: []
