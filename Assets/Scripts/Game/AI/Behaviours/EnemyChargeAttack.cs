@@ -30,6 +30,8 @@ namespace Game.AI.Behaviours
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
         [SerializeField, BoxGroup("Settings")] private float speed;
 
+        [SerializeField, BoxGroup("Debug")] private bool debugMode = false;
+
         private ITarget _target;
 
         public UnityEvent onPreparingToCharge, onChargeStart, onChargeEnd;
@@ -57,8 +59,7 @@ namespace Game.AI.Behaviours
 
         private void HandleChargeMovement()
         {
-            // If we reached the destination - we can no longer charge
-            if (Vector3.Distance(transform.position, _destination) <= 0.1f) // Added a small tolerance
+            if (Vector3.Distance(transform.position, _destination) <= 0.1f)
             {
                 EndCharge();
                 return;
@@ -85,9 +86,8 @@ namespace Game.AI.Behaviours
         private Vector3 GetChargeDestination(ITarget target)
         {
             var direction = (target.Position - transform.position).normalized;
-            var destination = transform.position + direction *
+            return transform.position + direction *
                 Mathf.Min(maxChargeDistance, Vector3.Distance(transform.position, target.Position));
-            return destination;
         }
 
         private void OnCollisionEnter(Collision other)
@@ -145,9 +145,25 @@ namespace Game.AI.Behaviours
             if (_isCharging) return false;
 
             var distanceToTarget = Vector3.Distance(transform.position, target.Position);
-            var isWithinRange = distanceToTarget <= distanceToTargetRange.Max &&
-                                distanceToTarget >= distanceToTargetRange.Min;
-            return isWithinRange;
+            return distanceToTarget <= distanceToTargetRange.Max && distanceToTarget >= distanceToTargetRange.Min;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!debugMode) return;
+
+            // Draw the detection range
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, distanceToTargetRange.Min);
+            Gizmos.DrawWireSphere(transform.position, distanceToTargetRange.Max);
+
+            // Draw the charge destination
+            if (_isCharging)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, _destination);
+                Gizmos.DrawWireSphere(_destination, 0.5f);
+            }
         }
     }
 }
