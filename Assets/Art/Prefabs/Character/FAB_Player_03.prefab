@@ -67,7 +67,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAttackCooldown: 0.35
+  firstAttackCD: 0.45
+  secondAttackCD: 0.65
+  thirdAttackCD: 0.55
   meleeDamage: 15
+  OnMeleeAttackAnimEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383767849049362318}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnMeleeAttack:
     m_PersistentCalls:
       m_Calls:
@@ -83,33 +101,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7383767849049362318}
-        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MeleeAttackTrigger
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3877892587926244631}
         m_TargetAssemblyTypeName: PlayerMovementController, Assembly-CSharp
         m_MethodName: SetSlowSpeed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1192822807824091387}
-        m_TargetAssemblyTypeName: EffectManager, Assembly-CSharp
-        m_MethodName: ActivateEffect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -161,6 +155,9 @@ MonoBehaviour:
           m_StringArgument: PlayerDeathTrigger
           m_BoolArgument: 0
         m_CallState: 2
+  hasAttackedOnce: 0
+  hasAttackedTwice: 0
+  hasAttackedThree: 0
 --- !u!1 &6798912110303037578
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,22 +209,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2155f719c2aca5f40af56ae5cd5af63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSmoothTime: 0.5
   rotationSpeed: 720
+  regularSpeed: 8
+  halfSpeed: 4
   lastDir: {x: 0, y: 0, z: 0}
   _shooter: {fileID: 4669290695049250055}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  newSpeed: 4
-  speedChangeDurationInSeconds: 1.2
   canMove: 1
-  onMovementSpeedChangeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onMovementSpeedChangeEnd:
-    m_PersistentCalls:
-      m_Calls: []
   onMove:
     m_PersistentCalls:
       m_Calls:
@@ -273,7 +263,7 @@ MonoBehaviour:
           m_StringArgument: DashTrigger
           m_BoolArgument: 0
         m_CallState: 2
-  dashDuration: 0.15
+  dashDuration: 0.25
   dashCooldown: 1
   _speed: 8
   gravityFactor: 100
@@ -513,12 +503,12 @@ PrefabInstance:
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingMarble.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingMarbleEnd.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -588,7 +578,7 @@ PrefabInstance:
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingMarble.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: DisableMovement
+      value: SetSlowSpeed
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -598,7 +588,7 @@ PrefabInstance:
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingMarbleEnd.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EnableMovement
+      value: SetRegularSpeed
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}

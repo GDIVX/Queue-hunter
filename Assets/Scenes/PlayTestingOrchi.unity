@@ -8266,6 +8266,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FAB_Level_01 Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5385645094856094720, guid: 7f537d3314b37784faf1a6fb6bbbe827,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8554148277707028427, guid: 7f537d3314b37784faf1a6fb6bbbe827,
         type: 3}
       propertyPath: m_LocalPosition.x

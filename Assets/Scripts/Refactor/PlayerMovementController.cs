@@ -11,22 +11,18 @@ public class PlayerMovementController : MonoBehaviour
 {
 
     #region RotationParams
-    [SerializeField] float rotSmoothTime = 0.5f;
     [SerializeField] float rotationSpeed = 360;
 
     #endregion
-    #region MovementParams
 
+    #region MovementParams
+    [SerializeField] float regularSpeed;
+    [SerializeField] float halfSpeed;
     [SerializeField] private Vector3 lastDir;
     [SerializeField] private MarbleShooter _shooter;
     [SerializeField] LayerMask groundLayer;
     private Vector3 skewedInput;
 
-    [SerializeField, BoxGroup("Speed change after shooting")]
-    private float newSpeed;
-
-    [SerializeField, BoxGroup("Speed change after shooting")]
-    private float speedChangeDurationInSeconds;
 
     Vector3 movementInput;
     bool isRunning;
@@ -38,8 +34,6 @@ public class PlayerMovementController : MonoBehaviour
         set => _speed = value;
     }
 
-    public UnityEvent onMovementSpeedChangeStart;
-    public UnityEvent onMovementSpeedChangeEnd;
     public UnityEvent<string, bool> onMove;
     public UnityEvent<string, bool> onMoveEnd;
     public UnityEvent<string> onDash;
@@ -67,13 +61,7 @@ public class PlayerMovementController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         _shooter = GetComponentInChildren<MarbleShooter>();
 
-        _shooter.onShootingMarbleAttempted?.AddListener((result) =>
-        {
-            if (result)
-            {
-                SetSpeedForDuration(/*newSpeed, speedChangeDurationInSeconds*/);
-            }
-        });
+        
     }
 
 
@@ -110,21 +98,6 @@ public class PlayerMovementController : MonoBehaviour
 
     #region MoveFunctions
 
-    public void SetSpeedForDuration(/*float newSpeed, float durationInSeconds*/)
-    {
-        float currSpeed = Speed;
-        StartCoroutine(SetSpeedForDurationEnum(newSpeed, speedChangeDurationInSeconds));
-        Speed = currSpeed;
-    }
-
-    IEnumerator SetSpeedForDurationEnum(float newSpeed, float durationInSeconds)
-    {
-        onMovementSpeedChangeStart?.Invoke();
-        Speed = newSpeed;
-        yield return new WaitForSeconds(durationInSeconds);
-        onMovementSpeedChangeEnd?.Invoke();
-    }
-
     void Move()
     {
         rb.velocity = new Vector3(lastDir.x * Time.fixedDeltaTime * (Speed * 100),
@@ -146,12 +119,12 @@ public class PlayerMovementController : MonoBehaviour
 
     public void SetSlowSpeed()
     {
-        Speed = Speed / 2;
+        Speed = halfSpeed;
     }
 
     public void SetRegularSpeed()
     {
-        Speed *= 2;
+        Speed = regularSpeed;
     }
 
     public void RotateTowardsAttack()
@@ -190,7 +163,6 @@ public class PlayerMovementController : MonoBehaviour
 
         //animation trigger
         onDash?.Invoke("DashTrigger");
-        //anim.SetTrigger("DashTrigger");
 
         // Get the dash direction based on player input
         dashDirection = lastDir;
