@@ -3,45 +3,55 @@ using Game.Combat;
 using Game.Queue;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EffectPool : MonoBehaviour
 {
-    [SerializeField] float amountToPool;
-    [SerializeField] List<Combat.Projectile> effects = new List<Combat.Projectile>();
-    [SerializeField] MarbleQueue queue;
     [SerializeField] ProjectileFactory projectileFactory;
     [SerializeField] Transform spawnPoint;
+    [SerializeField] private GameObject explosionObject;
+    [SerializeField] List<Combat.Projectile> effects = new List<Combat.Projectile>();
+    [SerializeField] private List<GameObject> explosionEffects = new List<GameObject>();
 
-    private void Start()
+    private void Awake()
     {
-        queue = GetComponent<MarbleQueue>();
         projectileFactory = GetComponent<ProjectileFactory>();
-        Init();
     }
 
-    void Init()
+    public void CreateProjectile(Marble marble)
     {
-        amountToPool = queue.startingQueue.Count;
-        for (int i = 0; i < amountToPool; i++)
+        Projectile proj = projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
+        effects.Add(proj);
+        proj.SetAvailable(true);
+        if (proj.GetProjectileType().ToString() == "Fire")
         {
-            var go = projectileFactory.Create(queue.startingQueue[i]._projectileModel, spawnPoint.position);
-            effects.Add(go);
-            go.gameObject.SetActive(true);
+            proj.gameObject.SetActive(false);
+            if (proj.TryGetComponent<ProjectileCollision>(out var col))
+            {
+                col.explosionObject = CreateExplosion(proj.transform);
+            }
         }
     }
 
     public Projectile GetProjectile(Marble marble)
     {
 
-        foreach (var go in effects)
+        foreach (var proj in effects)
         {
-            if (marble.GetType().ToString() == go.GetProjectileType().ToString())
+            if (marble.GetMarbleType().ToString() == proj.GetProjectileType().ToString() && proj.isAvailable)
             {
-                return go;
-            }    
+                proj.SetAvailable(false);
+                return proj;
+            }
         }
         return null;
     }
 
+    GameObject CreateExplosion(Transform parent)
+    {
+        GameObject expObject = Instantiate(explosionObject, parent);
+        explosionEffects.Add(expObject);
+        return expObject;
+    }
 }

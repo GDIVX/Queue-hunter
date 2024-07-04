@@ -8,6 +8,7 @@ namespace Combat
     {
         public bool IsActive { get; set; }
         [SerializeField] private Type type;
+        [SerializeField] public bool isAvailable;
 
         public ProjectileMovement Movement { get; private set; }
         public DamageOnCollision DamageOnCollision { get; private set; }
@@ -28,6 +29,11 @@ namespace Combat
         public Type GetProjectileType()
         {
             return this.type;
+        }
+
+        public void SetAvailable(bool value)
+        {
+            this.isAvailable = value;
         }
     }
 }

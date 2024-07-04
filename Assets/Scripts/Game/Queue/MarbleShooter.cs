@@ -12,6 +12,7 @@ namespace Game.Queue
     public class MarbleShooter : MonoBehaviour
     {
         [SerializeField] private ProjectileFactory _projectileFactory;
+        [SerializeField] private EffectPool _effectPool;
         [SerializeField] private MarbleQueue _queue;
         [SerializeField] private Transform spawnPoint;
 
@@ -28,6 +29,7 @@ namespace Game.Queue
         {
             _projectileFactory ??= GetComponent<ProjectileFactory>();
             _queue ??= GetComponent<MarbleQueue>();
+            _effectPool ??= GetComponent<EffectPool>();
         }
 
         public void ShootNextMarble()
@@ -53,7 +55,7 @@ namespace Game.Queue
 
             onShootingMarble.Invoke();
             StartCoroutine(PreFireCoroutine(marble));
-            
+
 
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);
@@ -76,7 +78,14 @@ namespace Game.Queue
 
             //Instantiate a projectile
 
-            Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
+            Projectile projectile = _effectPool.GetProjectile(marble);
+
+            projectile.transform.position = transform.position;
+
+            if (!projectile.isActiveAndEnabled)
+            {
+                projectile.gameObject.SetActive(true);
+            }
 
             //rotate the projectile
             projectile.transform.rotation = Quaternion.LookRotation(transform.forward);

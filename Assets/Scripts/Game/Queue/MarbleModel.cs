@@ -31,10 +31,5 @@ namespace Game.Queue
         {
             return new(_inQueueSpeed, _projectileModel, sprite, type);
         }
-
-        public Type GetMarbleType()
-        {
-            return this.type;
-        }
     }
 }

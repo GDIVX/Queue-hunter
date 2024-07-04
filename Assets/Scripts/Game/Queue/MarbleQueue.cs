@@ -10,9 +10,12 @@ namespace Game.Queue
 {
     public class MarbleQueue : MonoBehaviour
     {
-        [SerializeField] public List<MarbleModel> startingQueue;
+        /// <summary>
+        /// seriliazation only, do not use in runtime.
+        /// </summary>
+        [SerializeField] private List<MarbleModel> startingQueue;
 
-        [ShowInInspector, ReadOnly] private readonly List<Marble> _marbles = new List<Marble>();
+        [ShowInInspector, ReadOnly] public readonly List<Marble> _marbles = new List<Marble>();
 
         public UnityEvent<Marble> onMarbleEjected;
         public UnityEvent<Marble> onMarbleCreated;
@@ -30,6 +33,7 @@ namespace Game.Queue
             //Free up memeory by deleting the list
             startingQueue.Clear();
             startingQueue = null;
+            //onMarblesCreated?.Invoke(_marbles);
         }
 
         private void Update()

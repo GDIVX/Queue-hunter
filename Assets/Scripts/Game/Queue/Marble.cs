@@ -14,6 +14,9 @@ namespace Game.Queue
         [SerializeField] private MarbleModel.Type type;
 
 
+
+
+
         public float Speed
         {
             get => speed;
@@ -54,6 +57,11 @@ namespace Game.Queue
 
             //lerp one frame towards the goal
             Position = Vector3.Lerp(Position, goal, Time.deltaTime * Speed);
+        }
+
+        public MarbleModel.Type GetMarbleType()
+        {
+            return type;
         }
     }
 }
