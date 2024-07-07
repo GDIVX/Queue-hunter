@@ -11,6 +11,11 @@ namespace Game.Queue
         [SerializeField] private Sprite sprite;
         [SerializeField] private ProjectileModel projectileModel;
         [SerializeField] private Vector3 position;
+        [SerializeField] private MarbleModel.Type type;
+
+
+
+
 
         public float Speed
         {
@@ -36,12 +41,14 @@ namespace Game.Queue
             set => position = value;
         }
 
-        public Marble(float speed, ProjectileModel projectileModel, Sprite sprite)
+        public Marble(float speed, ProjectileModel projectileModel, Sprite sprite, MarbleModel.Type type)
         {
             Speed = speed;
             ProjectileModel = projectileModel;
             Sprite = sprite;
+            this.type = type;
         }
+
 
         public void UpdatePosition(Vector3 goal, float minDistanceToGoal = 0f)
         {
@@ -50,6 +57,11 @@ namespace Game.Queue
 
             //lerp one frame towards the goal
             Position = Vector3.Lerp(Position, goal, Time.deltaTime * Speed);
+        }
+
+        public MarbleModel.Type GetMarbleType()
+        {
+            return type;
         }
     }
 }
