@@ -644,13 +644,13 @@ PrefabInstance:
         type: 3}
       propertyPath: startingQueue.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: ca1f9f1754038e0489979460cec5764d,
+      objectReference: {fileID: 11400000, guid: c89b104de062af34ba38384a95ab27cc,
         type: 2}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: startingQueue.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: ca1f9f1754038e0489979460cec5764d,
+      objectReference: {fileID: 11400000, guid: c89b104de062af34ba38384a95ab27cc,
         type: 2}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
