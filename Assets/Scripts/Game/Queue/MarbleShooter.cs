@@ -25,6 +25,10 @@ namespace Game.Queue
         public UnityEvent onShootingMarble;
         public UnityEvent onShootingMarbleEnd;
 
+        public UnityEvent onShootingFire;
+        public UnityEvent onShootingLightning;
+        public UnityEvent onShootingIce;
+
         private void Awake()
         {
             _projectileFactory ??= GetComponent<ProjectileFactory>();
@@ -52,6 +56,13 @@ namespace Game.Queue
                 onShootingMarbleAttempted?.Invoke((false));
                 return;
             }
+            if (marble.GetMarbleType().ToString() == "Fire") onShootingFire?.Invoke();
+
+            else if (marble.GetMarbleType().ToString() == "Lightning") onShootingLightning?.Invoke();
+
+            else if (marble.GetMarbleType().ToString() == "Ice") onShootingIce?.Invoke();
+
+
 
             onShootingMarble.Invoke();
             StartCoroutine(PreFireCoroutine(marble));
