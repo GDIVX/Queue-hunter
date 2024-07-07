@@ -385,10 +385,11 @@ MonoBehaviour:
   rigidbody: {fileID: 6154112973120562343}
   targeting: {fileID: 1786835331794283215}
   distanceToTargetRange:
-    min: 2
-    max: 5
-  maxChargeDistance: 5
+    min: 5
+    max: 35
+  maxChargeDistance: 25
   coolDown: 3
+  windUp: 1
   attackDamage: 2
   speed: 6
   onPreparingToCharge:
