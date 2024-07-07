@@ -12,6 +12,8 @@ namespace Game.Combat
         [SerializeField] private LayerMask targetLayerMask;
         [SerializeField] private float lifetime;
 
+
+
         public float Speed => speed;
         public GameObject Prefab => prefab;
         public float Damage => damage;
