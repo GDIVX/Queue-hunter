@@ -28,22 +28,23 @@ public class ProjectileCollision : MonoBehaviour
             var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
             explosionObject.transform.position = point;
             StartCoroutine(ManageActiveness());
-            onEffectCollision?.Invoke();
         }
     }
 
     protected IEnumerator ManageActiveness()
     {
         if (TryGetComponent<Projectile>(out var proj))
+        {
+            onEffectCollision?.Invoke();
+            explosionObject.SetActive(true);
+            effectObject.SetActive(false);
 
-        explosionObject.SetActive(true);
-        effectObject.SetActive(false);
+            yield return new WaitForSeconds(resetTime);
 
-        yield return new WaitForSeconds(resetTime);
-
-        explosionObject.SetActive(false);
-        proj.SetAvailable(true);
-        gameObject.SetActive(false);
+            explosionObject.SetActive(false);
+            proj.SetAvailable(true);
+            gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator KillProjectile()

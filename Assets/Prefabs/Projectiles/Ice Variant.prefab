@@ -56,7 +56,16 @@ VisualEffect:
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0.12194117, y: 1.1709937, z: 1.5206778, w: 0}
+        m_Name: groundColor
+        m_Overridden: 1
+      - m_Value: {x: 0.12194117, y: 1.1709937, z: 1.5206778, w: 0}
+        m_Name: spikescolor
+        m_Overridden: 1
+      - m_Value: {x: 0.12194117, y: 1.1709937, z: 1.5206778, w: 0}
+        m_Name: icebasecolor
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
