@@ -19,6 +19,7 @@ namespace Game.Queue
 
         public UnityEvent<Marble> onMarbleEjected;
         public UnityEvent<Marble> onMarbleCreated;
+        public UnityEvent<Marble> onInitialized;
 
         public int Count => _marbles.Count;
 
@@ -33,7 +34,8 @@ namespace Game.Queue
             //Free up memeory by deleting the list
             startingQueue.Clear();
             startingQueue = null;
-            //onMarblesCreated?.Invoke(_marbles);
+
+            onInitialized?.Invoke(_marbles.First());
         }
 
         private void Update()
