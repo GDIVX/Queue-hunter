@@ -13,8 +13,16 @@ namespace Game.UI
 
         private void Start()
         {
-            marbleQueue.onInitialized.AddListener(ShowMarble);
-            marbleQueue.onMarbleEjected.AddListener(ShowMarble);
+            marbleQueue.onQueueInitialized.AddListener((q) =>
+            {
+                Marble marble = q._marbles.First();
+                ShowMarble(marble);
+            });
+            marbleQueue.onMarbleEjected.AddListener(ejectedMarble =>
+            {
+                var lastMarble = marbleQueue._marbles.Last();
+                ShowMarble(lastMarble);
+            });
         }
 
         private void ShowMarble(Marble marble)
