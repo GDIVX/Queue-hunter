@@ -671,6 +671,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onQueueInitialized.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onMarbleCreated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 623659622358683090}
@@ -681,8 +686,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onQueueInitialized.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 623659622358683090}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onMarbleCreated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CreateProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onQueueInitialized.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onQueueInitialized.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ProccessQueue
       objectReference: {fileID: 0}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -691,7 +711,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onQueueInitialized.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EffectPool, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onMarbleCreated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onQueueInitialized.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4140185320993207840, guid: def08ed2a9fab594d9b260f88ce76890,

@@ -18,13 +18,10 @@ namespace Game.Queue
         [ShowInInspector, ReadOnly] public readonly List<Marble> _marbles = new List<Marble>();
 
         public UnityEvent<Marble> onMarbleEjected;
-<<<<<<< Updated upstream
-        public UnityEvent<Marble> onMarbleCreated;
-=======
+
         public UnityEvent<Marble> onMarbleMovedToTop;
         public UnityEvent<MarbleQueue> onQueueInitialized;
         public UnityEvent<Marble> onMarbleInitialized;
->>>>>>> Stashed changes
 
         public int Count => _marbles.Count;
 
@@ -39,12 +36,9 @@ namespace Game.Queue
             //Free up memeory by deleting the list
             startingQueue.Clear();
             startingQueue = null;
-<<<<<<< Updated upstream
-            //onMarblesCreated?.Invoke(_marbles);
-=======
+
 
             onQueueInitialized?.Invoke(this);
->>>>>>> Stashed changes
         }
 
         private void Update()
