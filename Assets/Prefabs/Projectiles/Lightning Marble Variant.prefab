@@ -168,6 +168,45 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnMarbleAttackFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6821990515034940811}
+        m_TargetAssemblyTypeName: Combat.Projectile, Assembly-CSharp
+        m_MethodName: SetAvailable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 3910832899254074727}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6821990515034940811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6869422752320876265, guid: 3fd92c2e04e16d04dae93e6c788b536f,
+    type: 3}
+  m_PrefabInstance: {fileID: 142289596819934050}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910832899254074727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af923b4177374a5d92d92d67d60e468d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1012664629465481826
 PrefabInstance:
   m_ObjectHideFlags: 0
