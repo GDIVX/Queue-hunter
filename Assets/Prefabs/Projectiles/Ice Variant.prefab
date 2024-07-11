@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cf1e039ba31db49ac424b84a81fd48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 0.5
+  waitTime: 0.3
   damage: 30
 --- !u!114 &4776552488130184487 stripped
 MonoBehaviour:
