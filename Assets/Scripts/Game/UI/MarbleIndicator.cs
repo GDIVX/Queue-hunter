@@ -17,8 +17,12 @@ namespace Game.UI
             {
                 Marble marble = q._marbles.First();
                 ShowMarble(marble);
-            } ) ;
-            marbleQueue.onMarbleEjected.AddListener(ShowMarble);
+            });
+            marbleQueue.onMarbleEjected.AddListener(ejectedMarble =>
+            {
+                var lastMarble = marbleQueue._marbles.Last();
+                ShowMarble(lastMarble);
+            });
         }
 
         private void ShowMarble(Marble marble)
