@@ -15,12 +15,12 @@ namespace Game.UI
         {
             marbleQueue.onQueueInitialized.AddListener((q) =>
             {
-                Marble marble = q._marbles.First();
+                Marble marble = q.Marbles.First();
                 ShowMarble(marble);
             });
             marbleQueue.onMarbleEjected.AddListener(ejectedMarble =>
             {
-                var lastMarble = marbleQueue._marbles.Last();
+                var lastMarble = marbleQueue.Marbles.Last();
                 ShowMarble(lastMarble);
             });
         }
