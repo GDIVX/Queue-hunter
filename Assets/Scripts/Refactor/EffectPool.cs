@@ -21,7 +21,7 @@ public class EffectPool : MonoBehaviour
 
     public void ProccessQueue(MarbleQueue queue)
     {
-        foreach (var item in queue._marbles)
+        foreach (var item in queue.Marbles)
         {
             CreateProjectile(item);
         }

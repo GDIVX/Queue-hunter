@@ -22,6 +22,7 @@ namespace Game.Queue
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
         public UnityEvent<bool> onShootingMarbleAttempted;
+
         public UnityEvent onShootingMarble;
         public UnityEvent onShootingMarbleEnd;
 
@@ -52,16 +53,17 @@ namespace Game.Queue
 
             if (marble == null)
             {
-                Debug.LogError("Failed to fetch marble from a non empty queue");
                 onShootingMarbleAttempted?.Invoke((false));
                 return;
             }
+
+            //TODO: Refactor using enums and passing it through a single event
+            //Example: onShootingMarble<MarbleType.Fire>()?.Invoke();
             if (marble.GetMarbleType().ToString() == "Fire") onShootingFire?.Invoke();
 
             else if (marble.GetMarbleType().ToString() == "Lightning") onShootingLightning?.Invoke();
 
             else if (marble.GetMarbleType().ToString() == "Ice") onShootingIce?.Invoke();
-
 
 
             onShootingMarble.Invoke();
@@ -72,7 +74,6 @@ namespace Game.Queue
             onShootingMarbleAttempted?.Invoke(true);
             isShooting = true;
             StartCoroutine(MarbleShotCoroutine());
-
         }
 
         protected IEnumerator MarbleShotCoroutine()
@@ -84,7 +85,6 @@ namespace Game.Queue
 
         protected IEnumerator PreFireCoroutine(Marble marble)
         {
-
             yield return new WaitForSeconds(.2f);
 
             //Instantiate a projectile
