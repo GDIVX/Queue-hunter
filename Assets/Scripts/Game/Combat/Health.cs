@@ -13,6 +13,7 @@ namespace Game.Combat
         [ShowInInspector, ReadOnly] private float currentHealth;
         [SerializeField] private bool canBeDamaged = true;
         [SerializeField] private float deathTime;
+        bool isDying = false;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
@@ -86,11 +87,13 @@ namespace Game.Combat
 
         public void KillEntity()
         {
+            if (isDying) return;
             StartCoroutine(KillAfterSeconds());
         }
 
         private IEnumerator KillAfterSeconds()
         {
+            isDying = true;
             yield return new WaitForSeconds(deathTime);
             gameObject.SetActive(false);
         }

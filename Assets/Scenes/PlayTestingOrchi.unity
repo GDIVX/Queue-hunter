@@ -1069,6 +1069,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3745,6 +3750,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4517,6 +4527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5812,6 +5827,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7232,6 +7252,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
