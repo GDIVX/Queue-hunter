@@ -32,7 +32,8 @@ namespace Game.AI.Behaviours
 
         private ITarget _target;
 
-        public UnityEvent onPreparingToCharge, onChargeStart, onChargeEnd;
+        public UnityEvent onPreparingToCharge;
+        public UnityEvent<string, bool> onChargeStart, onChargeEnd;
 
         private bool _isCharging = false;
         private Vector3 _destination;
@@ -147,14 +148,14 @@ namespace Game.AI.Behaviours
         {
             _isCharging = true;
             _target = target;
-            onChargeStart?.Invoke();
+            onChargeStart?.Invoke("isLockedRunning", true);
             movementController.SetMovementAllowed(false);
         }
 
         private void EndCharge()
         {
             _target = null;
-            onChargeEnd?.Invoke();
+            onChargeEnd?.Invoke("isLockedRunning", false);
             rigidbody.velocity = Vector3.zero;
 
             StartCoroutine(HandleWindup());
