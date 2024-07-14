@@ -20,7 +20,7 @@ namespace Game.UI
             });
             marbleQueue.onMarbleEjected.AddListener(ejectedMarble =>
             {
-                var lastMarble = marbleQueue.Marbles.Last();
+                var lastMarble = marbleQueue.Marbles.First();
                 ShowMarble(lastMarble);
             });
         }
