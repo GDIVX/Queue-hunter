@@ -12,6 +12,7 @@ namespace Game.Queue
     public class MarbleShooter : MonoBehaviour
     {
         [SerializeField] private ProjectileFactory _projectileFactory;
+        [SerializeField] private EffectPool _effectPool;
         [SerializeField] private MarbleQueue _queue;
         [SerializeField] private Transform spawnPoint;
 
@@ -24,10 +25,15 @@ namespace Game.Queue
         public UnityEvent onShootingMarble;
         public UnityEvent onShootingMarbleEnd;
 
+        public UnityEvent onShootingFire;
+        public UnityEvent onShootingLightning;
+        public UnityEvent onShootingIce;
+
         private void Awake()
         {
             _projectileFactory ??= GetComponent<ProjectileFactory>();
             _queue ??= GetComponent<MarbleQueue>();
+            _effectPool ??= GetComponent<EffectPool>();
         }
 
         public void ShootNextMarble()
@@ -50,10 +56,17 @@ namespace Game.Queue
                 onShootingMarbleAttempted?.Invoke((false));
                 return;
             }
+            if (marble.GetMarbleType().ToString() == "Fire") onShootingFire?.Invoke();
+
+            else if (marble.GetMarbleType().ToString() == "Lightning") onShootingLightning?.Invoke();
+
+            else if (marble.GetMarbleType().ToString() == "Ice") onShootingIce?.Invoke();
+
+
 
             onShootingMarble.Invoke();
             StartCoroutine(PreFireCoroutine(marble));
-            
+
 
             //trigger event for sucssus
             onShootingMarbleAttempted?.Invoke(true);
@@ -76,7 +89,14 @@ namespace Game.Queue
 
             //Instantiate a projectile
 
-            Projectile projectile = _projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
+            Projectile projectile = _effectPool.GetProjectile(marble);
+
+            projectile.transform.position = transform.position;
+
+            if (!projectile.isActiveAndEnabled)
+            {
+                projectile.gameObject.SetActive(true);
+            }
 
             //rotate the projectile
             projectile.transform.rotation = Quaternion.LookRotation(transform.forward);

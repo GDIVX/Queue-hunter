@@ -26,13 +26,13 @@ namespace Game.UI
 
         private void OnEnable()
         {
-            marbleQueue.onMarbleCreated.AddListener(OnMarbleCreated);
+            marbleQueue.onMarbleMovedToTop.AddListener(OnMarbleCreated);
             marbleQueue.onMarbleEjected.AddListener(OnMarbleEjected);
         }
 
         private void OnDisable()
         {
-            marbleQueue.onMarbleCreated.RemoveListener(OnMarbleCreated);
+            marbleQueue.onMarbleMovedToTop.RemoveListener(OnMarbleCreated);
             marbleQueue.onMarbleEjected.RemoveListener(OnMarbleEjected);
         }
 

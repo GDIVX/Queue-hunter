@@ -10,12 +10,18 @@ namespace Game.Queue
 {
     public class MarbleQueue : MonoBehaviour
     {
+        /// <summary>
+        /// seriliazation only, do not use in runtime.
+        /// </summary>
         [SerializeField] private List<MarbleModel> startingQueue;
 
-        [ShowInInspector, ReadOnly] private readonly List<Marble> _marbles = new List<Marble>();
+        [ShowInInspector, ReadOnly] public readonly List<Marble> _marbles = new List<Marble>();
 
         public UnityEvent<Marble> onMarbleEjected;
-        public UnityEvent<Marble> onMarbleCreated;
+
+        public UnityEvent<Marble> onMarbleMovedToTop;
+        public UnityEvent<MarbleQueue> onQueueInitialized;
+        public UnityEvent<Marble> onMarbleInitialized;
 
         public int Count => _marbles.Count;
 
@@ -30,6 +36,9 @@ namespace Game.Queue
             //Free up memeory by deleting the list
             startingQueue.Clear();
             startingQueue = null;
+
+
+            onQueueInitialized?.Invoke(this);
         }
 
         private void Update()
@@ -48,7 +57,7 @@ namespace Game.Queue
             //Create a new marble
             Marble marble = model.Create();
             AddToTop(marble);
-
+            onMarbleInitialized?.Invoke(marble);
 
             return marble;
         }
@@ -59,7 +68,7 @@ namespace Game.Queue
             _marbles.Add(marble);
             //Set its position to the top of the container
             marble.Position = new(0, Count + 1, 0);
-            onMarbleCreated?.Invoke(marble);
+            onMarbleMovedToTop?.Invoke(marble);
         }
 
 
