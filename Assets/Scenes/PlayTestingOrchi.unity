@@ -11110,6 +11110,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4185985543456948829, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: minDistanceTolerant
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6222942314121909788, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
       propertyPath: m_LocalPosition.x
