@@ -56,8 +56,13 @@ namespace Game.Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
+                currentHealth = 0;
+                OnUpdateValue?.Invoke(-currentHealth, this);
+                OnTakeDamage?.Invoke();
+                OnTakeDamageUI?.Invoke(damage, transform.position);
                 OnDestroyed?.Invoke(this);
                 OnDeathUnityEvent?.Invoke();
+                canBeDamaged = false;
                 return;
             }
 
