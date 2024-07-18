@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.57, y: 1, z: 2.54}
-  m_Center: {x: 0, y: 1, z: 1}
+  m_Size: {x: 4.821327, y: 1, z: 4.806478}
+  m_Center: {x: 0.029788971, y: 1, z: 2.133239}
 --- !u!114 &1282648472909540298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,10 +66,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b29c9c02a40b64c8622dc8f7e57084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeAttackCooldown: 0.4335
-  firstAttackCD: 0.4335
-  secondAttackCD: 0.6335
-  thirdAttackCD: 0.55
+  meleeAttackCooldown: 0.289
+  firstAttackCD: 0.289
+  secondAttackCD: 0.422
+  thirdAttackCD: 0.366
   meleeDamage: 15
   OnMeleeAttackAnimEvent:
     m_PersistentCalls:
@@ -234,8 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 720
-  regularSpeed: 8
-  halfSpeed: 4
+  regularSpeed: 12
+  halfSpeed: 6
   lastDir: {x: 0, y: 0, z: 0}
   _shooter: {fileID: 4669290695049250055}
   groundLayer:
