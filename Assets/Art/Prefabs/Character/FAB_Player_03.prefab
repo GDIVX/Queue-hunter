@@ -289,7 +289,22 @@ MonoBehaviour:
         m_CallState: 2
   dashDuration: 0.25
   dashCooldown: 1
-  _speed: 8
+  OnDashCDChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIBarsManager, Assembly-CSharp
+        m_MethodName: UpdateStaminaBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _speed: 6
   gravityFactor: 100
 --- !u!114 &7704920714557367582
 MonoBehaviour:
@@ -336,6 +351,21 @@ MonoBehaviour:
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIBarsManager, Assembly-CSharp
+        m_MethodName: UpdateHealthBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTakeDamageUI:
     m_PersistentCalls:
       m_Calls:
@@ -628,6 +658,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: minDistanceTolerant
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}

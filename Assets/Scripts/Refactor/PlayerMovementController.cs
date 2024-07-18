@@ -55,6 +55,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool isDashing;
     private Vector3 dashDirection;
     private float dashStartTime;
+    public UnityEvent<float> OnDashCDChanged;
 
     #endregion
 
@@ -191,6 +192,7 @@ public class PlayerMovementController : MonoBehaviour
 
         // Record start time of dash
         dashStartTime = Time.fixedTime;
+        OnDashCDChanged?.Invoke(dashCooldown);
     }
 
     void DuringDash()
