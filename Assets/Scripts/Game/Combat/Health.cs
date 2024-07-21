@@ -18,6 +18,7 @@ namespace Game.Combat
 
         public UnityEvent OnDeathUnityEvent;
         public UnityEvent OnTakeDamage;
+        public UnityEvent<float, float> OnHealthChanged;
         public UnityEvent<float, Vector3> OnTakeDamageUI;
 
         public GameObject GameObject => gameObject;
@@ -56,8 +57,14 @@ namespace Game.Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
+                currentHealth = 0;
+                OnUpdateValue?.Invoke(-currentHealth, this);
+                OnTakeDamage?.Invoke();
+                OnTakeDamageUI?.Invoke(damage, transform.position);
                 OnDestroyed?.Invoke(this);
                 OnDeathUnityEvent?.Invoke();
+                canBeDamaged = false;
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
                 return;
             }
 
@@ -65,6 +72,8 @@ namespace Game.Combat
             OnUpdateValue?.Invoke(damage, this);
             OnTakeDamage?.Invoke();
             OnTakeDamageUI?.Invoke(damage, transform.position);
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
         }
 
         [Button]
