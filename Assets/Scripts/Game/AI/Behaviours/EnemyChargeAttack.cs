@@ -29,6 +29,7 @@ namespace Game.AI.Behaviours
         [SerializeField, BoxGroup("Settings")] private float coolDown, windUp;
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
         [SerializeField, BoxGroup("Settings")] private float speed;
+        [SerializeField, BoxGroup("Settings")] private float chargeDistanceToTargetTolerance = 1.5f;
 
         private ITarget _target;
 
@@ -61,7 +62,7 @@ namespace Game.AI.Behaviours
         {
             // If we reached the destination - we can no longer charge
             var distance = Vector3.Distance(transform.position, _destination);
-            if (distance <= 0.2f)
+            if (Mathf.Approximately(distance, chargeDistanceToTargetTolerance))
             {
                 HandleCollision(_target);
                 EndCharge();
