@@ -160,7 +160,6 @@ namespace Game.AI.Behaviours
             _target = null;
             _currentState = ChargeState.Recovering;
             onChargeEnd?.Invoke("isLockedRunning", false);
-            rigidbody.velocity = Vector3.zero;
             StartCoroutine(HandleWindup());
         }
 
