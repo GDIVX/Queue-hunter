@@ -37,6 +37,7 @@ namespace Game.AI.Behaviours
         private ITarget _target;
         private Vector3 _destination;
         private Vector3 _velocity;
+        private bool _hasAttacked = false;
         [ShowInInspector] private ChargeState _currentState;
 
         public ChargeState CurrentState => _currentState;
@@ -93,6 +94,7 @@ namespace Game.AI.Behaviours
         private void ChargeAt(ITarget target)
         {
             _destination = GetChargeDestination(target);
+            _hasAttacked = false;
             StartCharge(target);
         }
 
@@ -137,7 +139,9 @@ namespace Game.AI.Behaviours
 
         private void HandleDamage(IDamageable targetDamageable)
         {
+            if (_hasAttacked) return;
             targetDamageable.HandleDamage(attackDamage);
+            _hasAttacked = true;
         }
 
         private IEnumerator HandleCooldown(ITarget target)
