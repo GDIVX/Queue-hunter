@@ -22,7 +22,7 @@ namespace AI
         [SerializeField, TabGroup("Setting")] private float speed;
         private Animator _animator;
 
-        private bool IsMoving => !navMeshAgent.isStopped;
+        private bool _isMoving = true;
 
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMove;
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMoveEnd;
@@ -37,19 +37,11 @@ namespace AI
 
         public void SetMovementAllowed(bool value)
         {
-            if (!navMeshAgent)
+            _isMoving = value;
+            if (navMeshAgent != null)
             {
-                Debug.LogError($"{name} is missing a navmesh agent");
-                return;
+                navMeshAgent.isStopped = !value;
             }
-
-            if (!navMeshAgent.isOnNavMesh)
-            {
-                Debug.LogError($"{name} is not placed on a nav mesh. Can't modifiy it's movement");
-                return;
-            }
-
-            navMeshAgent.isStopped = !value;
         }
 
         private void Start()
@@ -69,13 +61,13 @@ namespace AI
                 navMeshAgent.isStopped = false;
             }
 
-            SetMovementAllowed(true);
+            _isMoving = true;
         }
 
 
         private void Update()
         {
-            if (!IsMoving)
+            if (!_isMoving)
             {
                 InvokeOnEnemyMoveEvent(false);
                 return;

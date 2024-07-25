@@ -29,24 +29,15 @@ namespace Game.AI.Behaviours
         [SerializeField, BoxGroup("Settings")] private float coolDown, windUp;
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
         [SerializeField, BoxGroup("Settings")] private float speed;
-        [SerializeField, BoxGroup("Settings")] private float chargeDistanceToTargetTolerance = 1.5f;
+
+        private ITarget _target;
 
         public UnityEvent onPreparingToCharge;
         public UnityEvent<string, bool> onChargeStart, onChargeEnd;
 
-        private ITarget _target;
+        private bool _isCharging = false;
         private Vector3 _destination;
         private Vector3 _velocity;
-        [ShowInInspector] private ChargeState _currentState;
-
-        public ChargeState CurrentState => _currentState;
-
-        public enum ChargeState
-        {
-            Charging,
-            Seeking,
-            Recovering
-        }
 
         private void OnValidate()
         {
@@ -58,19 +49,19 @@ namespace Game.AI.Behaviours
         private void Awake()
         {
             targeting.OnTargetFound += OnTargetFound;
-            _currentState = ChargeState.Seeking;
         }
 
         private void Update()
         {
-            if (_currentState != ChargeState.Charging) return;
+            if (!_isCharging) return;
             HandleChargeMovement();
         }
 
         private void HandleChargeMovement()
         {
+            // If we reached the destination - we can no longer charge
             var distance = Vector3.Distance(transform.position, _destination);
-            if (distance <= chargeDistanceToTargetTolerance)
+            if (distance <= 0.2f)
             {
                 HandleCollision(_target);
                 EndCharge();
@@ -78,14 +69,15 @@ namespace Game.AI.Behaviours
             }
 
             var direction = (_destination - transform.position).normalized;
-            _velocity = direction * speed;
-            rigidbody.MovePosition(transform.position + _velocity * Time.deltaTime);
+            _velocity = direction * (speed * Time.deltaTime);
+            transform.position += _velocity;
         }
+
 
         private void OnTargetFound(ITarget target)
         {
-            if (_currentState != ChargeState.Seeking) return;
             if (!CanCharge(target)) return;
+
             _target = target;
             StartCoroutine(HandleCooldown(target));
         }
@@ -99,9 +91,8 @@ namespace Game.AI.Behaviours
         private Vector3 GetChargeDestination(ITarget target)
         {
             var direction = (target.Position - transform.position).normalized;
-            var destination = transform.position + direction *
+            return transform.position + direction *
                 Mathf.Min(maxChargeDistance, Vector3.Distance(transform.position, target.Position));
-            return destination;
         }
 
         private void OnCollisionEnter(Collision other)
@@ -111,10 +102,13 @@ namespace Game.AI.Behaviours
 
         private void HandleCollision(Collider other)
         {
-            if (_currentState != ChargeState.Charging || _target == null) return;
+            if (!_isCharging) return;
+
+            if (_target == null) return;
 
             if (other.gameObject != _target.GameObject)
             {
+                EndCharge();
                 return;
             }
 
@@ -124,10 +118,13 @@ namespace Game.AI.Behaviours
 
         private void HandleCollision(ITarget target)
         {
-            if (_currentState != ChargeState.Charging || _target == null) return;
+            if (!_isCharging) return;
+
+            if (_target == null) return;
 
             if (target != _target)
             {
+                EndCharge();
                 return;
             }
 
@@ -149,7 +146,7 @@ namespace Game.AI.Behaviours
 
         private void StartCharge(ITarget target)
         {
-            _currentState = ChargeState.Charging;
+            _isCharging = true;
             _target = target;
             onChargeStart?.Invoke("isLockedRunning", true);
             movementController.SetMovementAllowed(false);
@@ -158,39 +155,50 @@ namespace Game.AI.Behaviours
         private void EndCharge()
         {
             _target = null;
-            _currentState = ChargeState.Recovering;
             onChargeEnd?.Invoke("isLockedRunning", false);
             rigidbody.velocity = Vector3.zero;
+
             StartCoroutine(HandleWindup());
         }
 
-        private IEnumerator HandleWindup()
+
+        IEnumerator HandleWindup()
         {
             yield return new WaitForSeconds(windUp);
-            _currentState = ChargeState.Seeking;
+
+            _isCharging = false;
             movementController.SetMovementAllowed(true);
         }
 
         private bool CanCharge(ITarget target)
         {
-            if (_currentState is ChargeState.Charging or ChargeState.Recovering) return false;
+            if (_isCharging) return false;
+
             var distanceToTarget = Vector3.Distance(transform.position, target.Position);
             return distanceToTarget <= distanceToTargetRange.Max && distanceToTarget >= distanceToTargetRange.Min;
         }
 
         private void OnDrawGizmos()
         {
+            // Draw the charge max range
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, maxChargeDistance);
+
+            // Draw the detection range
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, distanceToTargetRange.Min);
             Gizmos.DrawWireSphere(transform.position, distanceToTargetRange.Max);
 
-            if (_currentState != ChargeState.Charging) return;
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, _destination);
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, _velocity);
+            // Draw the charge destination
+            if (_isCharging)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, _destination);
+
+
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, _velocity);
+            }
         }
     }
 }
