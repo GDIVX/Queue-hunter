@@ -316,6 +316,9 @@ MonoBehaviour:
           m_StringArgument: HitTrigger
           m_BoolArgument: 0
         m_CallState: 2
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
   OnTakeDamageUI:
     m_PersistentCalls:
       m_Calls:
@@ -415,7 +418,8 @@ MonoBehaviour:
   coolDown: 3
   windUp: 1
   attackDamage: 2
-  speed: 6
+  speed: 13
+  chargeDistanceToTargetTolerance: 3
   onPreparingToCharge:
     m_PersistentCalls:
       m_Calls:

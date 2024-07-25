@@ -630,6 +630,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1734,6 +1739,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3555,6 +3565,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4155,6 +4170,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4232,6 +4252,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4724,6 +4749,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5082,6 +5112,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6237,6 +6272,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7396,6 +7436,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8497,6 +8542,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Charger (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9072,6 +9122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charger (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
