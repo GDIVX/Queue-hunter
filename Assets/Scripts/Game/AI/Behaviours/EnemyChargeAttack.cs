@@ -110,7 +110,7 @@ namespace Game.AI.Behaviours
         {
             var direction = (target.Position - transform.position).normalized;
             var distanceToTargetWithOvershoot =
-                Vector3.Distance(transform.position, target.Position);
+                Vector3.Distance(transform.position, target.Position) + chargeOvershootDistance;
             var distance = Mathf.Min(maxChargeDistance, distanceToTargetWithOvershoot);
             var destination = transform.position + direction *
                 distance;

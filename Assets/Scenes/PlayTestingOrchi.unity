@@ -2555,7 +2555,7 @@ PrefabInstance:
     - target: {fileID: 2321029437038995335, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -123.23689
+      value: -142.17
       objectReference: {fileID: 0}
     - target: {fileID: 2321029437038995335, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
@@ -2565,7 +2565,7 @@ PrefabInstance:
     - target: {fileID: 2321029437038995335, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -110.86745
+      value: -103.03
       objectReference: {fileID: 0}
     - target: {fileID: 2321029437038995335, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
@@ -2607,11 +2607,6 @@ PrefabInstance:
       propertyPath: OnTakeDamageUI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 878671099}
-    - target: {fileID: 3109053303165181385, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: OnTakeDamageUI.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetDamageNumber
-      objectReference: {fileID: 0}
     - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
       propertyPath: m_Name
@@ -11113,6 +11108,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 806793667011144635, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2.28228
+      objectReference: {fileID: 0}
+    - target: {fileID: 806793667011144635, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.8143921
+      objectReference: {fileID: 0}
+    - target: {fileID: 806793667011144635, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.2591362
+      objectReference: {fileID: 0}
+    - target: {fileID: 806793667011144635, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.032577515
+      objectReference: {fileID: 0}
     - target: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
       propertyPath: OnDashCDChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
