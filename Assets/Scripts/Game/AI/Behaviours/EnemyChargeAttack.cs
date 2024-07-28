@@ -26,6 +26,7 @@ namespace Game.AI.Behaviours
         private MinMaxFloat distanceToTargetRange;
 
         [SerializeField, BoxGroup("Settings")] private float maxChargeDistance;
+        [SerializeField, BoxGroup("Settings")] private float chargeOvershootDistance;
         [SerializeField, BoxGroup("Settings")] private float coolDown, windUp;
         [SerializeField, BoxGroup("Settings")] private float attackDamage;
         [SerializeField, BoxGroup("Settings")] private float speed;
@@ -37,7 +38,7 @@ namespace Game.AI.Behaviours
         private ITarget _target;
         private Vector3 _destination;
         private Vector3 _velocity;
-        private bool _hasAttacked = false;
+        private bool _hasAttacked;
         [ShowInInspector] private ChargeState _currentState;
 
         public ChargeState CurrentState => _currentState;
@@ -73,7 +74,6 @@ namespace Game.AI.Behaviours
             var distance = Vector3.Distance(transform.position, _destination);
             if (distance <= chargeDistanceToTargetTolerance)
             {
-                HandleCollision(_target);
                 EndCharge();
                 return;
             }
@@ -85,7 +85,9 @@ namespace Game.AI.Behaviours
 
         private void OnTargetFound(ITarget target)
         {
+            if (_target != null) return;
             if (_currentState != ChargeState.Seeking) return;
+
             if (!CanCharge(target)) return;
             _target = target;
             StartCoroutine(HandleCooldown(target));
@@ -93,6 +95,12 @@ namespace Game.AI.Behaviours
 
         private void ChargeAt(ITarget target)
         {
+            if (_currentState == ChargeState.Charging)
+            {
+                Debug.LogError($"{name} is trying to start a charge while already in charge state.");
+                return;
+            }
+
             _destination = GetChargeDestination(target);
             _hasAttacked = false;
             StartCharge(target);
@@ -101,8 +109,11 @@ namespace Game.AI.Behaviours
         private Vector3 GetChargeDestination(ITarget target)
         {
             var direction = (target.Position - transform.position).normalized;
+            var distanceToTargetWithOvershoot =
+                Vector3.Distance(transform.position, target.Position);
+            var distance = Mathf.Min(maxChargeDistance, distanceToTargetWithOvershoot);
             var destination = transform.position + direction *
-                Mathf.Min(maxChargeDistance, Vector3.Distance(transform.position, target.Position));
+                distance;
             return destination;
         }
 
@@ -116,19 +127,6 @@ namespace Game.AI.Behaviours
             if (_currentState != ChargeState.Charging || _target == null) return;
 
             if (other.gameObject != _target.GameObject)
-            {
-                return;
-            }
-
-            HandleDamage(_target.Damageable);
-            EndCharge();
-        }
-
-        private void HandleCollision(ITarget target)
-        {
-            if (_currentState != ChargeState.Charging || _target == null) return;
-
-            if (target != _target)
             {
                 return;
             }
@@ -192,8 +190,6 @@ namespace Game.AI.Behaviours
             if (_currentState != ChargeState.Charging) return;
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, _destination);
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, _velocity);
         }
     }
 }
