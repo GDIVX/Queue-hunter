@@ -179,7 +179,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -411,14 +411,14 @@ MonoBehaviour:
   rigidbody: {fileID: 6154112973120562343}
   targeting: {fileID: 1786835331794283215}
   distanceToTargetRange:
-    min: 5
+    min: 1
     max: 35
   maxChargeDistance: 25
   chargeOvershootDistance: 10
   coolDown: 3
   windUp: 1
   attackDamage: 2
-  speed: 18
+  speed: 50
   chargeDistanceToTargetTolerance: 3
   onPreparingToCharge:
     m_PersistentCalls:

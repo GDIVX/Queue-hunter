@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using AI;
 using Combat;
 using Game.Combat;
 using Game.Utility;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,34 +14,44 @@ namespace Game.AI.Behaviours
     [RequireComponent(typeof(Collider))]
     public class EnemyChargeAttack : MonoBehaviour
     {
-        [SerializeField, BoxGroup("Dependencies")]
+        [SerializeField, TabGroup("Dependencies")]
         private EnemyMovement movementController;
 
-        [SerializeField, BoxGroup("Dependencies")]
+        [SerializeField, TabGroup("Dependencies")]
         private new Rigidbody rigidbody;
 
-        [SerializeField, BoxGroup("Dependencies")]
+        [SerializeField, TabGroup("Dependencies")]
         private EnemyTargeting targeting;
 
-        [SerializeField, BoxGroup("Settings"),
+        [SerializeField, TabGroup("Settings"),
          Tooltip("The range to look for target. Targets would only be visible within this range")]
         private MinMaxFloat distanceToTargetRange;
 
-        [SerializeField, BoxGroup("Settings")] private float maxChargeDistance;
-        [SerializeField, BoxGroup("Settings")] private float chargeOvershootDistance;
-        [SerializeField, BoxGroup("Settings")] private float coolDown, windUp;
-        [SerializeField, BoxGroup("Settings")] private float attackDamage;
-        [SerializeField, BoxGroup("Settings")] private float speed;
-        [SerializeField, BoxGroup("Settings")] private float chargeDistanceToTargetTolerance = 1.5f;
+        [SerializeField, TabGroup("Settings")] private float maxChargeDistance;
+        [SerializeField, TabGroup("Settings")] private float chargeOvershootDistance;
+        [SerializeField, TabGroup("Settings")] private float coolDown, windUp;
+        [SerializeField, TabGroup("Settings")] private float attackDamage;
+        [SerializeField, TabGroup("Settings")] private float speed;
+        [SerializeField, TabGroup("Settings")] private float chargeDistanceToTargetTolerance = 1.5f;
+
 
         public UnityEvent onPreparingToCharge;
         public UnityEvent<string, bool> onChargeStart, onChargeEnd;
 
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private ITarget _target;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private Vector3 _destination;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private Vector3 _velocity;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private bool _hasAttacked;
-        [ShowInInspector] private ChargeState _currentState;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
+        private ChargeState _currentState;
 
         public ChargeState CurrentState => _currentState;
 
@@ -71,8 +83,24 @@ namespace Game.AI.Behaviours
 
         private void HandleChargeMovement()
         {
+            if (_currentState != ChargeState.Charging)
+            {
+                Debug.LogError($"{name} is trying to charge while not in charge state.");
+                return;
+            }
+
+            if (_target == null)
+            {
+                Debug.LogError($"{name} is trying to charge without a target");
+                return;
+            }
+
             var distance = Vector3.Distance(transform.position, _destination);
-            if (distance <= chargeDistanceToTargetTolerance)
+
+            //End charge if the distance is too far or too close
+            if (distance <= chargeDistanceToTargetTolerance ||
+                distance <= distanceToTargetRange.Min ||
+                distance >= distanceToTargetRange.Max)
             {
                 EndCharge();
                 return;
@@ -106,20 +134,30 @@ namespace Game.AI.Behaviours
             StartCharge(target);
         }
 
-        private Vector3 GetChargeDestination(ITarget target)
+        private Vector3 GetChargeDestination([NotNull] ITarget target)
         {
+            if (target == null) throw new ArgumentNullException(nameof(target));
+
             var direction = (target.Position - transform.position).normalized;
             var distanceToTargetWithOvershoot =
                 Vector3.Distance(transform.position, target.Position) + chargeOvershootDistance;
             var distance = Mathf.Min(maxChargeDistance, distanceToTargetWithOvershoot);
             var destination = transform.position + direction *
                 distance;
+
+            //flatten the destination to the target position y value
+            destination.y = target.Position.y;
             return destination;
         }
 
         private void OnCollisionEnter(Collision other)
         {
             HandleCollision(other.collider);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            HandleCollision(other);
         }
 
         private void HandleCollision(Collider other)
@@ -190,6 +228,8 @@ namespace Game.AI.Behaviours
             if (_currentState != ChargeState.Charging) return;
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, _destination);
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + _velocity);
         }
     }
 }
