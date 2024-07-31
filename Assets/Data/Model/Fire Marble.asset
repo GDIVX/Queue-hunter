@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inQueueSpeed: 1
   _projectileModel: {fileID: 11400000, guid: 36d631e81b3b0904fa65e6bda01046f4, type: 2}
-  sprite: {fileID: 21300000, guid: 038a2c81b58c0ab4cb8bfee904779af2, type: 3}
-  type: 0
+  sprite: {fileID: 21300000, guid: 7cb3a9d8c71f4b84dac020993598304d, type: 3}

@@ -26,19 +26,12 @@ public class PlayerMovementController : MonoBehaviour
 
     Vector3 movementInput;
     bool isRunning;
-    bool isAttacking;
     public bool canMove = true;
 
     public float Speed
     {
         get => _speed;
         set => _speed = value;
-    }
-
-    public bool IsAttacking
-    {
-        get => isAttacking;
-        set => isAttacking = value;
     }
 
     public UnityEvent<string, bool> onMove;
@@ -83,10 +76,14 @@ public class PlayerMovementController : MonoBehaviour
         //move detection
         if (skewedInput != Vector3.zero && canMove)
         {
-            if (isAttacking)
-                RotateTowardsAttack();
-            else
-                RotateForward();
+            Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
+
+
+            targetRotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.fixedDeltaTime);
+            rb.MoveRotation(targetRotation);
             lastDir = skewedInput.normalized;
             Move();
         }
@@ -110,18 +107,6 @@ public class PlayerMovementController : MonoBehaviour
         onMove?.Invoke("isRunning", true);
     }
 
-    void RotateForward()
-    {
-        Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
-
-
-        targetRotation = Quaternion.RotateTowards(
-            transform.rotation,
-            targetRotation,
-            rotationSpeed * Time.fixedDeltaTime);
-        rb.MoveRotation(targetRotation);
-    }
-
     public void DisableMovement()
     {
         canMove = false;
@@ -140,12 +125,6 @@ public class PlayerMovementController : MonoBehaviour
     public void SetRegularSpeed()
     {
         Speed = regularSpeed;
-    }
-
-    public void SetShooting(bool shooting)
-    {
-        isAttacking = shooting;
-        if (isDashing) EndDash();
     }
 
     public void RotateTowardsAttack()
@@ -181,7 +160,6 @@ public class PlayerMovementController : MonoBehaviour
         if (!canDash) return;
         canDash = false;
         isDashing = true;
-        isAttacking = false;
 
         //animation trigger
         onDash?.Invoke("DashTrigger");

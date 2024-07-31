@@ -204,13 +204,36 @@ MonoBehaviour:
   view: {fileID: 1988615734498153274}
   rotationSpeed: 8
   speed: 3
-  onEnemyMove:
+  OnEnemyMove:
     m_PersistentCalls:
-      m_Calls: []
-  onEnemyMoveEnd:
+      m_Calls:
+      - m_Target: {fileID: 7526568981060940477}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetBool
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEnemyMoveEnd:
     m_PersistentCalls:
-      m_Calls: []
-  canMove: 0
+      m_Calls:
+      - m_Target: {fileID: 7526568981060940477}
+        m_TargetAssemblyTypeName: PlayerAnimationManager, Assembly-CSharp
+        m_MethodName: SetBool
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3109053303165181385
 MonoBehaviour:
   m_ObjectHideFlags: 0

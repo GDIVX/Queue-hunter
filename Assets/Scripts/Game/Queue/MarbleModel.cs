@@ -10,16 +10,8 @@ namespace Game.Queue
     public class MarbleModel : ScriptableObject
     {
         [SerializeField] private float _inQueueSpeed;
-        [SerializeField] public ProjectileModel _projectileModel;
+        [SerializeField] private ProjectileModel _projectileModel;
         [SerializeField] private Sprite sprite;
-        [SerializeField] private Type type;
-
-        public enum Type
-        {
-            Fire,
-            Lightning,
-            Ice
-        }
 
         public float InQueueSpeed
         {
@@ -29,7 +21,7 @@ namespace Game.Queue
 
         public Marble Create()
         {
-            return new(_inQueueSpeed, _projectileModel, sprite, type);
+            return new(_inQueueSpeed, _projectileModel, sprite);
         }
     }
 }

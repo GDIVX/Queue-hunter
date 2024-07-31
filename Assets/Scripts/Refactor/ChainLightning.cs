@@ -28,7 +28,6 @@ namespace Combat.Weapons
         public UnityEvent<Collider> OnHit;
         public UnityEvent OnMarbleAttack;
         public UnityEvent OnMarbleAttackEnd;
-        public UnityEvent OnMarbleAttackFinished;
 
         bool IsAttacking = false;
         float cooldown = .3f;
@@ -37,7 +36,7 @@ namespace Combat.Weapons
         private int Damage => baseDamage;
         private uint MaxJumps => baseMaxJumps;
 
-        private void OnEnable()
+        private void Start()
         {
             UpdateWeapon();
         }
@@ -104,7 +103,6 @@ namespace Combat.Weapons
 
             yield return new WaitForSeconds(cooldown);
             IsAttacking = false;
-            OnMarbleAttackFinished?.Invoke();
         }
 
 

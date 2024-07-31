@@ -11,24 +11,17 @@ namespace Game.Combat
     {
         [SerializeField] private float speed;
         [SerializeField] private float windUpTime;
-
-        private bool canMove;
-
-        public bool CanMove
-        {
-            get => canMove;
-            set => canMove = value;
-        }
+        [SerializeField] private float destroyTime;
 
         public UnityEvent onMarbleShot;
         public UnityEvent onMarbleShotEnd;
 
         public Vector3 Direction { get; set; }
 
-        private void OnEnable()
+        private void Start()
         {
             StartCoroutine(ProjectileWindUp());
-            
+            StartCoroutine(KillProjectile());
         }
 
         public void Initialize(float speed)
@@ -38,7 +31,7 @@ namespace Game.Combat
 
         private void FixedUpdate()
         {
-            if (canMove)
+            if (windUpTime == 0)
                 HandleMovement();
         }
 
@@ -58,14 +51,14 @@ namespace Game.Combat
         private IEnumerator ProjectileWindUp()
         {
             onMarbleShot?.Invoke();
-            canMove = false;
             yield return new WaitForSeconds(windUpTime);
-            canMove = true;
+            windUpTime = 0;
         }
 
-        public void CancelMovement()
+        private IEnumerator KillProjectile()
         {
-            canMove = false;
+            yield return new WaitForSeconds(destroyTime);
+            Destroy(gameObject);
         }
     }
 }

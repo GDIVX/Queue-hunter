@@ -13,7 +13,6 @@ namespace Game.Combat
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float cooldown;
         public UnityEvent<DamageOnCollision, Collider> OnCollision;
-        [SerializeField] float AOESize;
 
         private bool _canDamage = true;
 
@@ -25,7 +24,7 @@ namespace Game.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            Collider[] cols = Physics.OverlapSphere(transform.position, AOESize, _layerMask);
+            Collider[] cols = Physics.OverlapSphere(transform.position, 4f, _layerMask);
             foreach (Collider col in cols)
             {
                 HandleDamage(col);

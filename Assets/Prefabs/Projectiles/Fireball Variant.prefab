@@ -1,79 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &791270808619514683
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8923377238406735482}
-    m_Modifications:
-    - target: {fileID: 7957083765476993412, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_Name
-      value: FAB_VFX_FireExplosion_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: bfb0dd1866ada2b4ba0f48eeddcf8718, type: 3}
---- !u!4 &9044678236054909455 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8610335433171437876, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
-    type: 3}
-  m_PrefabInstance: {fileID: 791270808619514683}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2887710443302915825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152,12 +78,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2887710443302915825}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9063235624759225399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2887710443302915825}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8642068568948139505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -224,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 4017090399391495685, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -263,11 +183,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
       propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
@@ -276,12 +191,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 1212611726798254645, guid: 538d3e826a2def34f99c4123f7faa74b,
+      objectReference: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -300,11 +210,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
       propertyPath: onMarbleShotEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3877892587926244631, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
@@ -317,12 +222,7 @@ PrefabInstance:
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: ActivateEffect
+      value: SetSlowSpeed
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -346,11 +246,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: EffectManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
       propertyPath: onMarbleShotEnd.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PlayerMovementController, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -362,11 +257,6 @@ PrefabInstance:
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
@@ -388,11 +278,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ProvidesContacts
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      propertyPath: AOESize
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -450,10 +335,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 880734938334413707, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9044678236054909455}
-    - targetCorrespondingSourceObject: {fileID: 880734938334413707, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2330685824381109711}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4017090399391495685, guid: 3fd92c2e04e16d04dae93e6c788b536f,
@@ -483,28 +364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ca16f2ce429fd44851e760609aaca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectObject: {fileID: 9063235624759225399}
-  explosionObject: {fileID: 0}
-  onEffectRequest:
-    m_PersistentCalls:
-      m_Calls: []
-  onEffectCollision:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5256143685070589508}
-        m_TargetAssemblyTypeName: Game.Combat.ProjectileMovement, Assembly-CSharp
-        m_MethodName: CancelMovement
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  destroyTime: 2
-  resetTime: 1
+  explosionObject: {fileID: 7957083765476993412, guid: bfb0dd1866ada2b4ba0f48eeddcf8718,
+    type: 3}
 --- !u!54 &-1195782615063136726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -532,18 +393,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5256143685070589508 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8642068568948139505}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634584431060079604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d4965be33e7f4748accc8f272bc4056, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8923377238406735482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 880734938334413707, guid: 3fd92c2e04e16d04dae93e6c788b536f,

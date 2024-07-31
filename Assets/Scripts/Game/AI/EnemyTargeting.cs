@@ -13,10 +13,6 @@ namespace Game.AI
         [SerializeField] private List<WeightPerLayer> weightPerLayers;
         [SerializeField] private bool debugMode;
 
-        /// <summary>
-        /// Called when had managed to find target. Get the results of the last target search
-        /// </summary>
-        public event Action<ITarget> OnTargetFound;
         private float _viewDistance;
         private PriorityQueue<ITarget> _priorityQueue;
 
@@ -39,7 +35,6 @@ namespace Game.AI
                 var target = _priorityQueue.Peek();
                 if (IsValidTarget(target))
                 {
-                    OnTargetFound?.Invoke(target);
                     return target;
                 }
 
