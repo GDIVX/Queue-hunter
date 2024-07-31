@@ -183,10 +183,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.57103425
   m_Height: 2.2
   m_Direction: 1
-  m_Center: {x: 0, y: 1.08, z: 0}
+  m_Center: {x: 0, y: 1.0800002, z: 0.028965797}
 --- !u!114 &3621960942769985064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,8 +322,7 @@ MonoBehaviour:
   OnTakeDamageUI:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7817773461581330519, guid: 5c39ca91ef3b8304bb1216917f9d51ca,
-          type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DamageFeedbackUI, Assembly-CSharp
         m_MethodName: GetDamageNumber
         m_Mode: 0
@@ -373,7 +372,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!195 &9046465264925358716
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -412,13 +411,14 @@ MonoBehaviour:
   rigidbody: {fileID: 6154112973120562343}
   targeting: {fileID: 1786835331794283215}
   distanceToTargetRange:
-    min: 5
+    min: 1
     max: 35
   maxChargeDistance: 25
+  chargeOvershootDistance: 10
   coolDown: 3
   windUp: 1
   attackDamage: 2
-  speed: 13
+  speed: 50
   chargeDistanceToTargetTolerance: 3
   onPreparingToCharge:
     m_PersistentCalls:

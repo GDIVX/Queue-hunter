@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using AI;
 using Combat;
 using Game.Combat;
 using Game.Utility;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,33 +14,44 @@ namespace Game.AI.Behaviours
     [RequireComponent(typeof(Collider))]
     public class EnemyChargeAttack : MonoBehaviour
     {
-        [SerializeField, BoxGroup("Dependencies")]
+        [SerializeField, TabGroup("Dependencies")]
         private EnemyMovement movementController;
 
-        [SerializeField, BoxGroup("Dependencies")]
+        [SerializeField, TabGroup("Dependencies")]
         private new Rigidbody rigidbody;
 
-        [SerializeField, BoxGroup("Dependencies")]
+        [SerializeField, TabGroup("Dependencies")]
         private EnemyTargeting targeting;
 
-        [SerializeField, BoxGroup("Settings"),
+        [SerializeField, TabGroup("Settings"),
          Tooltip("The range to look for target. Targets would only be visible within this range")]
         private MinMaxFloat distanceToTargetRange;
 
-        [SerializeField, BoxGroup("Settings")] private float maxChargeDistance;
-        [SerializeField, BoxGroup("Settings")] private float coolDown, windUp;
-        [SerializeField, BoxGroup("Settings")] private float attackDamage;
-        [SerializeField, BoxGroup("Settings")] private float speed;
-        [SerializeField, BoxGroup("Settings")] private float chargeDistanceToTargetTolerance = 1.5f;
+        [SerializeField, TabGroup("Settings")] private float maxChargeDistance;
+        [SerializeField, TabGroup("Settings")] private float chargeOvershootDistance;
+        [SerializeField, TabGroup("Settings")] private float coolDown, windUp;
+        [SerializeField, TabGroup("Settings")] private float attackDamage;
+        [SerializeField, TabGroup("Settings")] private float speed;
+        [SerializeField, TabGroup("Settings")] private float chargeDistanceToTargetTolerance = 1.5f;
+
 
         public UnityEvent onPreparingToCharge;
         public UnityEvent<string, bool> onChargeStart, onChargeEnd;
 
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private ITarget _target;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private Vector3 _destination;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private Vector3 _velocity;
-        private bool _hasAttacked = false;
-        [ShowInInspector] private ChargeState _currentState;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
+        private bool _hasAttacked;
+
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
+        private ChargeState _currentState;
 
         public ChargeState CurrentState => _currentState;
 
@@ -70,10 +83,25 @@ namespace Game.AI.Behaviours
 
         private void HandleChargeMovement()
         {
-            var distance = Vector3.Distance(transform.position, _destination);
-            if (distance <= chargeDistanceToTargetTolerance)
+            if (_currentState != ChargeState.Charging)
             {
-                HandleCollision(_target);
+                Debug.LogError($"{name} is trying to charge while not in charge state.");
+                return;
+            }
+
+            if (_target == null)
+            {
+                Debug.LogError($"{name} is trying to charge without a target");
+                return;
+            }
+
+            var distance = Vector3.Distance(transform.position, _destination);
+
+            //End charge if the distance is too far or too close
+            if (distance <= chargeDistanceToTargetTolerance ||
+                distance <= distanceToTargetRange.Min ||
+                distance >= distanceToTargetRange.Max)
+            {
                 EndCharge();
                 return;
             }
@@ -85,7 +113,9 @@ namespace Game.AI.Behaviours
 
         private void OnTargetFound(ITarget target)
         {
+            if (_target != null) return;
             if (_currentState != ChargeState.Seeking) return;
+
             if (!CanCharge(target)) return;
             _target = target;
             StartCoroutine(HandleCooldown(target));
@@ -93,16 +123,30 @@ namespace Game.AI.Behaviours
 
         private void ChargeAt(ITarget target)
         {
+            if (_currentState == ChargeState.Charging)
+            {
+                Debug.LogError($"{name} is trying to start a charge while already in charge state.");
+                return;
+            }
+
             _destination = GetChargeDestination(target);
             _hasAttacked = false;
             StartCharge(target);
         }
 
-        private Vector3 GetChargeDestination(ITarget target)
+        private Vector3 GetChargeDestination([NotNull] ITarget target)
         {
+            if (target == null) throw new ArgumentNullException(nameof(target));
+
             var direction = (target.Position - transform.position).normalized;
+            var distanceToTargetWithOvershoot =
+                Vector3.Distance(transform.position, target.Position) + chargeOvershootDistance;
+            var distance = Mathf.Min(maxChargeDistance, distanceToTargetWithOvershoot);
             var destination = transform.position + direction *
-                Mathf.Min(maxChargeDistance, Vector3.Distance(transform.position, target.Position));
+                distance;
+
+            //flatten the destination to the target position y value
+            destination.y = target.Position.y;
             return destination;
         }
 
@@ -111,24 +155,16 @@ namespace Game.AI.Behaviours
             HandleCollision(other.collider);
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            HandleCollision(other);
+        }
+
         private void HandleCollision(Collider other)
         {
             if (_currentState != ChargeState.Charging || _target == null) return;
 
             if (other.gameObject != _target.GameObject)
-            {
-                return;
-            }
-
-            HandleDamage(_target.Damageable);
-            EndCharge();
-        }
-
-        private void HandleCollision(ITarget target)
-        {
-            if (_currentState != ChargeState.Charging || _target == null) return;
-
-            if (target != _target)
             {
                 return;
             }
@@ -193,7 +229,7 @@ namespace Game.AI.Behaviours
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, _destination);
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, _velocity);
+            Gizmos.DrawLine(transform.position, transform.position + _velocity);
         }
     }
 }
