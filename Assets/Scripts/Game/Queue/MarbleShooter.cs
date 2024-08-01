@@ -21,10 +21,10 @@ namespace Game.Queue
 
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
-        public UnityEvent<bool> onShootingMarbleAttempted;
+        public UnityEvent<bool> onShootingAttempted;
 
-        public UnityEvent onShootingMarble;
-        public UnityEvent onShootingMarbleEnd;
+        public UnityEvent onShootingProjectile;
+        public UnityEvent onShootingEnd;
 
         public UnityEvent onShootingFire;
         public UnityEvent onShootingLightning;
@@ -37,14 +37,15 @@ namespace Game.Queue
             _effectPool ??= GetComponent<EffectPool>();
         }
 
-        public void ShootNextMarble()
+        public void FireNextProjectile()
         {
             if (isShooting) return;
+            isShooting = true;
 
             //If the queue is empty, throw an event for the UI/UX and return
             if (_queue.IsEmpty())
             {
-                onShootingMarbleAttempted?.Invoke((false));
+                onShootingAttempted?.Invoke((false));
                 return;
             }
 
@@ -53,34 +54,49 @@ namespace Game.Queue
 
             if (marble == null)
             {
-                onShootingMarbleAttempted?.Invoke((false));
+                onShootingAttempted?.Invoke((false));
                 return;
             }
 
-            //TODO: Refactor using enums and passing it through a single event
-            //Example: onShootingMarble<MarbleType.Fire>()?.Invoke();
-            if (marble.GetMarbleType().ToString() == "Fire") onShootingFire?.Invoke();
 
-            else if (marble.GetMarbleType().ToString() == "Lightning") onShootingLightning?.Invoke();
+            FireProjectile(marble);
+        }
 
-            else if (marble.GetMarbleType().ToString() == "Ice") onShootingIce?.Invoke();
-
-
-            onShootingMarble.Invoke();
+        private void FireProjectile(Marble marble)
+        {
             StartCoroutine(PreFireCoroutine(marble));
 
 
             //trigger event for sucssus
-            onShootingMarbleAttempted?.Invoke(true);
-            isShooting = true;
-            StartCoroutine(MarbleShotCoroutine());
+            StartCoroutine(StartFireCoroutine());
+            onShootingProjectile.Invoke();
+            onShootingAttempted?.Invoke(true);
+            InvokeMarbleTypeHasBeenFired(marble);
         }
 
-        protected IEnumerator MarbleShotCoroutine()
+        private void InvokeMarbleTypeHasBeenFired(Marble marble)
+        {
+            switch (marble.GetMarbleType())
+            {
+                case MarbleModel.Type.Fire:
+                    onShootingFire?.Invoke();
+                    break;
+                case MarbleModel.Type.Lightning:
+                    onShootingLightning?.Invoke();
+                    break;
+                case MarbleModel.Type.Ice:
+                    onShootingIce?.Invoke();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected IEnumerator StartFireCoroutine()
         {
             yield return new WaitForSeconds(marbleShotTime);
             isShooting = false;
-            onShootingMarbleEnd?.Invoke();
+            onShootingEnd?.Invoke();
         }
 
         protected IEnumerator PreFireCoroutine(Marble marble)
