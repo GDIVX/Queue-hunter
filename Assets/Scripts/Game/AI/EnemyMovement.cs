@@ -22,7 +22,7 @@ namespace AI
         [SerializeField, TabGroup("Setting")] private float speed;
         private Animator _animator;
 
-        private bool IsMoving => !navMeshAgent.isStopped;
+        public bool IsMoving => !navMeshAgent.isStopped;
 
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMove;
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMoveEnd;
@@ -154,6 +154,11 @@ namespace AI
             {
                 Debug.LogError("Animator component is missing in children.", this);
             }
+        }
+
+        public void Stop()
+        {
+            navMeshAgent.isStopped = true;
         }
     }
 }

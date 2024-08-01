@@ -24,7 +24,8 @@ namespace Combat
         public int CountInPool => pool.Count;
         public int CountOffPool { get; private set; }
 
-        public TInstance Create(TModel model, Vector3 position)
+        
+        public TInstance Get(TModel model, Vector3 position)
         {
             TInstance obj;
             //if we have objects in the stack, we recycle it
@@ -47,7 +48,7 @@ namespace Combat
         {
             returnDelegate += Return;
 
-            return Create(model, position);
+            return Get(model, position);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace AI
 
         public Enemy Spawn(EnemyModel model, Vector3 position)
         {
-            return pool.Create(model, position);
+            return pool.Get(model, position);
         }
 
         public void Return(Enemy enemy)
