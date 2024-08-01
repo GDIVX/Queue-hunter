@@ -119,12 +119,13 @@ namespace AI
         }
 
 
-        private void HandleRotation()
+        public void HandleRotation()
         {
             if (!navMeshAgent || !(navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)) return;
 
             Quaternion rotation = Quaternion.LookRotation(navMeshAgent.velocity.normalized);
-            view.rotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
+            var viewRotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
+            view.rotation = new Quaternion(0, viewRotation.y, 0, 0);
         }
 
 

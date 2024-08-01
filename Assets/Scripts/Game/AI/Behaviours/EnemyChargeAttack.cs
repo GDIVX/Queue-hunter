@@ -6,8 +6,10 @@ using Game.Combat;
 using Game.Utility;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Game.AI.Behaviours
 {
@@ -102,12 +104,13 @@ namespace Game.AI.Behaviours
                 distance <= distanceToTargetRange.Min ||
                 distance >= distanceToTargetRange.Max)
             {
-                EndCharge();
+                EndCharge(_target);
                 return;
             }
 
             var direction = (_destination - transform.position).normalized;
             _velocity = direction * speed;
+            //movementController.HandleRotation();
             rigidbody.MovePosition(transform.position + _velocity * Time.deltaTime);
         }
 
@@ -118,7 +121,7 @@ namespace Game.AI.Behaviours
 
             if (!CanCharge(target)) return;
             _target = target;
-            StartCoroutine(HandleCooldown(target));
+            StartCoroutine(HandleWindup(_target));
         }
 
         private void ChargeAt(ITarget target)
@@ -170,7 +173,7 @@ namespace Game.AI.Behaviours
             }
 
             HandleDamage(_target.Damageable);
-            EndCharge();
+            EndCharge(_target);
         }
 
         private void HandleDamage(IDamageable targetDamageable)
@@ -182,9 +185,9 @@ namespace Game.AI.Behaviours
 
         private IEnumerator HandleCooldown(ITarget target)
         {
-            onPreparingToCharge?.Invoke();
             yield return new WaitForSeconds(coolDown);
-            ChargeAt(target);
+            _currentState = ChargeState.Seeking;
+            movementController.SetMovementAllowed(true);
         }
 
         private void StartCharge(ITarget target)
@@ -192,22 +195,22 @@ namespace Game.AI.Behaviours
             _currentState = ChargeState.Charging;
             _target = target;
             onChargeStart?.Invoke("isLockedRunning", true);
-            movementController.SetMovementAllowed(false);
         }
 
-        private void EndCharge()
+        private void EndCharge(ITarget target)
         {
             _target = null;
             _currentState = ChargeState.Recovering;
             onChargeEnd?.Invoke("isLockedRunning", false);
-            StartCoroutine(HandleWindup());
+            StartCoroutine(HandleCooldown(target));
         }
 
-        private IEnumerator HandleWindup()
+        private IEnumerator HandleWindup(ITarget target)
         {
+            movementController.SetMovementAllowed(false);
+            onPreparingToCharge?.Invoke();
             yield return new WaitForSeconds(windUp);
-            _currentState = ChargeState.Seeking;
-            movementController.SetMovementAllowed(true);
+            ChargeAt(target);
         }
 
         private bool CanCharge(ITarget target)
