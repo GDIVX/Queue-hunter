@@ -42,7 +42,7 @@ public class PlayerAttackController : MonoBehaviour
 
     public void InitMeleeAttack()
     {
-        if (!canUseMelee) return;
+        if (!canUseMelee || Time.timeScale == 0) return;
         StartCoroutine(PunchCoroutine());
     }
 
