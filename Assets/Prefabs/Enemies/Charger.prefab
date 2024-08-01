@@ -416,7 +416,7 @@ MonoBehaviour:
   maxChargeDistance: 25
   chargeOvershootDistance: 10
   coolDown: 3
-  windUp: 1
+  windUp: 1.5
   attackDamage: 2
   speed: 50
   chargeDistanceToTargetTolerance: 3
