@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
 using Combat;
-using Game.Queue;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,12 +13,10 @@ namespace Game.Combat
         [SerializeField] private Transform spawnPoint;
 
         [SerializeField] private float delayBetweenShots;
-        [SerializeField] private bool isShooting;
+        [ShowInInspector, ReadOnly] private bool _isShooting;
 
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
-        public UnityEvent<bool> onShootingAttempted;
-
         public UnityEvent<Projectile> onShootingProjectile;
 
         private GameObjectPool<ProjectileModel, Projectile> _pool;
@@ -31,20 +28,23 @@ namespace Game.Combat
             _pool = new GameObjectPool<ProjectileModel, Projectile>(projectileFactory, projectileFactory);
         }
 
-        public void Fire()
+        public void Fire(Vector3 targetPoint)
         {
-            if (isShooting) return;
+            if (_isShooting) return;
 
-            StartCoroutine(StartShooting());
+            StartCoroutine(StartShooting(targetPoint));
         }
 
-        IEnumerator StartShooting()
+        IEnumerator StartShooting(Vector3 targetPoint)
         {
-            isShooting = true;
+            _isShooting = true;
             yield return new WaitForSeconds(delayBetweenShots);
             Projectile projectile = InstantiateProjectile();
+
+            projectile.transform.LookAt(targetPoint);
+
             onShootingProjectile?.Invoke(projectile);
-            isShooting = false;
+            _isShooting = false;
         }
 
         private Projectile InstantiateProjectile()
