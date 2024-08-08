@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using AI;
 using Combat;
+using DG.Tweening;
 using Game.Combat;
 using Game.Utility;
 using JetBrains.Annotations;
@@ -209,6 +210,8 @@ namespace Game.AI.Behaviours
         {
             movementController.SetMovementAllowed(false);
             onPreparingToCharge?.Invoke();
+            //Rotate towards the target
+            transform.LookAt(target.Position);
             yield return new WaitForSeconds(windUp);
             ChargeAt(target);
         }

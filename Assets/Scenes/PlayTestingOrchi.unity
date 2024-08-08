@@ -2011,45 +2011,15 @@ PrefabInstance:
       propertyPath: OnTakeDamageUI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 878671099}
-    - target: {fileID: 3621960942769985064, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4847894258755056903, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
       propertyPath: m_Name
       value: Charger (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 5609641074565785686, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: windUp
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5609641074565785686, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6154112973120562343, guid: 319a12fae44e05f448e5a7a43cad3609,
         type: 3}
       propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 9046465264925358716, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9046465264925358716, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: m_AngularSpeed
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 9046465264925358716, guid: 319a12fae44e05f448e5a7a43cad3609,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 1
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
