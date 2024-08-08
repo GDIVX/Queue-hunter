@@ -37,6 +37,11 @@ namespace Game.Queue
             _effectPool ??= GetComponent<EffectPool>();
         }
 
+        private void Start()
+        {
+            isShooting = false;
+        }
+
         public void FireNextProjectile()
         {
             if (isShooting) return;
@@ -46,6 +51,7 @@ namespace Game.Queue
             if (_queue.IsEmpty())
             {
                 onShootingAttempted?.Invoke((false));
+                isShooting = false;
                 return;
             }
 
@@ -55,6 +61,7 @@ namespace Game.Queue
             if (marble == null)
             {
                 onShootingAttempted?.Invoke((false));
+                isShooting = false;
                 return;
             }
 
@@ -68,10 +75,10 @@ namespace Game.Queue
 
 
             //trigger event for sucssus
-            StartCoroutine(StartFireCoroutine());
             onShootingProjectile.Invoke();
             onShootingAttempted?.Invoke(true);
             InvokeMarbleTypeHasBeenFired(marble);
+            StartCoroutine(StartFireCoroutine());
         }
 
         private void InvokeMarbleTypeHasBeenFired(Marble marble)
@@ -116,6 +123,8 @@ namespace Game.Queue
 
             //rotate the projectile
             projectile.transform.rotation = Quaternion.LookRotation(transform.forward);
+
+            
         }
     }
 }
