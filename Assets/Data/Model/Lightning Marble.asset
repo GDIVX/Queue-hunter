@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa7117c5eed44b384e136a28a177a33, type: 3}
   m_Name: Lightning Marble
   m_EditorClassIdentifier: 
-  _inQueueSpeed: 1
+  _inQueueSpeed: 0.5
   _projectileModel: {fileID: 11400000, guid: 95078b0d1808a184081c27747307efbc, type: 2}
   sprite: {fileID: 21300000, guid: ab51129f2c59d694e98f56db547b0d67, type: 3}
   type: 1

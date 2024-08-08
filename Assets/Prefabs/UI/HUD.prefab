@@ -323,7 +323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 60, y: -33}
+  m_AnchoredPosition: {x: 60, y: 1400}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &3410989792209047217
@@ -660,4 +660,4 @@ MonoBehaviour:
   marbleUIParent: {fileID: 1474217973675691521}
   start: {fileID: 8296076229258982767}
   end: {fileID: 9187786273844813885}
-  spacing: 0.75
+  spacing: 0.14

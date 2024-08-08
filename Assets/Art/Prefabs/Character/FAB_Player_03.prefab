@@ -304,7 +304,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _speed: 6
+  _speed: 10
   gravityFactor: 100
 --- !u!114 &7704920714557367582
 MonoBehaviour:
@@ -400,8 +400,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.7090454, y: 6.269435, z: 1.833725}
-  m_Center: {x: 0.04575348, y: 3.1546378, z: -0.042243958}
+  m_Size: {x: 2.28228, y: 6.269435, z: 1.8143921}
+  m_Center: {x: 0.2591362, y: 3.1546378, z: -0.032577515}
 --- !u!54 &6834084159580454417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -667,7 +667,7 @@ PrefabInstance:
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: startingQueue.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -679,7 +679,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startingQueue.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: c89b104de062af34ba38384a95ab27cc,
+      objectReference: {fileID: 11400000, guid: ca1f9f1754038e0489979460cec5764d,
         type: 2}
     - target: {fileID: 2285814947710257780, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -801,6 +801,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -821,6 +826,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -829,6 +844,11 @@ PrefabInstance:
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3877892587926244631}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -871,6 +891,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onShootingMarble.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3877892587926244631}
@@ -899,6 +924,11 @@ PrefabInstance:
       propertyPath: onShootingMarble.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
       objectReference: {fileID: 3877892587926244631}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetRegularSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -938,6 +968,21 @@ PrefabInstance:
         type: 3}
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: ActivateEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -1021,6 +1066,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3877892587926244631}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3877892587926244631}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 7383767849049362318}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onShootingLightning.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -1058,6 +1118,41 @@ PrefabInstance:
         type: 3}
       propertyPath: onShootingMarbleEnd.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetShooting
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RotateTowardsAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetSlowSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerMovementController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
@@ -1141,6 +1236,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerMovementController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerMovementController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: PlayerAnimationManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: 1HSpellTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
       propertyPath: onShootingFire.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -1197,6 +1317,21 @@ PrefabInstance:
     - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
         type: 3}
       propertyPath: onShootingMarbleEnd.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305933829625269550, guid: def08ed2a9fab594d9b260f88ce76890,
+        type: 3}
+      propertyPath: onShootingProjectile.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
