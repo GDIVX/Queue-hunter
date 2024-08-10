@@ -22,7 +22,7 @@ namespace AI
         [SerializeField, TabGroup("Setting")] private float speed;
         private Animator _animator;
 
-        private bool _isMoving = true;
+        public bool IsMoving => !navMeshAgent.isStopped;
 
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMove;
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMoveEnd;
@@ -37,11 +37,19 @@ namespace AI
 
         public void SetMovementAllowed(bool value)
         {
-            _isMoving = value;
-            if (navMeshAgent != null)
+            if (!navMeshAgent)
             {
-                navMeshAgent.isStopped = !value;
+                Debug.LogError($"{name} is missing a navmesh agent");
+                return;
             }
+
+            if (!navMeshAgent.isOnNavMesh)
+            {
+                Debug.LogError($"{name} is not placed on a nav mesh. Can't modifiy it's movement");
+                return;
+            }
+
+            navMeshAgent.isStopped = !value;
         }
 
         private void Start()
@@ -61,13 +69,13 @@ namespace AI
                 navMeshAgent.isStopped = false;
             }
 
-            _isMoving = true;
+            SetMovementAllowed(true);
         }
 
 
         private void Update()
         {
-            if (!_isMoving)
+            if (!IsMoving)
             {
                 InvokeOnEnemyMoveEvent(false);
                 return;
@@ -111,12 +119,13 @@ namespace AI
         }
 
 
-        private void HandleRotation()
+        public void HandleRotation()
         {
             if (!navMeshAgent || !(navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)) return;
 
             Quaternion rotation = Quaternion.LookRotation(navMeshAgent.velocity.normalized);
-            view.rotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
+            var viewRotation = Quaternion.Lerp(view.rotation, rotation, Time.deltaTime * rotationSpeed);
+            view.rotation = new Quaternion(0, viewRotation.y, 0, 0);
         }
 
 
@@ -146,6 +155,11 @@ namespace AI
             {
                 Debug.LogError("Animator component is missing in children.", this);
             }
+        }
+
+        public void Stop()
+        {
+            navMeshAgent.isStopped = true;
         }
     }
 }

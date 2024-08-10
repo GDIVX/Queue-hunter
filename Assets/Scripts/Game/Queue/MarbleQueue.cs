@@ -15,12 +15,17 @@ namespace Game.Queue
         /// </summary>
         [SerializeField] private List<MarbleModel> startingQueue;
 
-        [ShowInInspector, ReadOnly] public readonly List<Marble> _marbles = new List<Marble>();
+        [ShowInInspector, ReadOnly] public readonly List<Marble> Marbles = new List<Marble>();
+        [SerializeField, Range(0, 1)] private float minDistanceTolerant;
+
 
         public UnityEvent<Marble> onMarbleEjected;
-        public UnityEvent<Marble> onMarbleCreated;
 
-        public int Count => _marbles.Count;
+        public UnityEvent<Marble> onMarbleMovedToTop;
+        public UnityEvent<MarbleQueue> onQueueInitialized;
+        public UnityEvent<Marble> onMarbleInitialized;
+
+        public int Count => Marbles.Count;
 
         private void Start()
         {
@@ -33,17 +38,19 @@ namespace Game.Queue
             //Free up memeory by deleting the list
             startingQueue.Clear();
             startingQueue = null;
-            //onMarblesCreated?.Invoke(_marbles);
+
+
+            onQueueInitialized?.Invoke(this);
         }
 
         private void Update()
         {
-            if (_marbles.Count == 0) return;
+            if (Marbles.Count == 0) return;
 
-            for (int i = 0; i < _marbles.Count; i++)
+            for (int i = 0; i < Marbles.Count; i++)
             {
-                Marble marble = _marbles[i];
-                marble.UpdatePosition(new(0, i, 0));
+                Marble marble = Marbles[i];
+                marble.UpdatePosition(new(0, i, 0), minDistanceTolerant);
             }
         }
 
@@ -52,7 +59,7 @@ namespace Game.Queue
             //Create a new marble
             Marble marble = model.Create();
             AddToTop(marble);
-
+            onMarbleInitialized?.Invoke(marble);
 
             return marble;
         }
@@ -60,17 +67,18 @@ namespace Game.Queue
         private void AddToTop(Marble marble)
         {
             //Add it to the list
-            _marbles.Add(marble);
+            Marbles.Add(marble);
             //Set its position to the top of the container
             marble.Position = new(0, Count + 1, 0);
-            onMarbleCreated?.Invoke(marble);
+            onMarbleMovedToTop?.Invoke(marble);
         }
 
 
         public Marble EjectMarble()
         {
-            Marble marble = _marbles.First();
-            _marbles.Remove(marble);
+            Marble marble = Marbles.First();
+            if (!marble.IsReady) return null;
+            Marbles.Remove(marble);
             onMarbleEjected?.Invoke(marble);
             AddToTop(marble);
             return marble;
@@ -78,7 +86,7 @@ namespace Game.Queue
 
         public bool IsEmpty()
         {
-            return _marbles.IsEmpty();
+            return Marbles.IsEmpty();
         }
     }
 }

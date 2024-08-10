@@ -31,7 +31,7 @@ namespace Combat
                 return null;
             }
 
-            var projectile = pool.Create(model, position);
+            var projectile = pool.Get(model, position);
             if (projectile == null)
             {
                 Debug.LogError("Failed to create a projectile from the pool.", this);
@@ -52,7 +52,7 @@ namespace Combat
                 return null;
             }
 
-            var projectile = pool.Create(model, spawnPosition);
+            var projectile = pool.Get(model, spawnPosition);
             if (projectile == null)
             {
                 Debug.LogError("Failed to create a projectile from the pool.", this);

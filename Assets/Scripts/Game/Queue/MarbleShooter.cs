@@ -21,9 +21,10 @@ namespace Game.Queue
 
 
         [Tooltip("Triggered when attempting to shoot a marble. Rerun true if it was successful")]
-        public UnityEvent<bool> onShootingMarbleAttempted;
-        public UnityEvent onShootingMarble;
-        public UnityEvent onShootingMarbleEnd;
+        public UnityEvent<bool> onShootingAttempted;
+
+        public UnityEvent onShootingProjectile;
+        public UnityEvent onShootingEnd;
 
         public UnityEvent onShootingFire;
         public UnityEvent onShootingLightning;
@@ -36,14 +37,21 @@ namespace Game.Queue
             _effectPool ??= GetComponent<EffectPool>();
         }
 
-        public void ShootNextMarble()
+        private void Start()
+        {
+            isShooting = false;
+        }
+
+        public void FireNextProjectile()
         {
             if (isShooting) return;
+            isShooting = true;
 
             //If the queue is empty, throw an event for the UI/UX and return
             if (_queue.IsEmpty())
             {
-                onShootingMarbleAttempted?.Invoke((false));
+                onShootingAttempted?.Invoke((false));
+                isShooting = false;
                 return;
             }
 
@@ -52,39 +60,54 @@ namespace Game.Queue
 
             if (marble == null)
             {
-                Debug.LogError("Failed to fetch marble from a non empty queue");
-                onShootingMarbleAttempted?.Invoke((false));
+                onShootingAttempted?.Invoke((false));
+                isShooting = false;
                 return;
             }
-            if (marble.GetMarbleType().ToString() == "Fire") onShootingFire?.Invoke();
-
-            else if (marble.GetMarbleType().ToString() == "Lightning") onShootingLightning?.Invoke();
-
-            else if (marble.GetMarbleType().ToString() == "Ice") onShootingIce?.Invoke();
 
 
+            FireProjectile(marble);
+        }
 
-            onShootingMarble.Invoke();
+        private void FireProjectile(Marble marble)
+        {
             StartCoroutine(PreFireCoroutine(marble));
 
 
             //trigger event for sucssus
-            onShootingMarbleAttempted?.Invoke(true);
-            isShooting = true;
-            StartCoroutine(MarbleShotCoroutine());
-
+            onShootingProjectile.Invoke();
+            onShootingAttempted?.Invoke(true);
+            InvokeMarbleTypeHasBeenFired(marble);
+            StartCoroutine(StartFireCoroutine());
         }
 
-        protected IEnumerator MarbleShotCoroutine()
+        private void InvokeMarbleTypeHasBeenFired(Marble marble)
+        {
+            switch (marble.GetMarbleType())
+            {
+                case MarbleModel.Type.Fire:
+                    onShootingFire?.Invoke();
+                    break;
+                case MarbleModel.Type.Lightning:
+                    onShootingLightning?.Invoke();
+                    break;
+                case MarbleModel.Type.Ice:
+                    onShootingIce?.Invoke();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected IEnumerator StartFireCoroutine()
         {
             yield return new WaitForSeconds(marbleShotTime);
             isShooting = false;
-            onShootingMarbleEnd?.Invoke();
+            onShootingEnd?.Invoke();
         }
 
         protected IEnumerator PreFireCoroutine(Marble marble)
         {
-
             yield return new WaitForSeconds(.2f);
 
             //Instantiate a projectile
@@ -100,6 +123,8 @@ namespace Game.Queue
 
             //rotate the projectile
             projectile.transform.rotation = Quaternion.LookRotation(transform.forward);
+
+            
         }
     }
 }

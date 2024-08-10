@@ -19,6 +19,14 @@ public class EffectPool : MonoBehaviour
         projectileFactory = GetComponent<ProjectileFactory>();
     }
 
+    public void ProccessQueue(MarbleQueue queue)
+    {
+        foreach (var item in queue.Marbles)
+        {
+            CreateProjectile(item);
+        }
+    }
+
     public void CreateProjectile(Marble marble)
     {
         Projectile proj = projectileFactory.Create(marble.ProjectileModel, spawnPoint.position);
@@ -32,6 +40,7 @@ public class EffectPool : MonoBehaviour
                 col.explosionObject = CreateExplosion(proj.transform);
             }
         }
+        else proj.gameObject.SetActive(false);
     }
 
     public Projectile GetProjectile(Marble marble)

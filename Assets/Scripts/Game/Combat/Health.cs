@@ -13,10 +13,12 @@ namespace Game.Combat
         [ShowInInspector, ReadOnly] private float currentHealth;
         [SerializeField] private bool canBeDamaged = true;
         [SerializeField] private float deathTime;
+        bool isDying = false;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
         public UnityEvent OnTakeDamage;
+        public UnityEvent<float, float> OnHealthChanged;
         public UnityEvent<float, Vector3> OnTakeDamageUI;
 
         public GameObject GameObject => gameObject;
@@ -55,8 +57,14 @@ namespace Game.Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
+                currentHealth = 0;
+                OnUpdateValue?.Invoke(-currentHealth, this);
+                OnTakeDamage?.Invoke();
+                OnTakeDamageUI?.Invoke(damage, transform.position);
                 OnDestroyed?.Invoke(this);
                 OnDeathUnityEvent?.Invoke();
+                canBeDamaged = false;
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
                 return;
             }
 
@@ -64,6 +72,8 @@ namespace Game.Combat
             OnUpdateValue?.Invoke(damage, this);
             OnTakeDamage?.Invoke();
             OnTakeDamageUI?.Invoke(damage, transform.position);
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
         }
 
         [Button]
@@ -86,11 +96,13 @@ namespace Game.Combat
 
         public void KillEntity()
         {
+            if (isDying) return;
             StartCoroutine(KillAfterSeconds());
         }
 
         private IEnumerator KillAfterSeconds()
         {
+            isDying = true;
             yield return new WaitForSeconds(deathTime);
             gameObject.SetActive(false);
         }
