@@ -1,30 +1,24 @@
 using System;
 using AI;
+using Game.AI;
 using Game.Combat;
+using Game.Utility;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Combat
 {
-    public class PoolOnDeath : MonoBehaviour
+    public class PoolOnDeath : MonoBehaviour, IInit<EnemyModel>
     {
-        [SerializeField] Health health;
-        [SerializeField] Enemy enemy;
-        private EnemySpawnManager spawnManager;
+        [SerializeField] private Health health;
+        [SerializeField] private Enemy enemy;
 
-
-        private void Awake()
+        public void Init(EnemyModel input)
         {
-            enemy ??= GetComponent<Enemy>();
             health ??= GetComponent<Health>();
-
-            //spawnManager = GameObject.Find("Wave Spawner").GetComponent<EnemySpawnManager>();
-            
-            //TODO refactor
-            gameObject.SetActive(false);
-
-            health.OnDestroyed += x => { spawnManager.ReturnToPool(enemy); };
-
+            enemy ??= GetComponent<Enemy>();
+            EnemySpawnManager spawnManager = EnemySpawnManager.Instance;
+            spawnManager.ReturnToPool(enemy);
         }
     }
 }

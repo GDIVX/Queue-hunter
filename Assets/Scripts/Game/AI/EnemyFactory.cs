@@ -1,5 +1,6 @@
 ﻿using Combat;
 using Game.Combat;
+using Game.Utility;
 using UnityEngine;
 using Utility;
 
@@ -11,51 +12,13 @@ namespace AI
         {
             //instantiate a new prefab
             GameObject prefab = Object.Instantiate(model.Prefab, position, Quaternion.identity);
+            var enemy = prefab.GetComponent<Enemy>();
 
-            //Damage
-            if (prefab.TryGetComponent(out EnemyMeleeAttack attack))
+            foreach (IInit<IEnemyModel> init in prefab.GetComponents<IInit<IEnemyModel>>())
             {
-                attack.Init(model.Damage,
-                    model.AttackWindup,
-                    model.AttackCooldown,
-                    model.AttackRange);
-            }
-            else
-            {
-                prefab.AddComponent<EnemyMeleeAttack>().Init(model.Damage,
-                    model.AttackWindup,
-                    model.AttackCooldown,
-                    model.AttackRange);
+                init.Init(model);
             }
 
-            //Health
-
-            if (prefab.TryGetComponent(out IDamageable health))
-            {
-                health.Init(model.Health);
-            }
-            else
-            {
-                prefab.AddComponent<Health>().Init(model.Health);
-            }
-
-            //Speed
-            if (prefab.TryGetComponent(out EnemyMovement movement))
-            {
-                movement.Init(model.Speed);
-            }
-            else
-            {
-                prefab.AddComponent<EnemyMovement>().Init(model.Speed);
-            }
-
-            if (prefab.TryGetComponent(out Enemy enemy))
-            {
-                enemy.Init(health, movement);
-                return enemy;
-            }
-
-            enemy = prefab.AddComponent<Enemy>().Init(health, movement);
             return enemy;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Combat;
 using Game.Combat;
+using Game.Utility;
 using UnityEngine;
 using Utility;
 
@@ -13,37 +14,12 @@ namespace AI
 
             inInstance.transform.position = position;
             
-            //TODO : Damage
-
-            //Health
-
-            if (inInstance.TryGetComponent(out IDamageable health))
+            foreach (IInit<IEnemyModel> init in inInstance.GetComponents<IInit<IEnemyModel>>())
             {
-                health.Init(model.Health);
+                init.Init(model);
             }
-            else
-            {
-                inInstance.gameObject.AddComponent<Health>().Init(model.Health);
-            }
-
-            //Speed
-            if (inInstance.TryGetComponent(out EnemyMovement movement))
-            {
-                movement.Init(model.Speed);
-            }
-            else
-            {
-                inInstance.gameObject.AddComponent<EnemyMovement>().Init(model.Speed);
-            }
-
-            if (inInstance.TryGetComponent(out Enemy enemy))
-            {
-                enemy.Init(health, movement);
-                return enemy;
-            }
-
-            enemy = inInstance.gameObject.AddComponent<Enemy>().Init(health, movement);
-            return enemy;
+            
+            return inInstance.GetComponent<Enemy>();
         }
     }
 }
