@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c9f91f46c241d797802f2b6b574bbd, type: 3}
   m_Name: Wave
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
-  spawnRate: 0
-  spawnRateVelocity: 0
-  delay: 0
-  waveDuration: 0
-  targetWaveSize: 0
+  entries:
+  - enemyModel: {fileID: 11400000, guid: 51817a97b3fa2ea4fa409d37e6280205, type: 2}
+    count: 10
+  - enemyModel: {fileID: 11400000, guid: 51817a97b3fa2ea4fa409d37e6280205, type: 2}
+    count: 2
+  - enemyModel: {fileID: 11400000, guid: 54163a4826eed644b9ab3a6bea0ff0e2, type: 2}
+    count: 2
+  delayAtStart: 1
