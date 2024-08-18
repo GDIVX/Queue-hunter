@@ -2,6 +2,7 @@
 using Combat;
 using Game.AI;
 using Game.Combat;
+using Game.Utility;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Sirenix.OdinInspector;
@@ -11,7 +12,7 @@ using UnityEngine.Events;
 namespace AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMovement : MonoBehaviour
+    public class EnemyMovement : MonoBehaviour , IInit<EnemyModel>
     {
         [SerializeField, TabGroup("Setting")] private EnemyTargeting targeting;
         [SerializeField, TabGroup("Setting")] private NavMeshAgent navMeshAgent;
@@ -60,9 +61,9 @@ namespace AI
             }
         }
 
-        public void Init(float modelSpeed)
+        public void Init(EnemyModel model)
         {
-            speed = modelSpeed;
+            speed = model.Speed;
             if (navMeshAgent)
             {
                 navMeshAgent.speed = speed;

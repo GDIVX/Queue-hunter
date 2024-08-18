@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace AI
 {
-    [CreateAssetMenu(fileName = "Enemy Model", menuName = "Game/Entities", order = 0)]
+    [CreateAssetMenu(fileName = "Enemy Model", menuName = "Game/EnemyModel", order = 0)]
     public class EnemyModel : ScriptableObject, IEnemyModel
     {
         [SerializeField] private GameObject prefab;
