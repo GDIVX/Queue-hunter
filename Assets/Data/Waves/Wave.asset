@@ -19,4 +19,6 @@ MonoBehaviour:
     count: 2
   - enemyModel: {fileID: 11400000, guid: 54163a4826eed644b9ab3a6bea0ff0e2, type: 2}
     count: 2
-  delayAtStart: 1
+  delayAtStart: 3
+  duration: 20
+  spawnPointsToUseCount: 3

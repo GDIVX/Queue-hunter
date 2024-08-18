@@ -10,6 +10,8 @@ namespace Combat
     {
         public List<WaveEntry> entries;
         [Min(0)] public float delayAtStart;
+        [Min(0)] public float duration;
+        public int spawnPointsToUseCount;
     }
 
     [Serializable]
