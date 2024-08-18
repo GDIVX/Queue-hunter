@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Combat;
 using Game.Utility;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
@@ -13,10 +16,11 @@ namespace AI
         void ReturnToPool(Enemy enemy);
     }
 
-    public class EnemySpawnManager : Singleton<EnemySpawnManager>, IReturner 
+    public class EnemySpawnManager : Singleton<EnemySpawnManager>, IReturner
     {
         [SerializeField, TabGroup("Settings")] private List<Wave> waves;
         [SerializeField, TabGroup("Settings")] private float spawnRadius;
+        [SerializeField, TabGroup("Settings")] private Transform playerTransform;
         [SerializeField, TabGroup("Settings")] private List<GameObject> spawnPoints;
 
         [SerializeField, TabGroup("Events")] private UnityEvent onAllWavesFinished;
@@ -42,7 +46,7 @@ namespace AI
 
             StartCoroutine(StartNextWave());
         }
-        
+
         private IEnumerator StartNextWave()
         {
             _currentWaveIndex++;
@@ -55,6 +59,8 @@ namespace AI
 
             yield return new WaitForSeconds(CurrentWave.delayAtStart);
             SpawnWave();
+            yield return new WaitForSeconds(CurrentWave.duration);
+            StartCoroutine(StartNextWave());
         }
 
         private void SpawnWave()
@@ -63,8 +69,6 @@ namespace AI
             {
                 Spawn(entry);
             }
-
-            StartCoroutine(StartNextWave());
         }
 
         private void Spawn(WaveEntry entry)
@@ -78,7 +82,11 @@ namespace AI
 
         private Vector3 GetSpawnPoint()
         {
-            var spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+            var spawnPointsNearThePlayer = spawnPoints
+                .OrderBy(p => Vector3.Distance(p.transform.position, playerTransform.position))
+                .Take(CurrentWave.spawnPointsToUseCount).ToList();
+
+            var spawnPoint = spawnPointsNearThePlayer[Random.Range(0, spawnPointsNearThePlayer.Count)];
             var randPoint = Random.insideUnitSphere * spawnRadius;
             randPoint = new Vector3(randPoint.x + spawnPoint.transform.position.x
                 , spawnPoint.transform.position.y,
