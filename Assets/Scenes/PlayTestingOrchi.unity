@@ -4177,7 +4177,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80a9ae50c85ac3a4cada26c03a718e5a, type: 2}
   - {fileID: 11400000, guid: 80a9ae50c85ac3a4cada26c03a718e5a, type: 2}
   - {fileID: 11400000, guid: 80a9ae50c85ac3a4cada26c03a718e5a, type: 2}
-  spawnRadius: 30
+  spawnRadius: 5
   playerTransform: {fileID: 2933428109781515863}
   spawnPoints:
   - {fileID: 1831591021}
