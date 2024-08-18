@@ -4666,7 +4666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1500691821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7541,72 +7541,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FAB_Level_01 Variant (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923880381192182960, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923880381192182960, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923880381192182960, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923880381192182960, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923880381192182960, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5385645094856094720, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5385645094856094720, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ground
-      objectReference: {fileID: 0}
-    - target: {fileID: 6054772992031656159, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6054772992031656159, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: 37ced1e093a9602479c3b5d5b3916460,
-        type: 2}
-    - target: {fileID: 6054772992031656159, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_UseGeometry
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6095777657530006866, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6674268584918882644, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ground
-      objectReference: {fileID: 0}
-    - target: {fileID: 7407294179506720442, guid: 7f537d3314b37784faf1a6fb6bbbe827,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8554148277707028427, guid: 7f537d3314b37784faf1a6fb6bbbe827,
         type: 3}
