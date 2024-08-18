@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbf370e9f32402dae4d52fc365cd140, type: 3}
   m_Name: Fireball Proj  Enemy
   m_EditorClassIdentifier: 
-  speed: 30
-  prefab: {fileID: 4634584431060079604, guid: 25e9e60a0ab1b204398a8714349cdf20, type: 3}
+  speed: 20
+  prefab: {fileID: 4634584431060079604, guid: ec3cec04e0524f34e98c7a142e3f91fe, type: 3}
   damage: 10
   targetLayerMask:
     serializedVersion: 2
