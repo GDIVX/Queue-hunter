@@ -1348,6 +1348,16 @@ PrefabInstance:
       propertyPath: marbleQueue
       value: 
       objectReference: {fileID: 1887962723}
+    - target: {fileID: 8296076229258982767, guid: 6a7f662ec83546c4586f53685c6ec050,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1678
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187786273844813885, guid: 6a7f662ec83546c4586f53685c6ec050,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4168,7 +4178,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80a9ae50c85ac3a4cada26c03a718e5a, type: 2}
   - {fileID: 11400000, guid: 80a9ae50c85ac3a4cada26c03a718e5a, type: 2}
   spawnRadius: 30
-  searchRadiusFromThePlayer: 62.52
   playerTransform: {fileID: 2933428109781515863}
   spawnPoints:
   - {fileID: 1831591021}
@@ -4870,7 +4879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1500691821
 MonoBehaviour:
   m_ObjectHideFlags: 0
