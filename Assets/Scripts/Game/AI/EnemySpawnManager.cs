@@ -1,7 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Combat;
+using Game.Utility;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
@@ -10,125 +16,82 @@ namespace AI
         void ReturnToPool(Enemy enemy);
     }
 
-    public class EnemySpawnManager : MonoBehaviour, IReturner
+    public class EnemySpawnManager : Singleton<EnemySpawnManager>, IReturner
     {
-        [SerializeField] private List<Wave> waves;
-        [SerializeField] private float spawnRadius;
+        [SerializeField, TabGroup("Settings")] private List<Wave> waves;
+        [SerializeField, TabGroup("Settings")] private float spawnRadius;
+        [SerializeField, TabGroup("Settings")] private Transform playerTransform;
+        [SerializeField, TabGroup("Settings")] private List<GameObject> spawnPoints;
 
-        [SerializeField] private int currentWaveIndex = -1;
+        [SerializeField, TabGroup("Events")] private UnityEvent onAllWavesFinished;
+        [SerializeField, TabGroup("Events")] private UnityEvent<GameObject> onSpawn;
 
-        private Wave CurrentWave
-        {
-            get
-            {
-                if (currentWaveIndex >= waves.Count) return null;
-                return waves[currentWaveIndex];
-            }
-        }
+        [ShowInInspector, ReadOnly, TabGroup("Debug")]
+        private int _currentWaveIndex = -1;
 
-        private float waveTime;
+        private Wave CurrentWave => _currentWaveIndex >= waves.Count ? null : waves[_currentWaveIndex];
 
-        private EnemySpawner spawner;
+        private float _waveTime;
+
+        private EnemySpawner _spawner;
 
         public void ReturnToPool(Enemy enemy)
         {
-            spawner.Return(enemy);
+            _spawner.Return(enemy);
         }
 
         private void Start()
         {
-            spawner = new();
+            _spawner = new();
 
-            StartNextWave();
+            StartCoroutine(StartNextWave());
         }
 
-        private void Update()
+        private IEnumerator StartNextWave()
         {
-            if (currentWaveIndex >= waves.Count) return;
-            if (waveTime <= 0)
+            _currentWaveIndex++;
+
+            if (_currentWaveIndex >= waves.Count)
             {
-                StartNextWave();
-                return;
+                onAllWavesFinished?.Invoke();
+                yield break;
             }
 
-
-            waveTime -= Time.fixedDeltaTime;
+            yield return new WaitForSeconds(CurrentWave.delayAtStart);
+            SpawnWave();
+            yield return new WaitForSeconds(CurrentWave.duration);
+            StartCoroutine(StartNextWave());
         }
 
-        private IEnumerator SpawnWave()
+        private void SpawnWave()
         {
-            yield return new WaitForSeconds(CurrentWave.delay);
-            if (currentWaveIndex >= waves.Count) yield break;
-            if (CurrentWave == null) yield break;
-
-            //calculate how many units to spawn
-            var spawnSize = GetSpawnSize();
-
-            Spawn(CurrentWave.model, spawnSize);
-
-            yield return SpawnWave();
-        }
-
-        private int GetSpawnSize()
-        {
-            if (currentWaveIndex >= waves.Count) return 0;
-
-            var currSize = spawner.Count;
-            var targetSize = CurrentWave.targetWaveSize;
-            var spawnSizeEst = Mathf.Lerp(currSize, targetSize, CurrentWave.spawnRate);
-            spawnSizeEst = Mathf.Clamp(spawnSizeEst, 0, targetSize - currSize);
-            int spawnSize = (int)Mathf.Floor(spawnSizeEst);
-            return spawnSize;
-        }
-
-        private void StartNextWave()
-        {
-            waveTime = CurrentWave.waveDuration;
-            currentWaveIndex++;
-
-            if (currentWaveIndex >= waves.Count) return;
-
-            StartCoroutine(SpawnWave());
-        }
-
-        private void Spawn(EnemyModel model, int size)
-        {
-            for (int i = 0; i < size; i++)
+            foreach (WaveEntry entry in CurrentWave.entries)
             {
-                var circle = GetRandomPointOnCircleEdge() * spawnRadius;
-                Vector3 position = new Vector3(circle.x, 0f, circle.y) + transform.position;
-
-                spawner.Spawn(model, position);
+                Spawn(entry);
             }
         }
 
-        public static Vector2 GetRandomPointOnCircleEdge()
+        private void Spawn(WaveEntry entry)
         {
-            float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-            Vector2 pointOnCircle = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-            return pointOnCircle;
+            for (int i = 0; i < entry.count; i++)
+            {
+                var spawnPoint = GetSpawnPoint();
+                _spawner.Spawn(entry.enemyModel, spawnPoint);
+            }
         }
 
-        // IEnumerator SpawnWaveCor(Wave wave)
-        // {
-        //     if (wave.waveDuration <= 0)
-        //     {
-        //         StartNextWave();
-        //         yield break;
-        //     }
-        //
-        //
-        //     wave.waveDuration -= wave.delay;
-        //
-        //
-        //     //Debug.Log($"Spawning {spawnSize} enemies out of {targetSize} -> current size is {spawner.Count}");
-        //
-        //     yield return Spawn(wave.model, spawnSize, wave.delay);
-        //
-        //     wave.waveDuration -= wave.delay;
-        //
-        //     wave.spawnRate = Mathf.Clamp(wave.spawnRate, wave.spawnRate + wave.spawnRateVelocity, 1);
-        //     yield return SpawnWaveCor(wave);
-        // }
+        private Vector3 GetSpawnPoint()
+        {
+            var spawnPointsNearThePlayer = spawnPoints
+                .OrderBy(p => Vector3.Distance(p.transform.position, playerTransform.position))
+                .Take(CurrentWave.spawnPointsToUseCount).ToList();
+
+            var spawnPoint = spawnPointsNearThePlayer[Random.Range(0, spawnPointsNearThePlayer.Count)];
+            var randPoint = Random.insideUnitSphere * spawnRadius;
+            randPoint = new Vector3(randPoint.x + spawnPoint.transform.position.x
+                , spawnPoint.transform.position.y,
+                randPoint.z + spawnPoint.transform.position.z);
+            return randPoint;
+        }
     }
 }

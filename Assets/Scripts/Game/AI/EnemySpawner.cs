@@ -5,25 +5,25 @@ namespace AI
 {
     public class EnemySpawner
     {
-        public int Count => pool.CountOffPool;
-        private GameObjectPool<EnemyModel, Enemy> pool;
+        public int Count => _pool.CountOffPool;
+        private readonly GameObjectPool<EnemyModel, Enemy> _pool;
 
         public EnemySpawner()
         {
             EnemyFactory factory = new();
             EnemyRecycler recycler = new();
 
-            pool = new(factory, recycler);
+            _pool = new(factory, recycler);
         }
 
         public Enemy Spawn(EnemyModel model, Vector3 position)
         {
-            return pool.Get(model, position);
+            return _pool.Get(model, position);
         }
 
         public void Return(Enemy enemy)
         {
-            pool.Return(enemy);
+            _pool.Return(enemy);
         }
     }
 }
