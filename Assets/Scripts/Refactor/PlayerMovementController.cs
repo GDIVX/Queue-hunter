@@ -69,7 +69,7 @@ public class PlayerMovementController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         _shooter = GetComponentInChildren<MarbleShooter>();
 
-        
+
     }
 
 
@@ -79,7 +79,7 @@ public class PlayerMovementController : MonoBehaviour
             UnityEngine.Input.GetAxisRaw("Vertical"));
         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         skewedInput = matrix.MultiplyPoint3x4(movementInput);
-        
+
 
         //move detection
         if (skewedInput != Vector3.zero && canMove)
@@ -113,14 +113,16 @@ public class PlayerMovementController : MonoBehaviour
 
     void RotateForward()
     {
-        Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
+        if (isAttacking) return;
+
+            Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
 
 
         targetRotation = Quaternion.RotateTowards(
             transform.rotation,
             targetRotation,
             rotationSpeed * Time.fixedDeltaTime);
-        rb.MoveRotation(targetRotation);
+            rb.MoveRotation(targetRotation);
     }
 
     public void DisableMovement()
