@@ -94,17 +94,17 @@ namespace Game.Combat
             return this.gameObject;
         }
 
-        public void KillEntity()
-        {
-            if (isDying) return;
-            StartCoroutine(KillAfterSeconds());
-        }
-
-        private IEnumerator KillAfterSeconds()
-        {
-            isDying = true;
-            yield return new WaitForSeconds(deathTime);
-            gameObject.SetActive(false);
-        }
+        // public void KillEntity()
+        // {
+        //     if (isDying) return;
+        //     StartCoroutine(KillAfterSeconds());
+        // }
+        //
+        // private IEnumerator KillAfterSeconds()
+        // {
+        //     isDying = true;
+        //     yield return new WaitForSeconds(deathTime);
+        //     gameObject.SetActive(false);
+        // }
     }
 }
