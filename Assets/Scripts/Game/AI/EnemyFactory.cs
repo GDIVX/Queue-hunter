@@ -14,7 +14,7 @@ namespace AI
             GameObject prefab = Object.Instantiate(model.Prefab, position, Quaternion.identity);
             var enemy = prefab.GetComponent<Enemy>();
 
-            foreach (IInit<IEnemyModel> init in prefab.GetComponents<IInit<IEnemyModel>>())
+            foreach (var init in prefab.GetComponents<IInit<IEnemyModel>>())
             {
                 init.Init(model);
             }

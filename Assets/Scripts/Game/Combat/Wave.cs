@@ -10,7 +10,6 @@ namespace Combat
     {
         public List<WaveEntry> entries;
         [Min(0)] public float delayAtStart;
-        [Min(0)] public float duration;
         public int spawnPointsToUseCount;
     }
 
@@ -19,6 +18,8 @@ namespace Combat
     {
         public EnemyModel enemyModel;
         public int count;
+        [Min(0)] public float delayBetweenSpawns;
+        public float delayAfterEntry;
 
         public WaveEntry Clone()
         {
@@ -29,5 +30,5 @@ namespace Combat
             };
             return clone;
         }
-    } 
+    }
 }

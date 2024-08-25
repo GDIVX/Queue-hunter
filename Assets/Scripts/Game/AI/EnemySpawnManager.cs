@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Combat;
+using Game.Combat;
 using Game.Utility;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -34,10 +35,24 @@ namespace AI
         private float _waveTime;
 
         private EnemySpawner _spawner;
+        private int _enemyCountInWave;
+
 
         public void ReturnToPool(Enemy enemy)
         {
             _spawner.Return(enemy);
+            enemy.gameObject.SetActive(false);
+            UpdateEnemyCount(_enemyCountInWave - 1);
+        }
+
+        private void UpdateEnemyCount(int count)
+        {
+            _enemyCountInWave = count;
+
+            if (count <= 0)
+            {
+                StartCoroutine(StartNextWave());
+            }
         }
 
         private void Start()
@@ -58,25 +73,27 @@ namespace AI
             }
 
             yield return new WaitForSeconds(CurrentWave.delayAtStart);
-            SpawnWave();
-            yield return new WaitForSeconds(CurrentWave.duration);
-            StartCoroutine(StartNextWave());
+            StartCoroutine(SpawnWave());
         }
 
-        private void SpawnWave()
+        private IEnumerator SpawnWave()
         {
             foreach (WaveEntry entry in CurrentWave.entries)
             {
-                Spawn(entry);
+                StartCoroutine(Spawn(entry));
+                yield return new WaitForSeconds(entry.delayAfterEntry);
             }
         }
 
-        private void Spawn(WaveEntry entry)
+        private IEnumerator Spawn(WaveEntry entry)
         {
-            for (int i = 0; i < entry.count; i++)
+            for (var i = 0; i < entry.count; i++)
             {
                 var spawnPoint = GetSpawnPoint();
-                _spawner.Spawn(entry.enemyModel, spawnPoint);
+                var enemy = _spawner.Spawn(entry.enemyModel, spawnPoint);
+                enemy.GetComponent<Health>().OnDestroyed += destroyable => ReturnToPool(enemy);
+                enemy.gameObject.SetActive(true);
+                yield return new WaitForSeconds(entry.delayBetweenSpawns);
             }
         }
 
