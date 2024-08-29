@@ -56,6 +56,7 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 dashDirection;
     private float dashStartTime;
     public UnityEvent<float> OnDashCDChanged;
+    public UnityEvent OnDashStarted;
 
     #endregion
 
@@ -185,6 +186,8 @@ public class PlayerMovementController : MonoBehaviour
         canDash = false;
         isDashing = true;
         isAttacking = false;
+
+        OnDashStarted?.Invoke();
 
         //animation trigger
         onDash?.Invoke("DashTrigger");

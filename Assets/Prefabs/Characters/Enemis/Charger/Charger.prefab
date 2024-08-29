@@ -297,7 +297,20 @@ MonoBehaviour:
       m_Calls: []
   OnTakeDamageUI:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7817773461581330519, guid: 5c39ca91ef3b8304bb1216917f9d51ca,
+          type: 3}
+        m_TargetAssemblyTypeName: DamageFeedbackUI, Assembly-CSharp
+        m_MethodName: GetDamageNumber
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8763286313184353842
 MonoBehaviour:
   m_ObjectHideFlags: 0

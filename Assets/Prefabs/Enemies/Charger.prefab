@@ -279,7 +279,8 @@ MonoBehaviour:
   OnTakeDamageUI:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7817773461581330519, guid: 5c39ca91ef3b8304bb1216917f9d51ca,
+          type: 3}
         m_TargetAssemblyTypeName: DamageFeedbackUI, Assembly-CSharp
         m_MethodName: GetDamageNumber
         m_Mode: 0
