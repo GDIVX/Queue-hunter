@@ -18,11 +18,11 @@ MonoBehaviour:
     delayBetweenSpawns: 2
     delayAfterEntry: 2
   - enemyModel: {fileID: 11400000, guid: 96649ceca75f89244beb5efe05df7053, type: 2}
-    count: 0
+    count: 2
     delayBetweenSpawns: 5
     delayAfterEntry: 2
   - enemyModel: {fileID: 11400000, guid: 54163a4826eed644b9ab3a6bea0ff0e2, type: 2}
-    count: 0
+    count: 1
     delayBetweenSpawns: 10
     delayAfterEntry: 2
   delayAtStart: 3
