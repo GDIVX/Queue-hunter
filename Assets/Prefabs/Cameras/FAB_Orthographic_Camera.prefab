@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7077821746296205768}
   - component: {fileID: 6719262751911614196}
   m_Layer: 0
-  m_Name: FAB_MainCamera_01
+  m_Name: FAB_Orthographic_Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
