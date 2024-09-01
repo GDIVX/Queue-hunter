@@ -63,7 +63,7 @@ CapsuleCollider:
   m_Radius: 0.6
   m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: -1.81, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &1425025504499954912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
-  canBeDamaged: 1
   deathTime: 3
   OnDeathUnityEvent:
     m_PersistentCalls:
@@ -234,7 +233,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &661358912891107295
