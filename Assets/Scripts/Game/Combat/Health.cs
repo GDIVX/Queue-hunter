@@ -10,10 +10,8 @@ namespace Game.Combat
     public class Health : MonoBehaviour, IDamageable, IHealable, ITarget
     {
         [SerializeField] private float maxHealth;
-        [ShowInInspector, ReadOnly] private float currentHealth;
-        [SerializeField] private bool canBeDamaged = true;
+        [ShowInInspector, ReadOnly] private float _currentHealth;
         [SerializeField] private float deathTime;
-        bool isDying = false;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
@@ -24,62 +22,52 @@ namespace Game.Combat
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
 
-        public bool CanBeDamaged
-        {
-            get => canBeDamaged;
-            set => canBeDamaged = value;
-        }
 
         public void Init(int modelHealth)
         {
             maxHealth = modelHealth;
-            currentHealth = maxHealth;
+            _currentHealth = maxHealth;
         }
 
         public event Action<IDestroyable> OnDestroyed;
         public Vector3 Position => transform.localPosition;
 
-        public float CurrentHealth => currentHealth;
+        public float CurrentHealth => _currentHealth;
         public float MaxHealth => maxHealth;
 
         private void Start()
         {
-            currentHealth = maxHealth;
-            OnUpdateValue?.Invoke(currentHealth, this);
+            _currentHealth = maxHealth;
+            OnUpdateValue?.Invoke(_currentHealth, this);
         }
 
         [Button]
         public void HandleDamage(float damage)
         {
-            if (!CanBeDamaged) return;
-
-
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
-                currentHealth = 0;
-                OnUpdateValue?.Invoke(-currentHealth, this);
+                _currentHealth = 0;
+                OnUpdateValue?.Invoke(-_currentHealth, this);
                 OnTakeDamage?.Invoke();
                 OnTakeDamageUI?.Invoke(damage, transform.position);
                 OnDestroyed?.Invoke(this);
                 OnDeathUnityEvent?.Invoke();
-                canBeDamaged = false;
-                OnHealthChanged?.Invoke(currentHealth, maxHealth);
+                OnHealthChanged?.Invoke(_currentHealth, maxHealth);
                 return;
             }
 
-            currentHealth = CurrentHealth - damage;
+            _currentHealth = CurrentHealth - damage;
             OnUpdateValue?.Invoke(damage, this);
             OnTakeDamage?.Invoke();
             OnTakeDamageUI?.Invoke(damage, transform.position);
-            OnHealthChanged?.Invoke(currentHealth, maxHealth);
-
+            OnHealthChanged?.Invoke(_currentHealth, maxHealth);
         }
 
         [Button]
         public void Heal(float amount)
         {
-            currentHealth = Mathf.Clamp(CurrentHealth + amount, CurrentHealth, MaxHealth);
+            _currentHealth = Mathf.Clamp(CurrentHealth + amount, CurrentHealth, MaxHealth);
             OnUpdateValue?.Invoke(amount, this);
         }
 
