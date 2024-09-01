@@ -570,7 +570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectObject: {fileID: 9063235624759225399}
-  explosionObject: {fileID: 0}
+  explosionObject: {fileID: 8551125371771216531, guid: 5fc33ca830678e3468e93e4aed6ec9e5,
+    type: 3}
   onEffectRequest:
     m_PersistentCalls:
       m_Calls: []

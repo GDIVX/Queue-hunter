@@ -489,7 +489,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectObject: {fileID: 9063235624759225399}
-  explosionObject: {fileID: 0}
+  explosionObject: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
+    type: 3}
   onEffectRequest:
     m_PersistentCalls:
       m_Calls: []

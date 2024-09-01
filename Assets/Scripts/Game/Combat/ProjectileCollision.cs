@@ -1,3 +1,4 @@
+using System;
 using Combat;
 using Game.Combat;
 using System.Collections;
@@ -19,6 +20,15 @@ public class ProjectileCollision : MonoBehaviour
     {
         StartCoroutine(KillProjectile());
         effectObject.SetActive(true);
+    }
+
+    private void OnValidate()
+    {
+        if (explosionObject == null)
+        {
+            throw new Exception(
+                $"{gameObject} has not explosion object assigned. Please look at the prefab for ProjectileCollision/explosionObject ");
+        }
     }
 
     private void OnTriggerEnter(Collider other)

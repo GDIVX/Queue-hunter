@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb31758219218704ba3cac11017cc698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 60
+  maxHealth: 30
   canBeDamaged: 1
   deathTime: 3
   OnDeathUnityEvent:
