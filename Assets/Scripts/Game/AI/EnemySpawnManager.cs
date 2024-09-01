@@ -78,7 +78,23 @@ namespace AI
 
         private IEnumerator SpawnWave()
         {
-            foreach (WaveEntry entry in CurrentWave.entries)
+            if (CurrentWave.entries == null)
+            {
+                Debug.LogError(
+                    $"The current wave {CurrentWave.name} is empty. Please populate it with entries or delete it. Skipping to the next wave");
+                StartCoroutine(StartNextWave());
+                yield break;
+            }
+
+            if (!CurrentWave)
+            {
+                Debug.LogWarning("Current wave is null. Skipping to the next wave.");
+                StartCoroutine(StartNextWave());
+                yield break;
+            }
+
+
+            foreach (var entry in CurrentWave.entries)
             {
                 StartCoroutine(Spawn(entry));
                 yield return new WaitForSeconds(entry.delayAfterEntry);
@@ -99,6 +115,18 @@ namespace AI
 
         private Vector3 GetSpawnPoint()
         {
+            if (spawnPoints == null)
+            {
+                Debug.LogError("Missing spawn points at the enemy spawner. Please add game objects to the list.");
+                return default;
+            }
+
+            if (!playerTransform)
+            {
+                Debug.LogError("Missing player transform at the enemy spawner.");
+                return default;
+            }
+
             var spawnPointsNearThePlayer = spawnPoints
                 .OrderBy(p => Vector3.Distance(p.transform.position, playerTransform.position))
                 .Take(CurrentWave.spawnPointsToUseCount).ToList();
