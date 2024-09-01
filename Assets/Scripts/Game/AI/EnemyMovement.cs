@@ -97,7 +97,7 @@ namespace AI
                 navMeshAgent.SetDestination(destination);
             }
 
-            HandleRotation();
+            //HandleRotation();
             InvokeOnEnemyMoveEvent(true);
         }
 
