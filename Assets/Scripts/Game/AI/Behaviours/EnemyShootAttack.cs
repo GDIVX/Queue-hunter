@@ -85,10 +85,10 @@ namespace Game.AI.Behaviours
             }
 
             var directionFromTarget = (transform.position - _target.Position).normalized;
-            var moveToPosition = directionFromTarget * attackRange;
+            var distanceToTarget = Vector3.Distance(transform.position, _target.Position);
+            var distance = MathF.Min(attackRange, distanceToTarget);
+            var moveToPosition = directionFromTarget * distance;
             movement.MoveTo(moveToPosition);
-            
-            
         }
 
         private void HandleShooting()

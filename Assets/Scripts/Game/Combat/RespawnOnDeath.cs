@@ -29,13 +29,11 @@ namespace Combat
             yield return new WaitForSeconds(respawnDelay);
 
             health.transform.position = respawnPosition;
-            health.CanBeDamaged = false;
             health.MaxHeal();
             health.gameObject.SetActive(true);
             OnRespawn?.Invoke();
 
             yield return new WaitForSeconds(invulnerabilityDuration);
-            health.CanBeDamaged = true;
         }
     }
 }

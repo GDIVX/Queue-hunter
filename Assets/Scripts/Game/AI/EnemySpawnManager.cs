@@ -30,7 +30,13 @@ namespace AI
         [ShowInInspector, ReadOnly, TabGroup("Debug")]
         private int _currentWaveIndex = -1;
 
-        private Wave CurrentWave => _currentWaveIndex >= waves.Count ? null : waves[_currentWaveIndex];
+        private Wave CurrentWave => IsThereAreMoveWavesToSpawn() ? waves[_currentWaveIndex] : null;
+
+        private bool IsThereAreMoveWavesToSpawn()
+        {
+            return _currentWaveIndex < waves.Count;
+        }
+
 
         private float _waveTime;
 
@@ -44,6 +50,7 @@ namespace AI
             enemy.gameObject.SetActive(false);
             UpdateEnemyCount(_enemyCountInWave - 1);
         }
+
 
         private void UpdateEnemyCount(int count)
         {
@@ -78,7 +85,28 @@ namespace AI
 
         private IEnumerator SpawnWave()
         {
-            foreach (WaveEntry entry in CurrentWave.entries)
+            if (!CurrentWave)
+            {
+                if (!IsThereAreMoveWavesToSpawn())
+                {
+                    yield break;
+                }
+
+                Debug.LogWarning("Current wave is null. Skipping to the next wave.");
+                StartCoroutine(StartNextWave());
+                yield break;
+            }
+
+            if (CurrentWave.entries == null)
+            {
+                Debug.LogError(
+                    $"The current wave {CurrentWave.name} is empty. Please populate it with entries or delete it. Skipping to the next wave");
+                StartCoroutine(StartNextWave());
+                yield break;
+            }
+
+
+            foreach (var entry in CurrentWave.entries)
             {
                 StartCoroutine(Spawn(entry));
                 yield return new WaitForSeconds(entry.delayAfterEntry);
@@ -99,6 +127,30 @@ namespace AI
 
         private Vector3 GetSpawnPoint()
         {
+            if (!CurrentWave)
+            {
+                if (!IsThereAreMoveWavesToSpawn())
+                {
+                    return default;
+                }
+
+                Debug.LogError("Missing current wave.");
+                return default;
+            }
+
+            if (spawnPoints == null)
+            {
+                Debug.LogError("Missing spawn points at the enemy spawner. Please add game objects to the list.");
+                return default;
+            }
+
+            if (!playerTransform)
+            {
+                Debug.LogError("Missing player transform at the enemy spawner.");
+                return default;
+            }
+
+
             var spawnPointsNearThePlayer = spawnPoints
                 .OrderBy(p => Vector3.Distance(p.transform.position, playerTransform.position))
                 .Take(CurrentWave.spawnPointsToUseCount).ToList();

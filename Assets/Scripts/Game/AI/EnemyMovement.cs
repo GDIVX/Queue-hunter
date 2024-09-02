@@ -12,7 +12,7 @@ using UnityEngine.Events;
 namespace AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMovement : MonoBehaviour , IInit<EnemyModel>
+    public class EnemyMovement : MonoBehaviour, IInit<EnemyModel>
     {
         [SerializeField, TabGroup("Setting")] private EnemyTargeting targeting;
         [SerializeField, TabGroup("Setting")] private NavMeshAgent navMeshAgent;
@@ -44,13 +44,14 @@ namespace AI
                 return;
             }
 
-            if (!navMeshAgent.isOnNavMesh)
+            if (!navMeshAgent.isOnNavMesh && gameObject.activeInHierarchy)
             {
                 Debug.LogError($"{name} is not placed on a nav mesh. Can't modifiy it's movement");
                 return;
             }
 
-            navMeshAgent.isStopped = !value;
+            if (gameObject.activeInHierarchy)
+                navMeshAgent.isStopped = !value;
         }
 
         private void Start()
@@ -96,7 +97,7 @@ namespace AI
                 navMeshAgent.SetDestination(destination);
             }
 
-            HandleRotation();
+            //HandleRotation();
             InvokeOnEnemyMoveEvent(true);
         }
 

@@ -6,7 +6,6 @@ namespace Combat
     {
         void HandleDamage(float damage);
         event Action<float, IDamageable> OnUpdateValue;
-        bool CanBeDamaged { get; set; }
         void Init(int modelHealth);
     }
 }
