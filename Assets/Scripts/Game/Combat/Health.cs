@@ -18,6 +18,7 @@ namespace Game.Combat
         public UnityEvent OnTakeDamage;
         public UnityEvent<float, float> OnHealthChanged;
         public UnityEvent<float, Vector3> OnTakeDamageUI;
+        public UnityEvent<IDestroyable> OnAboutToBeDestroyed;
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
@@ -47,13 +48,7 @@ namespace Game.Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
-                _currentHealth = 0;
-                OnUpdateValue?.Invoke(-_currentHealth, this);
-                OnTakeDamage?.Invoke();
-                OnTakeDamageUI?.Invoke(damage, transform.position);
-                OnDestroyed?.Invoke(this);
-                OnDeathUnityEvent?.Invoke();
-                OnHealthChanged?.Invoke(_currentHealth, maxHealth);
+                HandleDeath(damage);
                 return;
             }
 
@@ -62,6 +57,25 @@ namespace Game.Combat
             OnTakeDamage?.Invoke();
             OnTakeDamageUI?.Invoke(damage, transform.position);
             OnHealthChanged?.Invoke(_currentHealth, maxHealth);
+        }
+
+        private void HandleDeath(float damage)
+        {
+            _currentHealth = 0;
+            OnUpdateValue?.Invoke(-_currentHealth, this);
+            OnTakeDamage?.Invoke();
+            OnTakeDamageUI?.Invoke(damage, transform.position);
+            OnHealthChanged?.Invoke(_currentHealth, maxHealth);
+
+            StartCoroutine(WaitAndThenHandleDeath());
+        }
+
+        IEnumerator WaitAndThenHandleDeath()
+        {
+            OnAboutToBeDestroyed?.Invoke(this);
+            yield return new WaitForSeconds(deathTime);
+            OnDestroyed?.Invoke(this);
+            OnDeathUnityEvent?.Invoke();
         }
 
         [Button]

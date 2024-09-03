@@ -11,11 +11,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.GraphicsBuffer;
+using Health = Game.Combat.Health;
 
 namespace Game.AI.Behaviours
 {
     [RequireComponent(typeof(Collider))]
-    public class EnemyChargeAttack : MonoBehaviour
+    public class EnemyChargeAttack : MonoBehaviour, IInit<EnemyModel>
     {
         [SerializeField, TabGroup("Dependencies")]
         private EnemyMovement movementController;
@@ -60,6 +61,7 @@ namespace Game.AI.Behaviours
 
         public enum ChargeState
         {
+            Idle,
             Charging,
             Seeking,
             Recovering
@@ -70,6 +72,15 @@ namespace Game.AI.Behaviours
             movementController ??= GetComponent<EnemyMovement>();
             targeting ??= GetComponent<EnemyTargeting>();
             rigidbody ??= GetComponent<Rigidbody>();
+        }
+
+        public void Init(EnemyModel input)
+        {
+            _currentState = ChargeState.Seeking;
+            if (TryGetComponent(out Health health))
+            {
+                health.OnAboutToBeDestroyed.AddListener(d => _currentState = ChargeState.Idle);
+            }
         }
 
         private void Awake()

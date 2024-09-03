@@ -71,6 +71,11 @@ namespace AI
                 navMeshAgent.isStopped = false;
             }
 
+            if (TryGetComponent(out Health health))
+            {
+                health.OnAboutToBeDestroyed.AddListener(d => SetMovementAllowed(false));
+            }
+
             SetMovementAllowed(true);
         }
 
