@@ -12,7 +12,7 @@ using UnityEngine.Events;
 namespace AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyMovement : MonoBehaviour, IInit<EnemyModel>
+    public class EnemyMovement : MonoBehaviour, IInit<IEnemyModel>
     {
         [SerializeField, TabGroup("Setting")] private EnemyTargeting targeting;
         [SerializeField, TabGroup("Setting")] private NavMeshAgent navMeshAgent;
@@ -62,8 +62,9 @@ namespace AI
             }
         }
 
-        public void Init(EnemyModel model)
+        public void Init(IEnemyModel model)
         {
+            Debug.Log("Test : init movement");
             speed = model.Speed;
             if (navMeshAgent)
             {

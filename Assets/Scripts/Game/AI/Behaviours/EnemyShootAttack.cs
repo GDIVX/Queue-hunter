@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.AI.Behaviours
 {
-    public class EnemyShootAttack : MonoBehaviour, IInit<EnemyModel>
+    public class EnemyShootAttack : MonoBehaviour, IInit<IEnemyModel>
     {
         [SerializeField, BoxGroup("Dependencies")]
         private EnemyMovement movement;
@@ -42,7 +42,7 @@ namespace Game.AI.Behaviours
             shooter ??= GetComponentInChildren<ProjectileShooter>();
         }
 
-        public void Init(EnemyModel input)
+        public void Init(IEnemyModel input)
         {
             _currentState = ShooterState.Seeking;
             if (TryGetComponent(out Health health))

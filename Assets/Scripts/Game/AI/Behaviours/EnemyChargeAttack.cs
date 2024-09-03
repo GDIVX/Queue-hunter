@@ -16,7 +16,7 @@ using Health = Game.Combat.Health;
 namespace Game.AI.Behaviours
 {
     [RequireComponent(typeof(Collider))]
-    public class EnemyChargeAttack : MonoBehaviour, IInit<EnemyModel>
+    public class EnemyChargeAttack : MonoBehaviour, IInit<IEnemyModel>
     {
         [SerializeField, TabGroup("Dependencies")]
         private EnemyMovement movementController;
@@ -74,7 +74,7 @@ namespace Game.AI.Behaviours
             rigidbody ??= GetComponent<Rigidbody>();
         }
 
-        public void Init(EnemyModel input)
+        public void Init(IEnemyModel input)
         {
             _currentState = ChargeState.Seeking;
             if (TryGetComponent(out Health health))
