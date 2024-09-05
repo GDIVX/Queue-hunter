@@ -74,8 +74,6 @@ namespace Game.AI.Behaviours
                 case ShooterState.Shooting:
                     HandleShooting();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
