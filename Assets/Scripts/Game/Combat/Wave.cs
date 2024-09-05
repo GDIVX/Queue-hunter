@@ -18,7 +18,7 @@ namespace Combat
     {
         public EnemyModel enemyModel;
         public int count;
-        [Min(0)] public float delayBetweenSpawns;
+        [Min(0)] public float spawnWindup;
         public float delayAfterEntry;
 
         public WaveEntry Clone()

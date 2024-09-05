@@ -120,8 +120,10 @@ namespace AI
                 var spawnPoint = GetSpawnPoint();
                 var enemy = _spawner.Spawn(entry.enemyModel, spawnPoint);
                 enemy.GetComponent<Health>().OnDestroyed += destroyable => ReturnToPool(enemy);
+                enemy.gameObject.SetActive(false);
+                onSpawn?.Invoke(enemy.gameObject);
+                yield return new WaitForSeconds(entry.spawnWindup);
                 enemy.gameObject.SetActive(true);
-                yield return new WaitForSeconds(entry.delayBetweenSpawns);
             }
         }
 
