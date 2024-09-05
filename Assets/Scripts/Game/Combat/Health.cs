@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using AI;
 using Combat;
+using Game.Utility;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -55,7 +57,8 @@ namespace Game.Combat
             _currentHealth = CurrentHealth - damage;
             OnUpdateValue?.Invoke(damage, this);
             OnTakeDamage?.Invoke();
-            OnTakeDamageUI?.Invoke(damage, transform.position);
+            //OnTakeDamageUI?.Invoke(damage, transform.position);
+            DamageFeedbackUI.Instance.GetDamageNumber(damage, transform.position);
             OnHealthChanged?.Invoke(_currentHealth, maxHealth);
         }
 
@@ -95,6 +98,8 @@ namespace Game.Combat
         {
             return this.gameObject;
         }
+
+        
 
         // public void KillEntity()
         // {

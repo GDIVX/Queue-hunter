@@ -8,6 +8,21 @@ public class DamageFeedbackUI : MonoBehaviour
     [SerializeField] GameObject damageNumberPrefab;
     [SerializeField] List<GameObject> damageNumbers = new List<GameObject>();
 
+    public static DamageFeedbackUI Instance;
+
+    private void Awake()
+    {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     private void Start()
     {
         Init();
