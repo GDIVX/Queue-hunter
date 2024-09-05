@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using AI;
 using Game.Combat;
+using Game.Utility;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.AI.Behaviours
 {
-    public class EnemyShootAttack : MonoBehaviour
+    public class EnemyShootAttack : MonoBehaviour, IInit<IEnemyModel>
     {
         [SerializeField, BoxGroup("Dependencies")]
         private EnemyMovement movement;
@@ -26,6 +27,7 @@ namespace Game.AI.Behaviours
 
         private enum ShooterState
         {
+            Idle,
             Seeking,
             Chasing,
             WindupStart,
@@ -38,6 +40,15 @@ namespace Game.AI.Behaviours
             movement ??= GetComponent<EnemyMovement>();
             targeting ??= GetComponentInChildren<EnemyTargeting>();
             shooter ??= GetComponentInChildren<ProjectileShooter>();
+        }
+
+        public void Init(IEnemyModel input)
+        {
+            _currentState = ShooterState.Seeking;
+            if (TryGetComponent(out Health health))
+            {
+                health.OnAboutToBeDestroyed.AddListener(d => _currentState = ShooterState.Idle);
+            }
         }
 
         private void Start()
