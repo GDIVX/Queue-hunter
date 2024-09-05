@@ -4193,7 +4193,19 @@ MonoBehaviour:
       m_Calls: []
   onSpawn:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1887962725}
+        m_TargetAssemblyTypeName: EffectPool, Assembly-CSharp
+        m_MethodName: GetSpawnEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1329943916
 GameObject:
   m_ObjectHideFlags: 0
@@ -6183,6 +6195,10 @@ MonoBehaviour:
   explosionObject: {fileID: 0}
   effects: []
   explosionEffects: []
+  spawnEffects: []
+  spawnEffect: {fileID: 0}
+  spawnEffectsAmount: 0
+  spawnEffectTime: 0
 --- !u!4 &1734714715
 Transform:
   m_ObjectHideFlags: 0
@@ -6649,6 +6665,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dfe16b239be7984184af2fb2f830c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1887962725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 623659622358683090, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7475721795045014229}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6867e5e298b28954e9f2028c2148f7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1921200916

@@ -14,9 +14,50 @@ public class EffectPool : MonoBehaviour
     [SerializeField] List<Combat.Projectile> effects = new List<Combat.Projectile>();
     [SerializeField] private List<GameObject> explosionEffects = new List<GameObject>();
 
+
+    [SerializeField] private List<GameObject> spawnEffects = new List<GameObject>();
+    [SerializeField] GameObject spawnEffect;
+    [SerializeField] float spawnEffectsAmount;
+    [SerializeField] float spawnEffectTime;
+
+
     private void Awake()
     {
         projectileFactory = GetComponent<ProjectileFactory>();
+    }
+
+    private void Start()
+    {
+        InitSpawnEffects();
+    }
+
+    void InitSpawnEffects()
+    {
+        for (int i = 0; i < spawnEffectsAmount; i++)
+        {
+            var go = Instantiate(spawnEffect);
+            spawnEffects.Add(go);
+        }
+    }
+
+    public void GetSpawnEffect(GameObject go)
+    {
+        foreach (var effect in spawnEffects)
+        {
+            if (!effect.gameObject.activeInHierarchy)
+            {
+                effect.transform.position = new Vector3(go.transform.position.x, go.transform.position.y + 1.5f, go.transform.position.z);
+                StartCoroutine(PlayEffect(effect));
+                break;
+            }
+        }
+    }    
+
+    private IEnumerator PlayEffect(GameObject go)
+    {
+        go.SetActive(true);
+        yield return new WaitForSeconds(spawnEffectTime);
+        go.SetActive(false);
     }
 
     public void ProccessQueue(MarbleQueue queue)
@@ -63,4 +104,6 @@ public class EffectPool : MonoBehaviour
         explosionEffects.Add(expObject);
         return expObject;
     }
+
+
 }

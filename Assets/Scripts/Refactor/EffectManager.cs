@@ -5,8 +5,9 @@ using UnityEngine.VFX;
 
 public class EffectManager : MonoBehaviour
 {
-    [SerializeField] VisualEffect effect;
+    [SerializeField] GameObject effect;
     [SerializeField] float effectDuration;
+    bool isActive = false;
 
     public void ActivateEffect()
     {
@@ -15,8 +16,20 @@ public class EffectManager : MonoBehaviour
 
     private IEnumerator EffectCoroutine()
     {
-        effect.gameObject.SetActive(true);
-        yield return new WaitForSeconds(effectDuration);
-        effect.gameObject.SetActive(false);
+        if (!isActive)
+        {
+            effect.gameObject.SetActive(true);
+            isActive = true;
+            yield return new WaitForSeconds(effectDuration);
+            effect.gameObject.SetActive(false);
+            isActive = false;
+        }
+
+        else
+        {
+            effect.gameObject.SetActive(false);
+            isActive = false;
+            StartCoroutine(EffectCoroutine());
+        }
     }
 }
