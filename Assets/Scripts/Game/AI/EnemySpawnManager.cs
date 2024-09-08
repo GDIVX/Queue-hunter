@@ -41,7 +41,7 @@ namespace AI
         private float _waveTime;
 
         private EnemySpawner _spawner;
-        private int _enemyCountInWave;
+        [ShowInInspector, ReadOnly] private int _enemyCountInWave;
 
 
         public void ReturnToPool(Enemy enemy)
@@ -124,6 +124,7 @@ namespace AI
                 onSpawn?.Invoke(enemy.gameObject);
                 yield return new WaitForSeconds(entry.spawnWindup);
                 enemy.gameObject.SetActive(true);
+                UpdateEnemyCount(_enemyCountInWave + 1);
             }
         }
 
