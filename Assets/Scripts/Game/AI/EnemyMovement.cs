@@ -50,6 +50,8 @@ namespace AI
                 return;
             }
 
+            Debug.Log("Movement Allowed : " + value);
+
             if (gameObject.activeInHierarchy)
                 navMeshAgent.isStopped = !value;
         }
@@ -64,12 +66,10 @@ namespace AI
 
         public void Init(IEnemyModel model)
         {
-            Debug.Log("Test : init movement");
-            speed = model.Speed;
             if (navMeshAgent)
             {
-                navMeshAgent.speed = speed;
-                navMeshAgent.isStopped = false;
+                navMeshAgent.speed = model.Speed;
+                ;
             }
 
             if (TryGetComponent(out Health health))

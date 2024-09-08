@@ -52,7 +52,8 @@ namespace Game.Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
-                HandleDeath(damage);
+                OnTakeDamageUI?.Invoke(damage, transform.position);
+                Kill();
                 return;
             }
 
@@ -64,14 +65,14 @@ namespace Game.Combat
             OnHealthChanged?.Invoke(_currentHealth, maxHealth);
         }
 
-        private void HandleDeath(float damage)
+        [Button]
+        public void Kill()
         {
             OnDeath?.Invoke(true);
             OnDeathAnim?.Invoke("DeathTrigger");
             _currentHealth = 0;
             OnUpdateValue?.Invoke(-_currentHealth, this);
             OnTakeDamage?.Invoke();
-            OnTakeDamageUI?.Invoke(damage, transform.position);
             OnHealthChanged?.Invoke(_currentHealth, maxHealth);
 
             StartCoroutine(WaitAndThenHandleDeath());
@@ -103,7 +104,6 @@ namespace Game.Combat
             return this.gameObject;
         }
 
-        
 
         // public void KillEntity()
         // {

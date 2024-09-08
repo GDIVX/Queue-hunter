@@ -17,7 +17,6 @@ namespace AI
             foreach (var init in prefab.GetComponents<IInit<IEnemyModel>>())
             {
                 init.Init(model);
-                Debug.Log("Called init");
             }
 
             return enemy;
