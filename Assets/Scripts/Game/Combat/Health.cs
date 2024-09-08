@@ -21,6 +21,8 @@ namespace Game.Combat
         public UnityEvent<float, float> OnHealthChanged;
         public UnityEvent<float, Vector3> OnTakeDamageUI;
         public UnityEvent<IDestroyable> OnAboutToBeDestroyed;
+        public UnityEvent<bool> OnDeath;
+        public UnityEvent<string> OnDeathAnim;
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
@@ -64,6 +66,8 @@ namespace Game.Combat
 
         private void HandleDeath(float damage)
         {
+            OnDeath?.Invoke(true);
+            OnDeathAnim?.Invoke("DeathTrigger");
             _currentHealth = 0;
             OnUpdateValue?.Invoke(-_currentHealth, this);
             OnTakeDamage?.Invoke();

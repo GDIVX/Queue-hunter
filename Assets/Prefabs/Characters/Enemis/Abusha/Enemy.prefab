@@ -284,6 +284,24 @@ MonoBehaviour:
   OnAboutToBeDestroyed:
     m_PersistentCalls:
       m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3621960942769985064}
+        m_TargetAssemblyTypeName: AI.EnemyMovement, Assembly-CSharp
+        m_MethodName: SetMovementAllowed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeathAnim:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6026234111414529931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,7 +487,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 97f383cbe9bee144e8d122e5d57c82f4, type: 2}
+      objectReference: {fileID: 2100000, guid: 1b7c85fd54d92f9429c5a05ada570d7d, type: 2}
     - target: {fileID: 919132149155446097, guid: ad17201679fa8ba4caa52e3f8f28f379,
         type: 3}
       propertyPath: m_Name
