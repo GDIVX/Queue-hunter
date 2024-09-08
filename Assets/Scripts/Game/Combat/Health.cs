@@ -13,6 +13,7 @@ namespace Game.Combat
     {
         [SerializeField] private float maxHealth;
         [SerializeField] private float deathTime;
+        [SerializeField] private Collider collider;
         [ShowInInspector, ReadOnly] private float _currentHealth;
         [ShowInInspector, ReadOnly] private bool _canBeDamaged;
         public event Action<float, IDamageable> OnUpdateValue;
@@ -27,6 +28,7 @@ namespace Game.Combat
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
 
+        public bool CanBeDamaged => _canBeDamaged;
 
         public event Action<IDestroyable> OnDestroyed;
         public Vector3 Position => transform.localPosition;
@@ -44,6 +46,7 @@ namespace Game.Combat
             _currentHealth = maxHealth;
             _canBeDamaged = true;
             OnUpdateValue?.Invoke(_currentHealth, this);
+            collider.enabled = true;
         }
 
         public void Init(IEnemyModel input)
@@ -72,6 +75,7 @@ namespace Game.Combat
             OnHealthChanged?.Invoke(_currentHealth, maxHealth);
         }
 
+
         [Button]
         public void Kill()
         {
@@ -88,6 +92,7 @@ namespace Game.Combat
         {
             OnAboutToBeDestroyed?.Invoke(this);
             OnDeathAnim?.Invoke("DeathTrigger");
+            collider.enabled = false;
             yield return new WaitForSeconds(deathTime);
             OnDestroyed?.Invoke(this);
             OnDeathUnityEvent?.Invoke();

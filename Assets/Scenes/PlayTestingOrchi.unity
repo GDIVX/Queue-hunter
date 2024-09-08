@@ -8015,6 +8015,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2155f719c2aca5f40af56ae5cd5af63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &3379563983134073468 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 806793667011144635, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7475721795045014229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7475721795045014229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8083,6 +8089,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FAB_Player_03
       objectReference: {fileID: 0}
+    - target: {fileID: 7704920714557367582, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
+        type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 3379563983134073468}
     - target: {fileID: 7704920714557367582, guid: 34fd30adc9a19ef40a9cb2e4f18bea1f,
         type: 3}
       propertyPath: OnTakeDamageUI.m_PersistentCalls.m_Calls.Array.size
