@@ -16,8 +16,11 @@ namespace Combat.Weapons
 
         [SerializeField, BoxGroup("Damage")] private int baseDamage;
 
-        [SerializeField, BoxGroup("Targeting")] private LayerMask targetMask;
-        [SerializeField, BoxGroup("Targeting")] float maxDistancePerJump = 5;
+        [SerializeField, BoxGroup("Targeting")]
+        private LayerMask targetMask;
+
+        [SerializeField, BoxGroup("Targeting")]
+        float maxDistancePerJump = 5;
 
         [SerializeField, BoxGroup("Effect")] Transform p4;
         [SerializeField, BoxGroup("Effect")] Transform p1;
@@ -72,8 +75,13 @@ namespace Combat.Weapons
                 if (hits.Length > 0)
                 {
                     Collider closestTarget = FindClosestTarget(hits, currPosition);
-                    if (closestTarget != null && closestTarget.transform.TryGetComponent(out IDamageable damageable)) 
+                    if (closestTarget != null && closestTarget.transform.TryGetComponent(out IDamageable damageable))
                     {
+                        if (!damageable.CanBeDamaged)
+                        {
+                            yield break;
+                        }
+
                         lastHitTarget = closestTarget;
                         //DebugDraw(currPosition, closestTarget.transform.position);
                         bolt.transform.position = currPosition;
