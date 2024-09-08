@@ -18,4 +18,4 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  lifetime: 1
+  lifetime: 3

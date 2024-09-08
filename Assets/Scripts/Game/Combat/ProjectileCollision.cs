@@ -9,17 +9,17 @@ using UnityEngine.Events;
 public class ProjectileCollision : MonoBehaviour
 {
     [SerializeField] GameObject effectObject;
-    [SerializeField] public GameObject explosionObject;
+    [SerializeField] public GameObject? explosionObject;
     public UnityEvent onEffectRequest;
     public UnityEvent onEffectCollision;
     [SerializeField] private float destroyTime;
-
+    [SerializeField] private LayerMask targetLayer;
     [SerializeField] float resetTime;
 
     private void OnEnable()
     {
         StartCoroutine(KillProjectile());
-        effectObject.SetActive(true);
+        effectObject?.SetActive(true);
     }
 
     private void OnValidate()
@@ -33,10 +33,13 @@ public class ProjectileCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") && !other.CompareTag("Vision") && !other.CompareTag("Ground"))
+        if (/*!other.CompareTag("Player") && !other.CompareTag("Vision") && !other.CompareTag("Ground")*/ /*other.CompareTag(targetLayer.ToString())*/ other.gameObject.layer == targetLayer)
         {
             var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-            explosionObject.transform.position = point;
+            if (explosionObject != null)
+            {
+                explosionObject.transform.position = point;
+            }
             StartCoroutine(ManageActiveness());
         }
     }
@@ -46,12 +49,19 @@ public class ProjectileCollision : MonoBehaviour
         if (TryGetComponent<Projectile>(out var proj))
         {
             onEffectCollision?.Invoke();
-            explosionObject.SetActive(true);
+            if (explosionObject != null)
+            {
+                explosionObject.SetActive(true);
+            }
             effectObject.SetActive(false);
 
             yield return new WaitForSeconds(resetTime);
 
-            explosionObject.SetActive(false);
+            if (explosionObject != null)
+            {
+                explosionObject?.SetActive(false);
+            }
+
             proj.SetAvailable(true);
             gameObject.SetActive(false);
         }
@@ -64,7 +74,7 @@ public class ProjectileCollision : MonoBehaviour
         if (TryGetComponent<Projectile>(out var proj))
         {
             effectObject.SetActive(false);
-            explosionObject.SetActive(false);
+            explosionObject?.SetActive(false);
             proj.SetAvailable(true);
         }
         gameObject.SetActive(false);

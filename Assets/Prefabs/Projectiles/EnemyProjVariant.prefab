@@ -478,7 +478,7 @@ PrefabInstance:
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: AOESize
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -488,12 +488,12 @@ PrefabInstance:
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: cooldown
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: _layerMask.m_Bits
-      value: 64
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -570,8 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectObject: {fileID: 9063235624759225399}
-  explosionObject: {fileID: 8551125371771216531, guid: 5fc33ca830678e3468e93e4aed6ec9e5,
-    type: 3}
+  explosionObject: {fileID: 0}
   onEffectRequest:
     m_PersistentCalls:
       m_Calls: []
@@ -591,6 +590,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   destroyTime: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 520
   resetTime: 1
 --- !u!54 &-1195782615063136726
 Rigidbody:

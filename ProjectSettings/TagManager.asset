@@ -8,6 +8,8 @@ TagManager:
   - Vision
   - Map
   - Ground
+  - asteroid
+  - ship
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - UI
   - Enemy
   - Ground
-  - 
-  - 
+  - Vision
+  - Wall
   - 
   - 
   - 
