@@ -91,6 +91,11 @@ namespace Game.AI.Behaviours
 
         private void Update()
         {
+            if (_currentState == ChargeState.Idle)
+            {
+                rigidbody.velocity = Vector3.zero;
+            }
+
             if (_currentState != ChargeState.Charging) return;
             HandleChargeMovement();
         }
@@ -211,8 +216,8 @@ namespace Game.AI.Behaviours
 
         private void EndCharge(ITarget target)
         {
-            _target = null;
             _currentState = ChargeState.Recovering;
+            _target = null;
             onChargeEnd?.Invoke("isLockedRunning", false);
             StartCoroutine(HandleCooldown(target));
         }
