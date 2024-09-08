@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Charger
   m_EditorClassIdentifier: 
   prefab: {fileID: 5455582838636205699, guid: ddc47c75627a3ce408d446fe83e82639, type: 3}
-  health: 0
-  speed: 6
+  health: 50
+  speed: 8
   damage: 0
   attackWindup: 0
   attackCooldown: 0

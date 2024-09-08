@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Grunt
   m_EditorClassIdentifier: 
   prefab: {fileID: 4847894258755056903, guid: eb0811f13c4d1144fa2b80e491e6bebc, type: 3}
-  health: 0
-  speed: 9
+  health: 150
+  speed: 5
   damage: 0
   attackWindup: 0
   attackCooldown: 0

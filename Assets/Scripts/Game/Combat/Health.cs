@@ -9,11 +9,12 @@ using UnityEngine.Events;
 
 namespace Game.Combat
 {
-    public class Health : MonoBehaviour, IDamageable, IHealable, ITarget
+    public class Health : MonoBehaviour, IDamageable, IHealable, ITarget, IInit<IEnemyModel>
     {
         [SerializeField] private float maxHealth;
-        [ShowInInspector, ReadOnly] private float _currentHealth;
         [SerializeField] private float deathTime;
+        [ShowInInspector, ReadOnly] private float _currentHealth;
+        [ShowInInspector, ReadOnly] private bool _canBeDamaged;
         public event Action<float, IDamageable> OnUpdateValue;
 
         public UnityEvent OnDeathUnityEvent;
@@ -21,18 +22,11 @@ namespace Game.Combat
         public UnityEvent<float, float> OnHealthChanged;
         public UnityEvent<float, Vector3> OnTakeDamageUI;
         public UnityEvent<IDestroyable> OnAboutToBeDestroyed;
-        public UnityEvent<bool> OnDeath;
         public UnityEvent<string> OnDeathAnim;
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => this;
 
-
-        public void Init(int modelHealth)
-        {
-            maxHealth = modelHealth;
-            _currentHealth = maxHealth;
-        }
 
         public event Action<IDestroyable> OnDestroyed;
         public Vector3 Position => transform.localPosition;
@@ -42,13 +36,26 @@ namespace Game.Combat
 
         private void Start()
         {
+            Init();
+        }
+
+        private void Init()
+        {
             _currentHealth = maxHealth;
+            _canBeDamaged = true;
             OnUpdateValue?.Invoke(_currentHealth, this);
+        }
+
+        public void Init(IEnemyModel input)
+        {
+            maxHealth = input.Health;
+            Init();
         }
 
         [Button]
         public void HandleDamage(float damage)
         {
+            if (!_canBeDamaged) return;
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
@@ -68,8 +75,7 @@ namespace Game.Combat
         [Button]
         public void Kill()
         {
-            OnDeath?.Invoke(true);
-            OnDeathAnim?.Invoke("DeathTrigger");
+            _canBeDamaged = false;
             _currentHealth = 0;
             OnUpdateValue?.Invoke(-_currentHealth, this);
             OnTakeDamage?.Invoke();
@@ -81,6 +87,7 @@ namespace Game.Combat
         IEnumerator WaitAndThenHandleDeath()
         {
             OnAboutToBeDestroyed?.Invoke(this);
+            OnDeathAnim?.Invoke("DeathTrigger");
             yield return new WaitForSeconds(deathTime);
             OnDestroyed?.Invoke(this);
             OnDeathUnityEvent?.Invoke();
@@ -98,24 +105,5 @@ namespace Game.Combat
         {
             Heal(MaxHealth);
         }
-
-        public GameObject TargetGO()
-        {
-            return this.gameObject;
-        }
-
-
-        // public void KillEntity()
-        // {
-        //     if (isDying) return;
-        //     StartCoroutine(KillAfterSeconds());
-        // }
-        //
-        // private IEnumerator KillAfterSeconds()
-        // {
-        //     isDying = true;
-        //     yield return new WaitForSeconds(deathTime);
-        //     gameObject.SetActive(false);
-        // }
     }
 }

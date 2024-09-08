@@ -50,8 +50,6 @@ namespace AI
                 return;
             }
 
-            Debug.Log("Movement Allowed : " + value);
-
             if (gameObject.activeInHierarchy)
                 navMeshAgent.isStopped = !value;
         }
