@@ -62,7 +62,7 @@ namespace Game.Combat
             //can we take this hit?
             if (damage >= CurrentHealth)
             {
-                OnTakeDamageUI?.Invoke(damage, transform.position);
+                DamageFeedbackUI.Instance.GetDamageNumber(damage, transform.position);
                 Kill();
                 return;
             }
@@ -70,7 +70,6 @@ namespace Game.Combat
             _currentHealth = CurrentHealth - damage;
             OnUpdateValue?.Invoke(damage, this);
             OnTakeDamage?.Invoke();
-            //OnTakeDamageUI?.Invoke(damage, transform.position);
             DamageFeedbackUI.Instance.GetDamageNumber(damage, transform.position);
             OnHealthChanged?.Invoke(_currentHealth, maxHealth);
         }

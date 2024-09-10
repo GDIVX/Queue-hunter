@@ -41,7 +41,7 @@ namespace Game.Combat
             yield return new WaitForSeconds(delayBetweenShots);
             Projectile projectile = InstantiateProjectile();
 
-            projectile.transform.LookAt(targetPoint);
+            projectile.transform.LookAt(new Vector3(targetPoint.x, 2, targetPoint.z));
 
             onShootingProjectile?.Invoke(projectile);
             _isShooting = false;

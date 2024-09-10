@@ -335,6 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   deathTime: 0
+  collider: {fileID: 806793667011144635}
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -370,20 +371,11 @@ MonoBehaviour:
         m_CallState: 2
   OnTakeDamageUI:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DamageFeedbackUI, Assembly-CSharp
-        m_MethodName: GetDamageNumber
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnAboutToBeDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathAnim:
     m_PersistentCalls:
       m_Calls: []
 --- !u!65 &806793667011144635
