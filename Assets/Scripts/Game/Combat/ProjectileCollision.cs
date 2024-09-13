@@ -33,7 +33,7 @@ public class ProjectileCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (/*!other.CompareTag("Player") && !other.CompareTag("Vision") && !other.CompareTag("Ground")*/ /*other.CompareTag(targetLayer.ToString())*/ other.gameObject.layer == targetLayer)
+        if (/*!other.CompareTag("Player") && !other.CompareTag("Vision") && !other.CompareTag("Ground")*/ /*other.CompareTag(targetLayer.ToString())*/ other.gameObject.layer == 6 || other.gameObject.layer == 9)
         {
             var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
             if (explosionObject != null)
