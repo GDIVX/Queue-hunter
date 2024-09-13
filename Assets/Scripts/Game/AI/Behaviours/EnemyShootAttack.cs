@@ -5,6 +5,7 @@ using Game.Combat;
 using Game.Utility;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.AI.Behaviours
 {
@@ -24,6 +25,8 @@ namespace Game.AI.Behaviours
 
         [ShowInInspector, ReadOnly] private ShooterState _currentState;
         private ITarget _target;
+
+        public UnityEvent<string> OnEnemyShooting;
 
         private enum ShooterState
         {
@@ -117,6 +120,7 @@ namespace Game.AI.Behaviours
             }
 
             shooter.Fire(_target.Position);
+            OnEnemyShooting?.Invoke("ShootTrigger");
         }
 
         private bool IsTargetInRange()

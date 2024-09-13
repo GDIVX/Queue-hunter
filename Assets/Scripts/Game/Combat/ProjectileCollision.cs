@@ -74,7 +74,10 @@ public class ProjectileCollision : MonoBehaviour
         if (TryGetComponent<Projectile>(out var proj))
         {
             effectObject.SetActive(false);
-            explosionObject?.SetActive(false);
+            if (explosionObject != null)
+            {
+                explosionObject?.SetActive(false);
+            }
             proj.SetAvailable(true);
         }
         gameObject.SetActive(false);
