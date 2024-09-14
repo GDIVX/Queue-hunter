@@ -96,12 +96,17 @@ namespace Game.AI.Behaviours
                 return;
             }
 
-            var directionFromTarget = (transform.position - _target.Position).normalized;
+            var directionToTarget = (_target.Position - transform.position).normalized;
             var distanceToTarget = Vector3.Distance(transform.position, _target.Position);
             var distance = MathF.Min(attackRange, distanceToTarget);
-            var moveToPosition = directionFromTarget * distance;
+            var moveToPosition = transform.position + directionToTarget * distance;
+
+            Debug.DrawLine(transform.position, moveToPosition, Color.green, Time.deltaTime);
+            Debug.DrawLine(transform.position, directionToTarget * distanceToTarget, Color.blue, Time.deltaTime);
+
             movement.MoveTo(moveToPosition);
         }
+
 
         private void HandleShooting()
         {
