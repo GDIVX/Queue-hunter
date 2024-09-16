@@ -306,7 +306,7 @@ MonoBehaviour:
   damage: 5
   attackCooldown: 1.4
   attackWindup: 1
-  range: 2
+  range: 5
   targeting: {fileID: 1786835331794283215}
   OnAttackWindup:
     m_PersistentCalls:
