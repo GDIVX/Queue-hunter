@@ -4246,7 +4246,6 @@ MonoBehaviour:
   - {fileID: 815097339}
   - {fileID: 990996278}
   - {fileID: 36704438}
-  - {fileID: 0}
   - {fileID: 2124325413}
   - {fileID: 270870441}
   onAllWavesFinished:
