@@ -33,15 +33,26 @@ public class ProjectileCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (/*!other.CompareTag("Player") && !other.CompareTag("Vision") && !other.CompareTag("Ground")*/ /*other.CompareTag(targetLayer.ToString())*/ other.gameObject.layer == 6 || other.gameObject.layer == 9)
+        if (this.gameObject.CompareTag("Player"))
         {
-            var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-            if (explosionObject != null)
+            if ( other.gameObject.layer == 6 || other.gameObject.layer == 9)
             {
-                explosionObject.transform.position = point;
+                var point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                if (explosionObject != null)
+                {
+                    explosionObject.transform.position = point;
+                }
+                StartCoroutine(ManageActiveness());
             }
-            StartCoroutine(ManageActiveness());
         }
+        //else if (this.gameObject.CompareTag("Enemy"))
+        //{
+        //    if (other.gameObject.layer == 3)
+        //    {
+        //        //StartCoroutine(ManageActiveness());
+        //    }
+
+        //}
     }
 
     protected IEnumerator ManageActiveness()

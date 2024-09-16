@@ -564,7 +564,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4634584431060079604}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63ca16f2ce429fd44851e760609aaca2, type: 3}
   m_Name: 
@@ -577,19 +577,7 @@ MonoBehaviour:
       m_Calls: []
   onEffectCollision:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5256143685070589508}
-        m_TargetAssemblyTypeName: Game.Combat.ProjectileMovement, Assembly-CSharp
-        m_MethodName: CancelMovement
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   destroyTime: 2
   targetLayer:
     serializedVersion: 2
@@ -622,18 +610,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5256143685070589508 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8642068568948139505}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634584431060079604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d4965be33e7f4748accc8f272bc4056, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8923377238406735482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 880734938334413707, guid: 3fd92c2e04e16d04dae93e6c788b536f,
