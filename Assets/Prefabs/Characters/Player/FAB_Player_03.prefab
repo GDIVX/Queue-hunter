@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 7704920714557367582}
   - component: {fileID: 806793667011144635}
   - component: {fileID: 6834084159580454417}
+  - component: {fileID: 8545486035395224567}
   m_Layer: 3
   m_Name: FAB_Player_03
   m_TagString: Player
@@ -319,7 +320,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _speed: 12
+  _speed: 6
   gravityFactor: 100
 --- !u!114 &7704920714557367582
 MonoBehaviour:
@@ -393,7 +394,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -426,6 +427,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!65 &8545486035395224567
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798912110303037578}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.28228, y: 6.269435, z: 1.8143921}
+  m_Center: {x: 0.2591362, y: 3.1546378, z: -0.032577515}
 --- !u!1001 &722928170737057895
 PrefabInstance:
   m_ObjectHideFlags: 0
