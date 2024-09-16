@@ -238,12 +238,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2887710443302915825}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9063235624759225399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2887710443302915825}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8642068568948139505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -330,12 +324,12 @@ PrefabInstance:
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: onMarbleShot.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: onMarbleShotEnd.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4548452306885241781, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -478,7 +472,7 @@ PrefabInstance:
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: AOESize
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
@@ -505,11 +499,6 @@ PrefabInstance:
       propertyPath: OnCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      propertyPath: OnCollision.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3927235912562458734}
     - target: {fileID: 7547928851758154029, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       propertyPath: OnCollision.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -545,10 +534,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4017090399391495685, guid: 3fd92c2e04e16d04dae93e6c788b536f,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3927235912562458734}
-    - targetCorrespondingSourceObject: {fileID: 4017090399391495685, guid: 3fd92c2e04e16d04dae93e6c788b536f,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: -1195782615063136726}
   m_SourcePrefab: {fileID: 100100000, guid: 3fd92c2e04e16d04dae93e6c788b536f, type: 3}
 --- !u!1 &4634584431060079604 stripped
@@ -557,32 +542,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8642068568948139505}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3927235912562458734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634584431060079604}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ca16f2ce429fd44851e760609aaca2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectObject: {fileID: 9063235624759225399}
-  explosionObject: {fileID: 6184605095648420550, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
-    type: 3}
-  onEffectRequest:
-    m_PersistentCalls:
-      m_Calls: []
-  onEffectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  destroyTime: 2
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 520
-  resetTime: 1
 --- !u!54 &-1195782615063136726
 Rigidbody:
   m_ObjectHideFlags: 0

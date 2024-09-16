@@ -46,7 +46,7 @@ namespace Game.Combat
         {
             onMarbleShotEnd?.Invoke();
             var direction = transform.forward;
-            Vector3 translation = direction * (speed * Time.fixedDeltaTime);
+            Vector3 translation = new Vector3(direction.x, 0, direction.z) * (speed * Time.fixedDeltaTime);
             transform.position += translation;
         }
 
