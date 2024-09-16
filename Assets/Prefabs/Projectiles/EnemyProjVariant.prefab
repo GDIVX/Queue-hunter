@@ -186,17 +186,17 @@ PrefabInstance:
     - target: {fileID: 4238792581835645778, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
-      value: 0.19358075
-      objectReference: {fileID: 0}
-    - target: {fileID: 4238792581835645778, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
-        type: 3}
-      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4238792581835645778, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
         type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
+      value: 0.005831611
+      objectReference: {fileID: 0}
+    - target: {fileID: 4238792581835645778, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
+        type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
-      value: 1.735849
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4238792581835645778, guid: d015e60e4e32d2c45a502b0ac7b5c9e0,
         type: 3}
