@@ -22,4 +22,4 @@ MonoBehaviour:
     spawnWindup: 2
     delayAfterEntry: 2
   delayAtStart: 3
-  spawnPointsToUseCount: 3
+  spawnPointsToUseCount: 2
