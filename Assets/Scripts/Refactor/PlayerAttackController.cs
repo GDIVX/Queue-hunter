@@ -10,6 +10,7 @@ public class PlayerAttackController : MonoBehaviour
 
 
     #region MeleeParams
+
     [SerializeField] float firstAttackCD;
     [SerializeField] float secondAttackCD;
     [SerializeField] float thirdAttackCD;
@@ -22,16 +23,18 @@ public class PlayerAttackController : MonoBehaviour
         get => meleeDamage;
         private set => meleeDamage = value;
     }
+
     #endregion
 
     public UnityEvent<string> OnMeleeAttackAnimEvent;
     public UnityEvent OnMeleeAttack;
     public UnityEvent OnMeleeAttackEnd;
     public UnityEvent OnPlayerDeath;
+    public UnityEvent OnAttack;
 
-    [SerializeField]private bool hasAttackedOnce;
-    [SerializeField]private bool hasAttackedTwice;
-    [SerializeField]private bool hasAttackedThree;
+    [SerializeField] private bool hasAttackedOnce;
+    [SerializeField] private bool hasAttackedTwice;
+    [SerializeField] private bool hasAttackedThree;
 
     private void Awake()
     {
@@ -49,7 +52,7 @@ public class PlayerAttackController : MonoBehaviour
     IEnumerator PunchCoroutine()
     {
         canUseMelee = false;
-        if(hasAttackedOnce)
+        if (hasAttackedOnce)
         {
             hasAttackedOnce = false;
             hasAttackedTwice = false;
@@ -102,6 +105,8 @@ public class PlayerAttackController : MonoBehaviour
 
     public void DoDamage()
     {
+        if (EntityInRange.Count == 0) return;
+        OnAttack?.Invoke();
         foreach (IDamageable target in EntityInRange)
         {
             target.HandleDamage(MeleeDamage);
@@ -126,7 +131,7 @@ public class PlayerAttackController : MonoBehaviour
             EntityInRange.Remove(target);
         }
     }
-    
+
     //temp
     public void PlayerDead()
     {
