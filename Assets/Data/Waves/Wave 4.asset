@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a1f685c51d445b59adc4729f244f652, type: 3}
-  m_Name: Charger
+  m_Script: {fileID: 11500000, guid: 18c9f91f46c241d797802f2b6b574bbd, type: 3}
+  m_Name: Wave 4
   m_EditorClassIdentifier: 
-  prefab: {fileID: 90703213211599410, guid: fb0c9108236e4bb40a96e77b8cccb039, type: 3}
-  health: 50
-  speed: 8
-  damage: 0
-  attackWindup: 0
-  attackCooldown: 0
-  attackRange: 0
+  entries:
+  - enemyModel: {fileID: 11400000, guid: 96649ceca75f89244beb5efe05df7053, type: 2}
+    count: 20
+    spawnWindup: 2
+    delayAfterEntry: 0
+  delayAtStart: 3
+  spawnPointsToUseCount: 3
