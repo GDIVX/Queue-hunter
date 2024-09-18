@@ -4236,6 +4236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
+  - {fileID: 11400000, guid: 76c2120960580954dbc97f262fbcc98f, type: 2}
   - {fileID: 11400000, guid: 80a9ae50c85ac3a4cada26c03a718e5a, type: 2}
   - {fileID: 11400000, guid: 437073957c1cce843baf6e495e672551, type: 2}
   - {fileID: 11400000, guid: 11f0bf480ea6ac24796180d0630bb076, type: 2}
@@ -4245,8 +4246,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 11f0bf480ea6ac24796180d0630bb076, type: 2}
   - {fileID: 11400000, guid: 437073957c1cce843baf6e495e672551, type: 2}
   - {fileID: 11400000, guid: 790924e7b73bb6140979fecda90eb0f8, type: 2}
-  - {fileID: 11400000, guid: 83468b3874c836c4caadf435e159e56b, type: 2}
   spawnRadius: 1
+  maxDistanceFromPlayer: 15
   playerTransform: {fileID: 2933428109781515863}
   spawnPoints:
   - {fileID: 1831591021}
@@ -6735,7 +6736,7 @@ Transform:
   m_GameObject: {fileID: 1831591021}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22, y: 2.22, z: -17.7}
+  m_LocalPosition: {x: -20.5, y: 2.22, z: -24.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

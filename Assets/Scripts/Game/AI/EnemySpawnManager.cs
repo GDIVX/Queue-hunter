@@ -21,6 +21,7 @@ namespace AI
     {
         [SerializeField, TabGroup("Settings")] private List<Wave> waves;
         [SerializeField, TabGroup("Settings")] private float spawnRadius;
+        [SerializeField, TabGroup("Settings")] private float maxDistanceFromPlayer;
         [SerializeField, TabGroup("Settings")] private Transform playerTransform;
         [SerializeField, TabGroup("Settings")] private List<GameObject> spawnPoints;
 
@@ -157,6 +158,10 @@ namespace AI
             var spawnPointsNearThePlayer = spawnPoints
                 .OrderBy(p => Vector3.Distance(p.transform.position, playerTransform.position))
                 .Take(CurrentWave.spawnPointsToUseCount).ToList();
+
+            //remove redundent points that are too far away
+            spawnPointsNearThePlayer.RemoveAll(p =>
+                Vector3.Distance(p.transform.position, playerTransform.position) < maxDistanceFromPlayer);
 
             var spawnPoint = spawnPointsNearThePlayer[Random.Range(0, spawnPointsNearThePlayer.Count)];
             var randPoint = Random.insideUnitSphere * spawnRadius;
