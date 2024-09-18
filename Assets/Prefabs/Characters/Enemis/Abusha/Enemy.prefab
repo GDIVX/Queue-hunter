@@ -183,7 +183,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  canMove: 0
 --- !u!114 &3109053303165181385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,8 +304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  attackCooldown: 1.4
-  attackWindup: 1
+  attackCooldown: 1.33
+  attackWindup: 1.33
   range: 5
   targeting: {fileID: 1786835331794283215}
   OnAttackWindup:
