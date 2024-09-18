@@ -14,12 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - enemyModel: {fileID: 11400000, guid: 51817a97b3fa2ea4fa409d37e6280205, type: 2}
-    count: 3
+    count: 1
     spawnWindup: 2
     delayAfterEntry: 2
   - enemyModel: {fileID: 11400000, guid: 54163a4826eed644b9ab3a6bea0ff0e2, type: 2}
     count: 2
     spawnWindup: 2
+    delayAfterEntry: 2
+  - enemyModel: {fileID: 11400000, guid: 96649ceca75f89244beb5efe05df7053, type: 2}
+    count: 3
+    spawnWindup: 1
     delayAfterEntry: 2
   delayAtStart: 3
   spawnPointsToUseCount: 2
