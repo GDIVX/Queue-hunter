@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1f685c51d445b59adc4729f244f652, type: 3}
   m_Name: Charger
   m_EditorClassIdentifier: 
-  prefab: {fileID: 90703213211599410, guid: fb0c9108236e4bb40a96e77b8cccb039, type: 3}
+  prefab: {fileID: 5455582838636205699, guid: ddc47c75627a3ce408d446fe83e82639, type: 3}
   health: 50
   speed: 8
   damage: 0
