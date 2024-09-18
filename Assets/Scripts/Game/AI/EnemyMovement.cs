@@ -27,7 +27,6 @@ namespace AI
 
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMove;
         [SerializeField, TabGroup("Events")] private UnityEvent<string, bool> onEnemyMoveEnd;
-        [SerializeField] private bool canMove;
 
 
         private void Awake()
@@ -51,7 +50,10 @@ namespace AI
             }
 
             if (gameObject.activeInHierarchy)
+            {
+                navMeshAgent.updateRotation = value;
                 navMeshAgent.isStopped = !value;
+            }
         }
 
         private void Start()
