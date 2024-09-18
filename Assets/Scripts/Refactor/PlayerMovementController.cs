@@ -9,18 +9,20 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovementController : MonoBehaviour
 {
-
     #region RotationParams
+
     [SerializeField] float rotationSpeed = 360;
 
     #endregion
 
     #region MovementParams
+
     [SerializeField] float regularSpeed;
     [SerializeField] float halfSpeed;
     [SerializeField] private Vector3 lastDir;
     [SerializeField] private MarbleShooter _shooter;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] private AudioSource footSteps;
     private Vector3 skewedInput;
 
 
@@ -69,8 +71,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _shooter = GetComponentInChildren<MarbleShooter>();
-
-
     }
 
 
@@ -96,6 +96,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             onMoveEnd?.Invoke("isRunning", false);
+            footSteps.gameObject.SetActive(false);
         }
 
         if (isDashing) DuringDash();
@@ -110,20 +111,24 @@ public class PlayerMovementController : MonoBehaviour
             lastDir.z * Time.fixedDeltaTime * (Speed * 100));
         rb.AddForce(new Vector3(0, -1, 0) * gravityFactor, ForceMode.Acceleration);
         onMove?.Invoke("isRunning", true);
+
+        //handle sound
+        footSteps.gameObject.SetActive(true);
+        footSteps.pitch = Random.Range(0.5f, 2f);
     }
 
     void RotateForward()
     {
         if (isAttacking) return;
 
-            Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
+        Quaternion targetRotation = Quaternion.LookRotation(skewedInput);
 
 
         targetRotation = Quaternion.RotateTowards(
             transform.rotation,
             targetRotation,
             rotationSpeed * Time.fixedDeltaTime);
-            rb.MoveRotation(targetRotation);
+        rb.MoveRotation(targetRotation);
     }
 
     public void DisableMovement()
