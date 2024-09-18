@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave 5
   m_EditorClassIdentifier: 
   entries:
-  - enemyModel: {fileID: 11400000, guid: 96649ceca75f89244beb5efe05df7053, type: 2}
+  - enemyModel: {fileID: 11400000, guid: 54163a4826eed644b9ab3a6bea0ff0e2, type: 2}
     count: 20
     spawnWindup: 2
     delayAfterEntry: 0
