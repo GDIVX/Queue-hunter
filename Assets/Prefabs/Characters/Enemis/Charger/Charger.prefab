@@ -235,7 +235,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  canMove: 0
 --- !u!114 &8843304971666863897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,10 +372,10 @@ MonoBehaviour:
     min: 10
     max: 38.02
   maxChargeDistance: 54.23
-  chargeOvershootDistance: 5
+  chargeOvershootDistance: 10
   coolDown: 1
   windUp: 2
-  attackDamage: 2
+  attackDamage: 5
   speed: 16
   chargeDistanceToTargetTolerance: 1.5
   onPreparingToCharge:
