@@ -35,7 +35,7 @@ namespace AI
             _animator = GetComponentInChildren<Animator>();
         }
 
-        public void SetMovementAllowed(bool value)
+        public void SetMovementAllowed(bool value , bool rotation = true)
         {
             if (!navMeshAgent)
             {
@@ -51,7 +51,7 @@ namespace AI
 
             if (gameObject.activeInHierarchy)
             {
-                navMeshAgent.updateRotation = value;
+                navMeshAgent.updateRotation = rotation;
                 navMeshAgent.isStopped = !value;
             }
         }
@@ -74,7 +74,7 @@ namespace AI
 
             if (TryGetComponent(out Health health))
             {
-                health.OnAboutToBeDestroyed.AddListener(d => SetMovementAllowed(false));
+                health.OnAboutToBeDestroyed.AddListener(d => SetMovementAllowed(false , false));
             }
 
             SetMovementAllowed(true);
